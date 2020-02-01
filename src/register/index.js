@@ -187,7 +187,7 @@ export function registerCMD(command) {
     { next: _handler, error: console.warn },
     map(emissions => emissions[args])
   )
-  let CMD = reso
+  let CMD = _reso
     ? { [sub$]: _sub$, [args]: _args, [reso]: _reso, [erro]: _erro }
     : { [sub$]: _sub$, [args]: _args }
   // Set.add not supported by IE
@@ -323,7 +323,9 @@ export const boot = async CFG => {
       ? null
       : [_app, [state$[PAGE_TEMPLATE], getIn(state$, state$[ROUTE_PATH])]]
   )
+
   if (_draft) $store$.swap(x => ({ ..._draft, ...x }))
+
   $store$.resetIn(ROOT, _root)
 
   state$.subscribe(sidechainPartition(fromRAF())).transform(

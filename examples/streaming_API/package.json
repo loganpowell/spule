@@ -1,9 +1,11 @@
 {
+  "name": "hdom-rstream-multiplex",
+  "version": "0.0.1",
   "main": "index.js",
   "scripts": {
     "clean": "rm -rf .cache dist",
     "prep": "npm run clean && mkdir dist && cp -r assets dist ",
-    "build": "cross-env NODE_ENV=production && npm run prep && parcel build index.html -d dist --public-url ./ --no-source-maps --no-cache",
+    "build": "cross-env NODE_ENV=production && npm run prep && parcel build index.html -d dist --public-url ./ --no-source-maps --no-cache --no-minify",
     "start": "cross-env NODE_ENV=development parcel index.html -d dist"
   },
   "keywords": [
@@ -12,17 +14,37 @@
   "browserslist": [
     "last 2 Chrome versions"
   ],
-  "prettier": {
-    "endOfLine": "lf",
-    "printWidth": 100,
-    "semi": false
+  "dependencies": {
+    "@thi.ng/hdom": "^8.0.8",
+    "@thi.ng/rstream": "latest",
+    "@thi.ng/transducers-hdom": "^2.0.32",
+    "querystring": "^0.2.0",
+    "@thi.ng/associative": "latest",
+    "@thi.ng/transducers": "latest",
+    "@thi.ng/checks": "latest",
+    "@thi.ng/paths": "latest",
+    "@thi.ng/atom": "latest",
+    "@thi.ng/arrays": "latest",
+    "@babel/runtime-corejs3": "^7.7.7",
+    "styled-system-hdom": "latest"
   },
   "devDependencies": {
-    "@babel/core": "^7.8.3",
+    "@babel/core": "^7.7.7",
+    "@babel/plugin-transform-runtime": "^7.7.6",
+    "@babel/preset-env": "^7.7.7",
+    "@mapbox/scroll-restorer": "^1.0.0",
+    "babel-preset-env": "^1.7.0",
     "cross-env": "^6.0.3",
-    "isomorphic-fetch": "^2.2.1"
+    "cssnano": "^4.1.10",
+    "dotenv": "^8.2.0",
+    "regenerator-runtime": "^0.13.3"
   },
-  "dependencies": {
-    "styled-system-hdom": "^0.1.4"
+  "author": "Logan Powell",
+  "license": "MIT",
+  "prettier": {
+    "endOfLine": "lf",
+    "printWidth": 80,
+    "semi": false,
+    "singleQuote": false
   }
 }

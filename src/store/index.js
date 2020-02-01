@@ -64,7 +64,7 @@ export let $store$ = new Atom(DEFAULT_CFG)
 export const set$State = (path, val) =>
   $store$.swapIn(path, x =>
     !path.length && !isPlainObject(val)
-      ? { ...x, [val]: val }
+      ? { ...x, [Object.keys(val)[0]]: val }
       : isPlainObject(x) && isPlainObject(val)
       ? { ...x, ...val }
       : val

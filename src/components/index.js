@@ -1,5 +1,6 @@
 import { _F_LIP, F_LIP_, HURL } from "../commands"
 import { run, args } from "../store"
+
 /**
  * There're only 3 lifecycle hooks. render is called for
  * every update and is just providing the actual hiccup for
@@ -23,7 +24,6 @@ import { run, args } from "../store"
  * frame the component appears in the DOM
  *
  */
-
 const err_str = prop => `
   No '${prop}' property found on FLIPkid firstChild. 
   Ensure you are providing FLIPkid a component with an 
@@ -41,30 +41,33 @@ const simEvent = href => ({
   }
 })
 
-export const FLIPkid = {
-  render: (ctx, ...rest) => [
-    "div",
-    {
-      onclick: ev => {
-        ev.preventDefault()
-        const target = ev.target
-        const href = target.getAttribute("href")
-        // console.log({ target, href })
-        if (!href) return new Error(err_str("href"))
-        ctx[run]([
-          { ...HURL, [args]: simEvent(href) },
-          { ..._F_LIP, [args]: { id: href, target } }
-        ])
-      }
-    },
-    ...rest
-  ],
+export const FLIPkid = Object.freeze({
+  render: (ctx, ...rest) =>
+    // console.log("FLIPkid"),
+    [
+      "div",
+      {
+        onclick: ev => {
+          ev.preventDefault()
+          const target = ev.target
+          const href = target.getAttribute("href")
+          // console.log({ target, href })
+          if (!href) return new Error(err_str("href"))
+          ctx[run]([
+            { ...HURL, [args]: simEvent(href) },
+            { ..._F_LIP, [args]: { id: href, target } }
+          ])
+        }
+      },
+      ...rest
+    ],
   init: (el, ctx) => {
     // console.log({
     //   el,
     //   firstChild: el.firstChild,
     //   id: el.firstChild.getAttribute("href")
     // }),
+    console.log("FLIPkid_init")
     ctx[run]({
       ...F_LIP_,
       [args]: {
@@ -73,7 +76,7 @@ export const FLIPkid = {
       }
     })
   }
-}
+})
 
 /* OLD (non FRP) APPROACH
 let attrs = {

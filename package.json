@@ -1,60 +1,46 @@
 {
   "name": "reduce.ac",
+  "author": "Logan Powell",
+  "license": "MIT",
   "version": "0.1.2",
   "description": "AC is a framework for leveraging `@thi.ng/umbrella` for web apps",
   "main": "browser",
   "repository": "https://github.com/loganpowell/ac",
   "homepage": "https://github.com/loganpowell/ac",
   "scripts": {
-    "clean": "rm -rf .cache dist",
-    "prep": "npm run clean && mkdir dist",
-    "build": "cross-env NODE_ENV=production && npm run prep && parcel build test/index.html -d dist --public-url ./ --no-source-maps --no-cache",
-    "start": "cross-env NODE_ENV=development parcel test/index.html -d dist",
-    "serve": "node dist/server.js",
+    "build": "parcel build src/index.js --no-source-maps --no-cache --experimental-scope-hoisting",
     "docs": "jsdoc --configure jsdoc.json --verbose",
-    "pages": "gh-pages -d dist"
+    "pages": "gh-pages -d docs"
   },
   "keywords": [
-    "thi.ng"
+    "thi.ng",
+    "multiplex",
+    "FRP"
   ],
   "dependencies": {
-    "@thi.ng/hdom": "^8.0.8",
-    "@thi.ng/rstream": "latest",
-    "@thi.ng/transducers-hdom": "^2.0.32",
-    "abort-controller": "^3.0.0",
-    "axios": "^0.19.1",
-    "nanographql": "^2.0.0",
+    "@thi.ng/rstream": "^3.0.2",
+    "@thi.ng/transducers-hdom": "^2.0.34",
     "querystring": "^0.2.0"
   },
   "peerDependencies": {
-    "@thi.ng/associative": "latest",
-    "@thi.ng/transducers": "latest",
-    "@thi.ng/checks": "latest",
-    "@thi.ng/paths": "latest",
-    "@thi.ng/atom": "latest",
-    "@thi.ng/arrays": "latest"
+    "@thi.ng/transducers": "^6.2.1",
+    "@thi.ng/associative": "^3.1.3",
+    "@thi.ng/checks": "^2.5.0",
+    "@thi.ng/arrays": "^0.5.1",
+    "@thi.ng/paths": "^3.0.1",
+    "@thi.ng/atom": "^3.1.4",
+    "@thi.ng/hdom": "^8.0.10"
   },
   "devDependencies": {
-    "@babel/runtime-corejs2": "latest",
-    "@babel/runtime-corejs3": "^7.7.7",
-    "@babel/core": "^7.7.7",
-    "@babel/plugin-transform-runtime": "^7.7.6",
-    "@babel/preset-env": "^7.7.7",
-    "@mapbox/scroll-restorer": "^1.0.0",
-    "babel-plugin-transform-remove-console": "^6.9.4",
+    "@babel/core": "^7.8.4",
+    "@babel/plugin-transform-runtime": "^7.8.3",
+    "@babel/preset-env": "^7.8.4",
+    "@babel/runtime-corejs3": "^7.8.4",
     "babel-preset-env": "^1.7.0",
-    "cross-env": "^6.0.3",
-    "cssnano": "^4.1.10",
-    "dotenv": "^8.2.0",
+    "cross-env": "^7.0.0",
     "eslint": "^6.8.0",
-    "flip-toolkit": "^7.0.7",
-    "gh-pages": "^2.2.0",
-    "isomorphic-fetch": "^2.2.1",
-    "jsdoc": "^3.6.3",
-    "node-fetch": "^2.6.0"
+    "jsdoc": "^3.6.3"
   },
-  "author": "Logan Powell",
-  "license": "MIT",
   "prettier": {
     "endOfLine": "lf",
     "printWidth": 80,

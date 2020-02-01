@@ -1,10 +1,11 @@
 import { isObject } from "@thi.ng/checks"
-import { fURL, msTaskDelay } from "../utils"
+import { fURL } from "../utils"
 import {
   __HREF_PUSHSTATE_DOM,
   __NOTIFY_PRERENDER_DOM,
   __SET_LINK_ATTRS_DOM,
-  __SET_STATE
+  __SET_STATE,
+  msTaskDelay
 } from "../commands"
 import {
   PAGE_TEMPLATE,
@@ -26,8 +27,6 @@ import {
   STATE,
   PATH
 } from "../store"
-// import { log$ } from "../streams"
-// import scrolly from "@mapbox/scroll-restorer"
 
 /**
  *
@@ -79,7 +78,7 @@ export const __URL__ROUTE = CFG => {
     __post = []
     __prefix = null
   }
-  return ({ URL }) => [
+  return acc => [
     ...__pre, // 📌 enable progress observation
     /**
      * ## `_SET_ROUTER_LOADING_STATE`cod
@@ -98,15 +97,17 @@ export const __URL__ROUTE = CFG => {
      *
      */
     {
-      [args]: __prefix ? __router(URL.replace(__prefix, "")) : __router(URL),
-      [reso]: (acc, res) => ({
-        [URL_page]: res[URL_page],
-        [URL_data]: res[URL_data]
+      [args]: __prefix
+        ? __router(acc[URL].replace(__prefix, ""))
+        : __router(acc[URL]),
+      [reso]: (_acc, _res) => ({
+        [URL_page]: _res[URL_page],
+        [URL_data]: _res[URL_data]
       }),
-      [erro]: (acc, err) =>
-        console.warn("Error in __URL__ROUTE:", err, "constructed:", acc)
+      [erro]: (_acc, _err) =>
+        console.warn("Error in __URL__ROUTE:", _err, "constructed:", _acc)
     },
-    { [args]: __prefix ? fURL(URL, __prefix) : fURL(URL) },
+    { [args]: __prefix ? fURL(acc[URL], __prefix) : fURL(acc[URL]) },
     /**
      * ## `_SET_ROUTER_PATH`
      *
@@ -127,8 +128,8 @@ export const __URL__ROUTE = CFG => {
      */
     {
       ...__SET_STATE,
-      args: acc => ({
-        [STATE]: acc[URL_path],
+      args: _acc => ({
+        [STATE]: _acc[URL_path],
         [PATH]: [ROUTE_PATH]
       })
     },
@@ -183,7 +184,7 @@ export const __URL_DOM__ROUTE = CFG => {
     },
     { ...__HREF_PUSHSTATE_DOM, args: { [URL]: acc[URL], [DOM]: acc[DOM] } },
     // example Subtask injection
-    acc => match({ [URL]: acc[URL] }),
+    _acc => match({ [URL]: _acc[URL] }),
     // { args: msTaskDelay(2000) },
     /**
      * takes the result from two sources: the user-provided
@@ -198,16 +199,16 @@ export const __URL_DOM__ROUTE = CFG => {
      */
     {
       ...__SET_STATE,
-      args: acc => ({
+      args: _acc => ({
         [PATH]: [PAGE_TEMPLATE],
-        [STATE]: acc[URL_page]
+        [STATE]: _acc[URL_page]
       })
     },
     {
       ...__SET_STATE,
-      args: acc => ({
-        [PATH]: acc[URL_path],
-        [STATE]: acc[URL_data][BODY] || acc[URL_data]
+      args: _acc => ({
+        [PATH]: _acc[URL_path],
+        [STATE]: _acc[URL_data][BODY] || _acc[URL_data]
       })
     },
     // wait on pending promise(s) w/a non-nullary fn (+)=>
