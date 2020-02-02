@@ -1,5 +1,5 @@
 {
-  "name": "reduce.ac",
+  "name": "mplex",
   "author": "Logan Powell",
   "license": "MIT",
   "version": "0.1.8",
@@ -8,7 +8,7 @@
   "repository": "https://github.com/loganpowell/ac",
   "homepage": "https://github.com/loganpowell/ac",
   "scripts": {
-    "build": "parcel build src/index.js --no-source-maps --no-cache",
+    "build": "parcel build src/index.js --no-source-maps --no-cache --no-minify",
     "docs": "jsdoc --configure jsdoc.json --verbose",
     "pages": "gh-pages -d docs"
   },
