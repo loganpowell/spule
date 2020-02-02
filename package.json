@@ -2,7 +2,7 @@
   "name": "mplex",
   "author": "Logan Powell",
   "license": "MIT",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "AC is a framework for leveraging `@thi.ng/umbrella` for web apps",
   "main": "dist/index.js",
   "repository": "https://github.com/loganpowell/ac",
