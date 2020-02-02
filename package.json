@@ -2,7 +2,7 @@
   "name": "mplex",
   "author": "Logan Powell",
   "license": "MIT",
-  "version": "0.1.19",
+  "version": "0.1.20",
   "description": "a state management library for single page applications",
   "main": "src/index.js",
   "repository": "https://github.com/loganpowell/mplex",
