@@ -1,7 +1,5 @@
 import { trace } from "@thi.ng/rstream"
 
-let fix_jsdoc
-
 /**
  * ## `trace_stream`
  *

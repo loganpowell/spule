@@ -1,7 +1,5 @@
 import { isObject, isFunction, isPromise } from "@thi.ng/checks"
 
-let fix_jsdoc
-
 // prettier-ignore
 /**
  * ### `stringify_type`

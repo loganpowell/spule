@@ -9,8 +9,6 @@ import {
   URL_path
 } from "../store"
 
-let fix_jsdoc
-
 /**
  * # HREF/URL Parser
  *

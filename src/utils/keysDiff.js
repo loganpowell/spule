@@ -1,4 +1,4 @@
-export const keys_diff = (known_keys = [], known_obj = {}) => {
+export const diffKeys = (known_keys = [], known_obj = {}) => {
   let all = Object.keys(known_obj)
   let uknown_keys = all.filter(key => !known_keys.includes(key))
   let uknown_obj = Object.entries(known_obj).reduce((a, [k, v]) => {
