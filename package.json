@@ -2,13 +2,13 @@
   "name": "mplex",
   "author": "Logan Powell",
   "license": "MIT",
-  "version": "0.1.9",
+  "version": "0.1.8",
   "description": "AC is a framework for leveraging `@thi.ng/umbrella` for web apps",
   "main": "dist/index.js",
   "repository": "https://github.com/loganpowell/ac",
   "homepage": "https://github.com/loganpowell/ac",
   "scripts": {
-    "build": "parcel build src/index.js --no-source-maps --no-cache --no-minify",
+    "build": "parcel build src/index.js --no-source-maps --no-cache",
     "docs": "jsdoc --configure jsdoc.json --verbose",
     "pages": "gh-pages -d docs"
   },
