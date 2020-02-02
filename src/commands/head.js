@@ -1,7 +1,7 @@
 import { registerCMD } from "../register"
 import { URL_data, sub$, args, handler, HEAD } from "../store"
 
-export const setFavicon = href => {
+const setFavicon = href => {
   let link =
     document.querySelector("link[rel*='icon']") ||
     document.createElement("link")
@@ -11,7 +11,7 @@ export const setFavicon = href => {
   document.getElementsByTagName("head")[0].appendChild(link)
 }
 
-export const replaceMeta = (obj = defalt_cfg) => {
+const replaceMeta = (obj = defalt_cfg) => {
   Object.entries(obj).forEach(([key, val]) => {
     try {
       return {
@@ -47,7 +47,7 @@ const defalt_cfg = {
   favicon: "https://github.com/loganpowell/ac/raw/master/assets/favicon.ico"
 }
 
-export const HEAD_CMD = ({
+const HEAD_CMD = ({
   title = defalt_cfg.meta.title,
   description = defalt_cfg.meta["og:description"],
   image: {

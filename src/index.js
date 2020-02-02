@@ -1,9 +1,57 @@
-import * as commands from "./commands"
-import * as tasks from "./tasks"
-import * as utils from "./utils"
-import * as register from "./register"
-import * as streams from "./streams"
-import * as components from "./components"
-import * as store from "./store"
+// prettier-ignore
+import {
+  HURL,
+  INJECT_HEAD,
+  F_LIP_,
+  _F_LIP,
+  SET_STATE,
+  // msTaskDelay
+} from "./commands"
+// import { __URL_DOM__ROUTE, __URL_ROUTE } from "./tasks"
+// prettier-ignore
+import { 
+  fURL, 
+  // unfURL 
+} from "./utils"
+// prettier-ignore
+import {
+  // registerRouter,
+  // registerRouterDOM,
+  registerCMD,
+  boot
+} from "./register"
+// prettier-ignore
+import {
+  // DOMContentLoaded$,
+  // DOMnavigated$,
+  // command$,
+  // log$,
+  // out$,
+  // popstate$,
+  // task$,
+  run$
+} from "./streams"
+// prettier-ignore
+import { 
+  FLIPkid 
+} from "./components"
+// prettier-ignore
+import { 
+  $store$, 
+  set$State 
+} from "./store"
 
-export { commands, tasks, utils, register, streams, components, store }
+export default {
+  HURL,
+  INJECT_HEAD,
+  _F_LIP,
+  F_LIP_,
+  SET_STATE,
+  fURL,
+  registerCMD,
+  boot,
+  run$,
+  $store$,
+  set$State,
+  FLIPkid
+}

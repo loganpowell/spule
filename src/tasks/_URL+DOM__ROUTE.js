@@ -4,8 +4,8 @@ import {
   __HREF_PUSHSTATE_DOM,
   __NOTIFY_PRERENDER_DOM,
   __SET_LINK_ATTRS_DOM,
-  __SET_STATE,
-  msTaskDelay
+  SET_STATE
+  // msTaskDelay
 } from "../commands"
 import {
   PAGE_TEMPLATE,
@@ -127,7 +127,7 @@ export const __URL__ROUTE = CFG => {
      *
      */
     {
-      ...__SET_STATE,
+      ...SET_STATE,
       args: _acc => ({
         [STATE]: _acc[URL_path],
         [PATH]: [ROUTE_PATH]
@@ -176,7 +176,7 @@ export const __URL_DOM__ROUTE = CFG => {
 
   return acc => [
     {
-      ...__SET_STATE,
+      ...SET_STATE,
       args: {
         [PATH]: [ROUTE_LOADING],
         [STATE]: true
@@ -198,14 +198,14 @@ export const __URL_DOM__ROUTE = CFG => {
      *
      */
     {
-      ...__SET_STATE,
+      ...SET_STATE,
       args: _acc => ({
         [PATH]: [PAGE_TEMPLATE],
         [STATE]: _acc[URL_page]
       })
     },
     {
-      ...__SET_STATE,
+      ...SET_STATE,
       args: _acc => ({
         [PATH]: _acc[URL_path],
         [STATE]: _acc[URL_data][BODY] || _acc[URL_data]
@@ -218,7 +218,7 @@ export const __URL_DOM__ROUTE = CFG => {
     // { sub$: log$, args: () => ({ DOM }) },
     __SET_LINK_ATTRS_DOM,
     {
-      ...__SET_STATE,
+      ...SET_STATE,
       args: _ => ({
         [PATH]: [ROUTE_LOADING],
         [STATE]: false

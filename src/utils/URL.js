@@ -157,7 +157,7 @@ export const fURL = (_URL, prefixRGX) => {
  * TODO: testing for `unparse_URL`
  *
  */
-export const unFURL = (parsed, isAbsolute = false) => {
+export const unfURL = (parsed, isAbsolute = false) => {
   // console.log("unparsing...")
 
   const {

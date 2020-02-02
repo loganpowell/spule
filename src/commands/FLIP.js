@@ -14,7 +14,7 @@ import { sub$, args, handler } from "../store"
 //
 // add before/after transition hooks for support animations
 
-export function getRect(element, frame) {
+function getRect(element, frame) {
   const {
     top,
     bottom,
@@ -41,7 +41,7 @@ const shuffle_paths = uid => ({
   elems: ["_FLIP_shuffle", "elems", uid]
 })
 
-export const FLIP_all = (el, state, uid, frameDOMel = null) => {
+const FLIP_all = (el, state, uid, frameDOMel = null) => {
   let { rects } = shuffle_paths(uid)
 
   if (!getIn(state.deref(), rects))
@@ -93,7 +93,7 @@ const zoom_paths = uid => ({
  *  - if first === last, no change (on nav e.g.)
  *  - if first !== last, nav change (store rect for id)
  */
-export const FLIP_first = ({ state, id, target }) => {
+const FLIP_first = ({ state, id, target }) => {
   // 📌 TODO: GOOD PLACE FOR AN `onStart` hook animation/callback
 
   let { rects, clicks, scrolls } = zoom_paths(id)
@@ -120,7 +120,7 @@ const zIndex = (el, idx) => (el.style.zIndex = idx)
  * 2. if a back/nav (no frame) event was what triggered
  *    the init do the calcs with no frame
  */
-export const FLIP_last_invert_play = ({
+const FLIP_last_invert_play = ({
   element,
   state,
   id,

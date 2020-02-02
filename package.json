@@ -8,7 +8,7 @@
   "repository": "https://github.com/loganpowell/ac",
   "homepage": "https://github.com/loganpowell/ac",
   "scripts": {
-    "build": "parcel build src/index.js --no-source-maps --no-cache --experimental-scope-hoisting",
+    "build": "parcel build src/index.js --no-source-maps --no-cache",
     "docs": "jsdoc --configure jsdoc.json --verbose",
     "pages": "gh-pages -d docs"
   },
