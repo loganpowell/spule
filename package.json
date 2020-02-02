@@ -3,10 +3,10 @@
   "author": "Logan Powell",
   "license": "MIT",
   "version": "0.1.19",
-  "description": "AC is a framework for leveraging `@thi.ng/umbrella` for web apps",
+  "description": "a state management library for single page applications",
   "main": "src/index.js",
-  "repository": "https://github.com/loganpowell/ac",
-  "homepage": "https://github.com/loganpowell/ac",
+  "repository": "https://github.com/loganpowell/mplex",
+  "homepage": "https://github.com/loganpowell/mplex",
   "scripts": {
     "clean": "rm -rf .cache build dist",
     "build": "npm run clean && cross-env NODE_ENV=production parcel build src/index.js --no-source-maps --no-cache --public-url ./",
