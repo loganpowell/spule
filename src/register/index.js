@@ -34,7 +34,7 @@ import {
   trace
 } from "../store"
 import { __URL_DOM__ROUTE, __URL__ROUTE } from "../tasks"
-import { x_key_ERR, fURL, stringify_w_functions, keys_diff } from "../utils"
+import { x_key_ERR, fURL, stringify_w_functions, diffKeys } from "../utils"
 
 const err_str = "registerCMD"
 
@@ -168,7 +168,7 @@ export function registerCMD(command) {
   let _handler = command[handler]
 
   let knowns = [sub$, args, reso, erro, source$, handler]
-  let [unknowns] = keys_diff(knowns, command)
+  let [unknowns] = diffKeys(knowns, command)
   // console.log({ knowns, all, unknowns })
 
   /**
@@ -305,7 +305,7 @@ export const boot = async CFG => {
   const _trace = CFG[trace]
 
   const knowns = [root, app, draft, router, trace]
-  const [, others] = keys_diff(knowns, CFG)
+  const [, others] = diffKeys(knowns, CFG)
 
   const escRGX = /[-/\\^$*+?.()|[\]{}]/g
   const escaped = string => string.replace(escRGX, "\\$&")
