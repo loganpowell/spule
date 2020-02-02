@@ -1,6 +1,6 @@
 import { Atom } from "@thi.ng/atom"
 import { getIn } from "@thi.ng/paths"
-import { registerCMD } from "../register"
+import { registerCMD } from "../register/primaries"
 import { sub$, args, handler } from "../store"
 
 //
@@ -93,7 +93,7 @@ const zoom_paths = uid => ({
  *  - if first === last, no change (on nav e.g.)
  *  - if first !== last, nav change (store rect for id)
  */
-const FLIP_first = ({ state, id, target }) => {
+const FLIPFirst = ({ state, id, target }) => {
   // 📌 TODO: GOOD PLACE FOR AN `onStart` hook animation/callback
 
   let { rects, clicks, scrolls } = zoom_paths(id)
@@ -120,7 +120,7 @@ const zIndex = (el, idx) => (el.style.zIndex = idx)
  * 2. if a back/nav (no frame) event was what triggered
  *    the init do the calcs with no frame
  */
-const FLIP_last_invert_play = ({
+const FLIPLastInvertPlay = ({
   element,
   state,
   id,
@@ -213,14 +213,14 @@ const FLIP_last_invert_play = ({
 
 const state = new Atom({})
 
-export const _F_LIP = registerCMD({
-  [sub$]: "_F_LIP",
+export const FLIP_FIRST = registerCMD({
+  [sub$]: "FLIP_FIRST",
   [args]: x => x,
-  [handler]: ({ id, target }) => FLIP_first({ id, target, state })
+  [handler]: ({ id, target }) => FLIPFirst({ id, target, state })
 })
 
-export const F_LIP_ = registerCMD({
-  [sub$]: "F_LIP_",
+export const FLIP_LAST_INVERSE_PLAY = registerCMD({
+  [sub$]: "FLIP_LAST_INVERSE_PLAY",
   [args]: x => x,
-  [handler]: ({ id, element }) => FLIP_last_invert_play({ id, element, state })
+  [handler]: ({ id, element }) => FLIPLastInvertPlay({ id, element, state })
 })

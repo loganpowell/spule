@@ -1,3 +1,5 @@
+/** @format */
+
 import { isObject } from "@thi.ng/checks"
 import { fURL } from "../utils"
 import {

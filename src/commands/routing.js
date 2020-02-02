@@ -1,3 +1,5 @@
+/** @format */
+
 import { registerCMD } from "../register"
 import { fURL } from "../utils"
 import { DOMnavigated$ } from "../streams"

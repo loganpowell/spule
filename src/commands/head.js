@@ -1,3 +1,5 @@
+/** @format */
+
 import { registerCMD } from "../register"
 import { URL_data, sub$, args, handler, HEAD } from "../store"
 

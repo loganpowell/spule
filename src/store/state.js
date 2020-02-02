@@ -1,0 +1,26 @@
+/** @format */
+
+import { Atom } from "@thi.ng/atom"
+import { isPlainObject } from "@thi.ng/checks"
+import { DEFAULT_CFG } from "./constants.js"
+
+// Global $store$ Container from [@thi.ng/atom](http://thi.ng/atom)
+export let $store$ = new Atom(DEFAULT_CFG)
+
+/**
+ *
+ *  Swaps the current value at the given path/lens into the
+ *  global store with that of the given value. Checks to see
+ *  if that value should be either spread into an existing
+ *  object or a complete replacement
+ *
+ */
+export const set$$tate = (path, val) =>
+  $store$.swapIn(path, x =>
+    !path.length && !isPlainObject(val)
+      ? { ...x, [Object.keys(val)[0]]: val }
+      : isPlainObject(x) && isPlainObject(val)
+      ? { ...x, ...val }
+      : val
+  )
+// $store$.resetIn(path, val)

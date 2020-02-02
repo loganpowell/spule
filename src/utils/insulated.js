@@ -1,3 +1,5 @@
+/** @format */
+
 import { DEFAULT_IMPL, normalizeTree, replaceChild } from "@thi.ng/hdom"
 // import { memoize1 } from "@thi.ng/memoize"
 
