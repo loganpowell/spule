@@ -5,7 +5,7 @@ export {
 
 export { 
   stringify_type 
-} from "./strinigify_type.js/index.js"
+} from "./strinigify_type.js"
 
 export { 
   trace$ 
@@ -19,4 +19,4 @@ export {
 
 export { 
   diff_keys 
-} from "./diff_keys.js/index.js"
+} from "./diff_keys.js"
