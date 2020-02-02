@@ -1,7 +1,7 @@
 /** @format */
 
 import { registerCMD } from "../register"
-import { URL_data, sub$, args, handler, HEAD } from "../store"
+import { URL_data_, sub$_, args_, handler_, HEAD_ } from "../store"
 
 const setFavicon = href => {
   let link =
@@ -49,7 +49,7 @@ const defalt_cfg = {
   favicon: "https://github.com/loganpowell/ac/raw/master/assets/favicon.ico"
 }
 
-const HEAD_CMD = ({
+const conform_head = ({
   title = defalt_cfg.meta.title,
   description = defalt_cfg.meta["og:description"],
   image: {
@@ -80,11 +80,11 @@ const HEAD_CMD = ({
 
 export const INJECT_HEAD = registerCMD({
   // source$: DOMnavigated$,
-  [sub$]: "INJECT_HEAD",
-  [args]: acc => ({ [URL_data]: acc[URL_data] }),
-  [handler]: ({
-    [URL_data]: {
-      [HEAD]: { title, description, image, favicon, type }
+  [sub$_]: "INJECT_HEAD",
+  [args_]: acc => ({ [URL_data_]: acc[URL_data_] }),
+  [handler_]: ({
+    [URL_data_]: {
+      [HEAD_]: { title, description, image, favicon, type }
     }
-  }) => replaceMeta(HEAD_CMD({ title, description, image, favicon, type }))
+  }) => replaceMeta(conform_head({ title, description, image, favicon, type }))
 })

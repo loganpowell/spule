@@ -5,8 +5,8 @@
 
 import { fromDOMEvent, merge, pubsub, stream, trace } from "@thi.ng/rstream"
 import { map } from "@thi.ng/transducers"
-import { spool } from "../spool"
-import { URL, DOM } from "../store"
+import { spule } from "../spule"
+import { URL_, DOM_ } from "../store"
 
 export const log$ = stream().subscribe(trace("log$ -> "), { id: "log$" })
 /**
@@ -121,7 +121,7 @@ export const command$ = run$.subscribeTopic(
 export const task$ = run$.subscribeTopic(
   false,
   {
-    next: spool,
+    next: spule,
     error: console.warn
   },
   { id: "task$_stream" }
@@ -156,5 +156,5 @@ export const DOMContentLoaded$ = fromDOMEvent(window, "DOMContentLoaded")
 export const DOMnavigated$ = merge({
   src: [popstate$, DOMContentLoaded$]
 }).transform(
-  map(x => ({ [URL]: x.target.location.href, [DOM]: x.currentTarget }))
+  map(x => ({ [URL_]: x.target.location.href, [DOM_]: x.currentTarget }))
 )

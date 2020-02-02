@@ -14,26 +14,26 @@ import { getIn } from "@thi.ng/paths"
 import { command$, out$, run$, DOMnavigated$ } from "../streams"
 import {
   $store$,
-  ROUTE_LOADING,
-  ROUTE_PATH,
-  ROOT,
-  PAGE_TEMPLATE,
-  DOM,
-  URL,
-  sub$,
-  args,
-  reso,
-  erro,
-  prefix,
-  source$,
-  handler,
-  run,
-  state,
-  root,
-  app,
-  router,
-  draft,
-  trace
+  ROUTE_LOADING_,
+  ROUTE_PATH_,
+  ROOT_,
+  PAGE_TEMPLATE_,
+  DOM_,
+  URL_,
+  sub$_,
+  args_,
+  reso_,
+  erro_,
+  prefix_,
+  source$_,
+  handler_,
+  run_,
+  state_,
+  root_,
+  app_,
+  router_,
+  draft_,
+  trace_
 } from "../store"
 import { __URL_DOM__ROUTE, __URL__ROUTE } from "../tasks"
 import { x_key_ERR, fURL, stringify_w_functions, diff_keys } from "../utils"
@@ -41,17 +41,17 @@ import { x_key_ERR, fURL, stringify_w_functions, diff_keys } from "../utils"
 const err_str = "registerCMD"
 
 const feedCMD$fromSource$ = cmd => {
-  let _sub$ = cmd[sub$]
-  let _args = cmd[args]
+  let _sub$ = cmd[sub$_]
+  let _args = cmd[args_]
   let args_is_fn = isFunction(_args)
-  let deliver = x => ({ [sub$]: _sub$, [args]: _args(x) })
-  let delivery = { [sub$]: _sub$, [args]: _args }
+  let deliver = x => ({ [sub$_]: _sub$, [args_]: _args(x) })
+  let delivery = { [sub$_]: _sub$, [args_]: _args }
 
   let feed = $ =>
     args_is_fn ? map(x => $.next(deliver(x))) : map(() => $.next(delivery))
 
   // looks for the `sub$` key to determine if its a command
-  return cmd[source$].subscribe(feed(command$))
+  return cmd[source$_].subscribe(feed(command$))
 }
 
 // const feedCMD$fromSource$ = ({ sub$, args, source$ }) => {
@@ -162,14 +162,14 @@ let registered = new EquivMap()
 export function registerCMD(command) {
   // 📌 TODO: register factory function
 
-  let _sub$ = command[sub$]
-  let _args = command[args]
-  let _erro = command[erro]
-  let _reso = command[reso]
-  let _source$ = command[source$]
-  let _handler = command[handler]
+  let _sub$ = command[sub$_]
+  let _args = command[args_]
+  let _erro = command[erro_]
+  let _reso = command[reso_]
+  let _source$ = command[source$_]
+  let _handler = command[handler_]
 
-  let knowns = [sub$, args, reso, erro, source$, handler]
+  let knowns = [sub$_, args_, reso_, erro_, source$_, handler_]
   let [unknowns] = diff_keys(knowns, command)
   console.log({ knowns, unknowns })
 
@@ -187,11 +187,11 @@ export function registerCMD(command) {
   out$.subscribeTopic(
     _sub$,
     { next: _handler, error: console.warn },
-    map(emissions => emissions[args])
+    map(emissions => emissions[args_])
   )
   let CMD = _reso
-    ? { [sub$]: _sub$, [args]: _args, [reso]: _reso, [erro]: _erro }
-    : { [sub$]: _sub$, [args]: _args }
+    ? { [sub$_]: _sub$, [args_]: _args, [reso_]: _reso, [erro_]: _erro }
+    : { [sub$_]: _sub$, [args_]: _args }
   // Set.add not supported by IE
   if (registered.set) {
     if (registered.has(_sub$)) {
@@ -248,11 +248,11 @@ export const registerRouterDOM = router => {
 
   const taskFrom = __URL_DOM__ROUTE(router)
   return registerCMD({
-    [source$]: DOMnavigated$,
-    [sub$]: "_URL_NAVIGATED$_DOM",
-    [args]: x => x,
-    [handler]: args =>
-      run$.next(taskFrom({ [URL]: args[URL], [DOM]: args[DOM] }))
+    [source$_]: DOMnavigated$,
+    [sub$_]: "_URL_NAVIGATED$_DOM",
+    [args_]: x => x,
+    [handler_]: args =>
+      run$.next(taskFrom({ [URL_]: args[URL_], [DOM_]: args[DOM_] }))
   })
 }
 
@@ -261,18 +261,18 @@ export const registerRouter = router => {
 
   const taskFrom = __URL__ROUTE(router)
   return registerCMD({
-    [sub$]: "_URL_NAVIGATED$",
+    [sub$_]: "_URL_NAVIGATED$",
     // 📌 TODO: add source for API access/server source$
-    [source$]: DOMnavigated$,
-    [args]: x => x,
-    [handler]: args =>
-      run$.next(taskFrom({ [URL]: args[URL], [DOM]: args[DOM] }))
+    [source$_]: DOMnavigated$,
+    [args_]: x => x,
+    [handler_]: args =>
+      run$.next(taskFrom({ [URL_]: args[URL_], [DOM_]: args[DOM_] }))
   })
 }
 
 const pre = (ctx, body) => (
   console.log(
-    `no \`app\` component provided to \`${boot.name}({${app}})\`. Rendering state by route path`
+    `no \`app\` component provided to \`${boot.name}({${app_}})\`. Rendering state by route path`
   ),
   ["pre", JSON.stringify(body[1], null, 2)]
 )
@@ -300,19 +300,19 @@ const pre = (ctx, body) => (
 export const boot = async CFG => {
   // console.log({ URL_page })
 
-  const _root = CFG[root] || document.body
-  const _app = CFG[app] || pre
-  const _draft = CFG[draft]
-  const _router = CFG[router]
-  const _trace = CFG[trace]
+  const _root = CFG[root_] || document.body
+  const _app = CFG[app_] || pre
+  const _draft = CFG[draft_]
+  const _router = CFG[router_]
+  const _trace = CFG[trace_]
 
-  const knowns = [root, app, draft, router, trace]
+  const knowns = [root_, app_, draft_, router_, trace_]
   const [, others] = diff_keys(knowns, CFG)
 
   const escRGX = /[-/\\^$*+?.()|[\]{}]/g
   const escaped = string => string.replace(escRGX, "\\$&")
 
-  const _prefix = _router[prefix] || null
+  const _prefix = _router[prefix_] || null
   const RGX = _prefix ? new RegExp(escaped(_prefix || ""), "g") : null
 
   if (_router) registerRouterDOM(_router)
@@ -321,14 +321,14 @@ export const boot = async CFG => {
 
   const shell = state$ => (
     _trace ? console.log(_trace, state$) : null,
-    state$[ROUTE_LOADING]
+    state$[ROUTE_LOADING_]
       ? null
-      : [_app, [state$[PAGE_TEMPLATE], getIn(state$, state$[ROUTE_PATH])]]
+      : [_app, [state$[PAGE_TEMPLATE_], getIn(state$, state$[ROUTE_PATH_])]]
   )
 
   if (_draft) $store$.swap(x => ({ ..._draft, ...x }))
 
-  $store$.resetIn(ROOT, _root)
+  $store$.resetIn(ROOT_, _root)
 
   state$.subscribe(sidechainPartition(fromRAF())).transform(
     map(peek),
@@ -337,8 +337,8 @@ export const boot = async CFG => {
       root: _root,
       span: false,
       ctx: {
-        [run]: x => run$.next(x),
-        [state]: $store$,
+        [run_]: x => run$.next(x),
+        [state_]: $store$,
         // remove any staging path components (e.g., gh-pages)
         [fURL.name]: () =>
           // console.log({ fURL }),

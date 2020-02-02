@@ -1,12 +1,12 @@
 import qs from "querystring"
 // import gql from "nanographql"
 import {
-  URL,
-  URL_subdomain,
-  URL_domain,
-  URL_query,
-  URL_hash,
-  URL_path
+  URL_,
+  URL_subdomain_,
+  URL_domain_,
+  URL_query_,
+  URL_hash_,
+  URL_path_
 } from "../store"
 
 /**
@@ -98,9 +98,9 @@ import {
  * */
 export const fURL = (_URL, prefixRGX) => {
   // console.log("parsing...")
-  let _URL_subdomain = []
-  let _URL_domain = []
-  let _URL_path = []
+  let URL_subdomain = []
+  let URL_domain = []
+  let URL_path = []
   let splitRGX = /(?=\?)|(?=#)/g
   // split the path on any `?` and/or `#` chars (1-3 parts)
   const parts = prefixRGX
@@ -114,33 +114,33 @@ export const fURL = (_URL, prefixRGX) => {
   if (/http/i.test(_URL)) {
     // if the input URL is HTTP(S), partition into sub components
     // domain is the last two members of the 2nd component
-    _URL_domain = full_path[1].split(".").slice(-2)
+    URL_domain = full_path[1].split(".").slice(-2)
     // subdomain is anything before the domain
     // see https://stackoverflow.com/a/56921347
     // for mocking subdomain on localhost
-    _URL_subdomain = full_path[1].split(".").slice(0, -2)
+    URL_subdomain = full_path[1].split(".").slice(0, -2)
     // path is the last component in the
-    _URL_path = full_path.slice(2)
+    URL_path = full_path.slice(2)
   } else {
     // in the case of a relative URL `<a href="/about">
     // the relative path is the full path
-    _URL_path = full_path
+    URL_path = full_path
   }
   // pull out the query component as a string
   const query_str = parts.filter(part => part.slice(0, 1) === "?")[0] || ""
   // pull out the hash component as a string
   const hash_str = parts.filter(part => part.slice(0, 1) === "#")[0] || ""
   // parse the query string into conventional parts using qs
-  const _URL_query = qs.parse(query_str.slice(1))
+  const URL_query = qs.parse(query_str.slice(1))
   // remove the actual `#` hash character from the string
-  const _URL_hash = hash_str.slice(1)
+  const URL_hash = hash_str.slice(1)
   return {
-    [URL]: _URL,
-    [URL_subdomain]: _URL_subdomain,
-    [URL_domain]: _URL_domain,
-    [URL_path]: _URL_path,
-    [URL_query]: _URL_query,
-    [URL_hash]: _URL_hash
+    [URL_]: _URL,
+    [URL_subdomain_]: URL_subdomain,
+    [URL_domain_]: URL_domain,
+    [URL_path_]: URL_path,
+    [URL_query_]: URL_query,
+    [URL_hash_]: URL_hash
   }
 }
 
@@ -159,40 +159,40 @@ export const unfURL = (parsed, isAbsolute = false) => {
   // console.log("unparsing...")
 
   const {
-    [URL_subdomain]: _URL_subdomain,
-    [URL_domain]: _URL_domain,
-    [URL_path]: _URL_path,
-    [URL_query]: _URL_query,
-    [URL_hash]: _URL_hash
-  } = fURL(parsed[URL] || window.location.href)
+    [URL_subdomain_]: URL_subdomain,
+    [URL_domain_]: URL_domain,
+    [URL_path_]: URL_path,
+    [URL_query_]: URL_query,
+    [URL_hash_]: URL_hash
+  } = fURL(parsed[URL_] || window.location.href)
 
   let {
-    __URL_subdomain = _URL_subdomain,
-    __URL_domain = _URL_domain,
-    __URL_path = _URL_path,
-    __URL_query = _URL_query,
-    __URL_hash = _URL_hash
+    _URL_subdomain = URL_subdomain,
+    _URL_domain = URL_domain,
+    _URL_path = URL_path,
+    _URL_query = URL_query,
+    _URL_hash = URL_hash
   } = parsed
 
-  let [protocol, rest] = URL.split("//")
+  let [protocol, rest] = URL_.split("//")
   let [root] = rest.split("/")
   let [part_one, ...other_parts] = root.split(".")
   // console.log({ part_one, other_parts })
 
   let domain =
-    __URL_subdomain && __URL_domain
-      ? [...__URL_subdomain, ...__URL_domain]
-      : __URL_subdomain && other_parts.length > 1
-      ? [...__URL_subdomain, ...other_parts]
-      : __URL_subdomain && other_parts.length === 1
-      ? [...__URL_subdomain, part_one, ...other_parts]
-      : [...__URL_subdomain, part_one]
+    _URL_subdomain && _URL_domain
+      ? [..._URL_subdomain, ..._URL_domain]
+      : _URL_subdomain && other_parts.length > 1
+      ? [..._URL_subdomain, ...other_parts]
+      : _URL_subdomain && other_parts.length === 1
+      ? [..._URL_subdomain, part_one, ...other_parts]
+      : [..._URL_subdomain, part_one]
 
-  const query_string = qs.encode(__URL_query)
+  const query_string = qs.encode(_URL_query)
 
   const rootRelative = `${
-    __URL_path.length > 0 ? "/" + __URL_path.join("/") : ""
-  }${__URL_hash ? "#" + __URL_hash : null}?${query_string}`
+    _URL_path.length > 0 ? "/" + _URL_path.join("/") : ""
+  }${_URL_hash ? "#" + _URL_hash : null}?${query_string}`
 
   // console.log({ domain })
   // console.log({ protocol, rest, root, domain, URL_domain })

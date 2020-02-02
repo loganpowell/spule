@@ -1,7 +1,7 @@
 /** @format */
 
 import { FLIP_FIRST, FLIP_LAST_INVERSE_PLAY, HURL } from "../commands"
-import { run, args } from "../store"
+import { run_, args_ } from "../store"
 
 /**
  * There're only 3 lifecycle hooks. render is called for
@@ -55,9 +55,9 @@ export const FLIPkid = Object.freeze({
           const href = target.getAttribute("href")
           // console.log({ target, href })
           if (!href) return new Error(err_str("href"))
-          ctx[run]([
-            { ...HURL, [args]: sim_event(href) },
-            { ...FLIP_FIRST, [args]: { id: href, target } }
+          ctx[run_]([
+            { ...HURL, [args_]: sim_event(href) },
+            { ...FLIP_FIRST, [args_]: { id: href, target } }
           ])
         }
       },
@@ -70,9 +70,9 @@ export const FLIPkid = Object.freeze({
     //   id: el.firstChild.getAttribute("href")
     // }),
     console.log("FLIPkid_init")
-    ctx[run]({
+    ctx[run_]({
       ...FLIP_LAST_INVERSE_PLAY,
-      [args]: {
+      [args_]: {
         element: el.firstChild,
         id: el.firstChild.getAttribute("href")
       }

@@ -4,11 +4,11 @@
 import { isFunction, isPromise } from "@thi.ng/checks"
 import { stringify_type, x_key_ERR, key_index_err, diff_keys } from "../utils"
 import { command$ } from "../streams"
-import { sub$, args, reso, erro, source$, handler } from "../store"
+import { sub$_, args_, reso_, erro_, source$_, handler_ } from "../store"
 
-let err_str = "Spool Interupted" // <- add doc link to error strings
+const err_str = "Spool Interupted" // <- add doc link to error strings
 
-let no_sub$_err = (c, i) =>
+const nosub$_err = (c, i) =>
   console.warn(`
   🔥 No sub$ included for a Command with a primitive for 'args'. 
   🔥 Ergo, nothing was done with this Command: 
@@ -66,7 +66,7 @@ let no_sub$_err = (c, i) =>
  *   Task:
  * - non-function `args` (primitives, objects) send the args
  *   as-is to the Command handler
- * - nullary fns (`(0)=>` ) send the _args_ as a Command to
+ * - nullary fns (`(0)=>` ) send the args_ as a Command to
  *   a `sub$` _stream_ of your choosing (ADVANCED: see
  *   Ad-hoc Stream Injection below)
  * - unary fns (`(1)=>`) are passed the inter-Task
@@ -182,64 +182,65 @@ let no_sub$_err = (c, i) =>
  * ```
  *
  **/
-export const spool = task_array =>
+export const spule = task_array =>
   task_array.reduce(async (a, c, i) => {
     const acc = await a
     // console.log("ACCUMULATOR =>", acc)
     if (isFunction(c)) {
       try {
-        let recur = c(acc)
+        const recur = c(acc)
         // this ensures the accumulator is preserved between
         // stacks
-        recur.unshift({ [args]: acc })
-        return spool(recur)
+        recur.unshift({ [args_]: acc })
+        return spule(recur)
       } catch (e) {
         console.warn(err_str, e)
         return
       }
     }
-    let _sub$ = c[sub$]
-    let _args = c[args]
-    let _erro = c[erro]
-    let _reso = c[reso]
-    // let _source$ = c[source$]
-    // let _handler = c[handler]
-    let knowns = [sub$, args, reso, erro, source$, handler]
-    let [unknowns] = diff_keys(knowns, c)
+    const sub$ = c[sub$_]
+    const args = c[args_]
+    const erro = c[erro_]
+    const reso = c[reso_]
+    // const _source$ = c[source$]
+    // const _handler = c[handler]
+    const knowns = [sub$_, args_, reso_, erro_, source$_, handler_]
+    const [unknowns] = diff_keys(knowns, c)
 
     if (unknowns.length > 0)
-      throw new Error(x_key_ERR(err_str, c, unknowns, _sub$, i))
-    let arg_type = stringify_type(_args)
-    let result = _args
+      throw new Error(x_key_ERR(err_str, c, unknowns, sub$, i))
+    const arg_type = stringify_type(args)
+
+    let result = args
 
     /* RESOLVING ARGS */
-    if (arg_type !== "PROMISE" && _reso) {
+    if (arg_type !== "PROMISE" && reso) {
       // if some signature needs to deal with both promises
       // and non-promises, non-promises are wrapped in a
       // Promise to "lift" them into the proper context for
       // handling
-      result = Promise.resolve(_args)
+      result = Promise.resolve(args)
     }
-    if (_args !== Object(_args) && !_sub$) {
-      no_sub$_err(c, i)
+    if (args !== Object(args) && !sub$) {
+      nosub$_err(c, i)
       return acc
     }
     if (arg_type === "PROMISE") {
       // result = await discardable(args).catch(e => e)
-      result = await _args.catch(e => e)
+      result = await args.catch(e => e)
     }
     if (arg_type === "THUNK") {
       // if thunk, dispatch to ad-hoc stream, return acc
       // as-is ⚠ this command will not be waited on
-      result = _args()
-      console.log(`dispatching to ad-hoc stream: ${_sub$.id}`)
-      _sub$.next(result) // 💃
+      result = args()
+      console.log(`dispatching to ad-hoc stream: ${sub$.id}`)
+      sub$.next(result) // 💃
       return acc
     }
     if (arg_type === "FUNCTION") {
       // if function, call it with acc and resolve any
       // promises
-      let temp = _args(acc)
+      let temp = args(acc)
       // result = isPromise(temp) ? await discardable(temp).catch(e => e) : temp
       result = isPromise(temp) ? await temp.catch(e => e) : temp
     }
@@ -247,33 +248,33 @@ export const spool = task_array =>
     if (arg_type === "OBJECT") {
       // if object, send the Command as-is and spread into
       // acc
-      if (!_sub$) return { ...acc, ..._args }
+      if (!sub$) return { ...acc, ...args }
       command$.next(c)
-      return { ...acc, ..._args }
+      return { ...acc, ...args }
     }
 
     /* RESULT HANDLERS */
-    if (_reso) {
+    if (reso) {
       // promise rejection handler
-      if (_erro & (result instanceof Error)) {
-        let error = erro(acc, result)
-        if (error._sub$) return command$.next(error)
+      if (erro & (result instanceof Error)) {
+        let error = erro_(acc, result)
+        if (error.sub$) return command$.next(error)
         console.warn(err_str, "[ Promise rejected ]:", result)
         result = error
       }
       // resovled promise handler
       if (!(result instanceof Error)) {
-        let resolved = _reso(acc, result)
-        if (resolved._sub$) command$.next(resolved)
-        // resolved promise with no _sub$ key -> spread
+        let resolved = reso(acc, result)
+        if (resolved.sub$) command$.next(resolved)
+        // resolved promise with no sub$ key -> spread
         // resolved value into acc
-        else if (!_sub$) return { ...acc, ...resolved }
+        else if (!sub$) return { ...acc, ...resolved }
         result = resolved
       }
       console.warn(`no 'erro' (Error handler) set for ${c}`)
     }
-    // no _sub$ key & not a promise -> just spread into acc
-    if (!_reso && !_sub$) return { ...acc, ...result }
+    // no sub$ key & not a promise -> just spread into acc
+    if (!reso && !sub$) return { ...acc, ...result }
 
     // error, but no error handler
     if (result instanceof Error) {
@@ -281,18 +282,18 @@ export const spool = task_array =>
       return acc
     }
     if (result !== Object(result)) {
-      if (!_sub$) {
-        no_sub$_err(c, i)
+      if (!sub$) {
+        nosub$_err(c, i)
         return acc
       }
       // if the final result is primitive, you can't refer
       // to this value in proceeding Commands -> send the
       // Command as-is, return acc as-is.
-      command$.next({ [sub$]: _sub$, [args]: result })
+      command$.next({ [sub$_]: sub$, [args_]: result })
       return acc
     }
     // if the result has made it this far, send it along
     // console.log(`${sub$} made it through`)
-    command$.next({ [sub$]: _sub$, [args]: result })
+    command$.next({ [sub$_]: sub$, [args_]: result })
     return { ...acc, ...result }
   }, Promise.resolve({}))

@@ -1,7 +1,7 @@
 import { Atom } from "@thi.ng/atom"
 import { getIn } from "@thi.ng/paths"
 import { registerCMD } from "../register/primaries"
-import { sub$, args, handler } from "../store"
+import { sub$_, args_, handler_ } from "../store"
 
 //
 //    d8                  888
@@ -214,13 +214,13 @@ const FLIPLastInvertPlay = ({
 const state = new Atom({})
 
 export const FLIP_FIRST = registerCMD({
-  [sub$]: "FLIP_FIRST",
-  [args]: x => x,
-  [handler]: ({ id, target }) => FLIPFirst({ id, target, state })
+  [sub$_]: "FLIP_FIRST",
+  [args_]: x => x,
+  [handler_]: ({ id, target }) => FLIPFirst({ id, target, state })
 })
 
 export const FLIP_LAST_INVERSE_PLAY = registerCMD({
-  [sub$]: "FLIP_LAST_INVERSE_PLAY",
-  [args]: x => x,
-  [handler]: ({ id, element }) => FLIPLastInvertPlay({ id, element, state })
+  [sub$_]: "FLIP_LAST_INVERSE_PLAY",
+  [args_]: x => x,
+  [handler_]: ({ id, element }) => FLIPLastInvertPlay({ id, element, state })
 })

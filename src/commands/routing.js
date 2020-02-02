@@ -3,7 +3,7 @@
 import { registerCMD } from "../register"
 import { fURL } from "../utils"
 import { DOMnavigated$ } from "../streams"
-import { DOM, URL, URL_path, sub$, args, handler } from "../store"
+import { DOM_, URL_, URL_path_, sub$_, args_, handler_ } from "../store"
 /**
  * we need to transform the payload to align with the
  * object structure of the native DOM events ('popstate'
@@ -17,7 +17,7 @@ export const HURLer = ev => {
   let href = ev.target.href
   let w_href = window.location.href
   let parsed = fURL(w_href)
-  let w_path = `/${parsed[URL_path].join("/")}`
+  let w_path = `/${parsed[URL_path_].join("/")}`
   // handle both absolute and root relative paths
   if (href === w_href || href === w_path) return
 
@@ -29,9 +29,9 @@ export const HURLer = ev => {
 }
 
 export const HURL = registerCMD({
-  [sub$]: "HURL",
-  [args]: ev => ev,
-  [handler]: HURLer
+  [sub$_]: "HURL",
+  [args_]: ev => ev,
+  [handler_]: HURLer
 })
 
 const setLinkAttrs = target => {
@@ -65,9 +65,9 @@ const setLinkAttrs = target => {
  *
  */
 export const __SET_LINK_ATTRS_DOM = registerCMD({
-  [sub$]: "__SET_LINK_ATTRS_DOM",
-  [args]: acc => ({ [DOM]: acc[DOM] }),
-  [handler]: args => setLinkAttrs(args[DOM])
+  [sub$_]: "__SET_LINK_ATTRS_DOM",
+  [args_]: acc => ({ [DOM_]: acc[DOM_] }),
+  [handler_]: args => setLinkAttrs(args[DOM_])
 })
 
 /**
@@ -94,11 +94,11 @@ export const __SET_LINK_ATTRS_DOM = registerCMD({
  *
  */
 export const __HREF_PUSHSTATE_DOM = registerCMD({
-  [sub$]: "__HREF_PUSHSTATE_DOM",
-  [args]: acc => ({ [URL]: acc[URL], [DOM]: acc[DOM] }),
-  [handler]: args =>
-    !args[DOM].document
-      ? history.pushState(fURL(args[URL]), null, args[URL])
+  [sub$_]: "__HREF_PUSHSTATE_DOM",
+  [args_]: acc => ({ [URL_]: acc[URL_], [DOM_]: acc[DOM_] }),
+  [handler_]: args =>
+    !args[DOM_].document
+      ? history.pushState(fURL(args[URL_]), null, args[URL_])
       : null
 })
 
@@ -130,8 +130,8 @@ export const __HREF_PUSHSTATE_DOM = registerCMD({
  *
  */
 export const __NOTIFY_PRERENDER_DOM = registerCMD({
-  [sub$]: "__NOTIFY_PRERENDER_DOM",
-  [args]: true,
+  [sub$_]: "__NOTIFY_PRERENDER_DOM",
+  [args_]: true,
   //👀 for prerenderer,
-  [handler]: () => document.dispatchEvent(new Event("rendered"))
+  [handler_]: () => document.dispatchEvent(new Event("rendered"))
 })

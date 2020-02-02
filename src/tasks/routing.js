@@ -10,24 +10,24 @@ import {
   // msTaskDelay
 } from "../commands"
 import {
-  PAGE_TEMPLATE,
-  ROUTE_LOADING,
-  ROUTE_PATH,
-  DOM,
-  URL,
-  URL_data,
-  URL_path,
-  URL_page,
-  pre,
-  post,
-  prefix,
-  router,
-  args,
-  reso,
-  erro,
-  BODY,
-  STATE,
-  PATH
+  PAGE_TEMPLATE_,
+  ROUTE_LOADING_,
+  ROUTE_PATH_,
+  DOM_,
+  URL_,
+  URL_data_,
+  URL_path_,
+  URL_page_,
+  pre_,
+  post_,
+  prefix_,
+  router_,
+  args_,
+  reso_,
+  erro_,
+  BODY_,
+  STATE_,
+  PATH_
 } from "../store"
 
 /**
@@ -61,10 +61,10 @@ import {
 export const __URL__ROUTE = CFG => {
   let __router, __pre, __post, __prefix
   if (isObject(CFG)) {
-    let _router = CFG[router]
-    let _pre = CFG[pre]
-    let _post = CFG[post]
-    let _prefix = CFG[prefix] || null
+    let _router = CFG[router_]
+    let _pre = CFG[pre_]
+    let _post = CFG[post_]
+    let _prefix = CFG[prefix_] || null
     const escRGX = /[-/\\^$*+?.()|[\]{}]/g
     const escaped = string => string.replace(escRGX, "\\$&")
 
@@ -99,17 +99,17 @@ export const __URL__ROUTE = CFG => {
      *
      */
     {
-      [args]: __prefix
-        ? __router(acc[URL].replace(__prefix, ""))
-        : __router(acc[URL]),
-      [reso]: (_acc, _res) => ({
-        [URL_page]: _res[URL_page],
-        [URL_data]: _res[URL_data]
+      [args_]: __prefix
+        ? __router(acc[URL_].replace(__prefix, ""))
+        : __router(acc[URL_]),
+      [reso_]: (_acc, _res) => ({
+        [URL_page_]: _res[URL_page_],
+        [URL_data_]: _res[URL_data_]
       }),
-      [erro]: (_acc, _err) =>
+      [erro_]: (_acc, _err) =>
         console.warn("Error in __URL__ROUTE:", _err, "constructed:", _acc)
     },
-    { [args]: __prefix ? fURL(acc[URL], __prefix) : fURL(acc[URL]) },
+    { [args_]: __prefix ? fURL(acc[URL_], __prefix) : fURL(acc[URL_]) },
     /**
      * ## `_SET_ROUTER_PATH`
      *
@@ -130,9 +130,9 @@ export const __URL__ROUTE = CFG => {
      */
     {
       ...SET_STATE,
-      args: _acc => ({
-        [STATE]: _acc[URL_path],
-        [PATH]: [ROUTE_PATH]
+      [args_]: _acc => ({
+        [STATE_]: _acc[URL_path_],
+        [PATH_]: [ROUTE_PATH_]
       })
     },
     ...__post
@@ -179,14 +179,17 @@ export const __URL_DOM__ROUTE = CFG => {
   return acc => [
     {
       ...SET_STATE,
-      args: {
-        [PATH]: [ROUTE_LOADING],
-        [STATE]: true
+      [args_]: {
+        [PATH_]: [ROUTE_LOADING_],
+        [STATE_]: true
       }
     },
-    { ...__HREF_PUSHSTATE_DOM, args: { [URL]: acc[URL], [DOM]: acc[DOM] } },
+    {
+      ...__HREF_PUSHSTATE_DOM,
+      [args_]: { [URL_]: acc[URL_], [DOM_]: acc[DOM_] }
+    },
     // example Subtask injection
-    _acc => match({ [URL]: _acc[URL] }),
+    _acc => match({ [URL_]: _acc[URL_] }),
     // { args: msTaskDelay(2000) },
     /**
      * takes the result from two sources: the user-provided
@@ -201,16 +204,16 @@ export const __URL_DOM__ROUTE = CFG => {
      */
     {
       ...SET_STATE,
-      args: _acc => ({
-        [PATH]: [PAGE_TEMPLATE],
-        [STATE]: _acc[URL_page]
+      [args_]: _acc => ({
+        [PATH_]: [PAGE_TEMPLATE_],
+        [STATE_]: _acc[URL_page_]
       })
     },
     {
       ...SET_STATE,
-      args: _acc => ({
-        [PATH]: _acc[URL_path],
-        [STATE]: _acc[URL_data][BODY] || _acc[URL_data]
+      [args_]: _acc => ({
+        [PATH_]: _acc[URL_path_],
+        [STATE_]: _acc[URL_data_][BODY_] || _acc[URL_data_]
       })
     },
     // wait on pending promise(s) w/a non-nullary fn (+)=>
@@ -221,9 +224,9 @@ export const __URL_DOM__ROUTE = CFG => {
     __SET_LINK_ATTRS_DOM,
     {
       ...SET_STATE,
-      args: _ => ({
-        [PATH]: [ROUTE_LOADING],
-        [STATE]: false
+      [args_]: _ => ({
+        [PATH_]: [ROUTE_LOADING_],
+        [STATE_]: false
       })
     },
     __NOTIFY_PRERENDER_DOM
