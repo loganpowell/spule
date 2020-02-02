@@ -26,9 +26,9 @@ import {
   // DOMnavigated$,
   // command$,
   // log$,
-  // out$,
   // popstate$,
-  // task$,
+  task$,
+  out$,
   run$
 } from "./streams"
 // prettier-ignore
@@ -51,6 +51,8 @@ export default {
   registerCMD,
   boot,
   run$,
+  out$,
+  task$,
   $store$,
   set$State,
   FLIPkid
