@@ -1,5 +1,5 @@
 // prettier-ignore
-import {
+export {
   HURL,
   INJECT_HEAD,
   F_LIP_,
@@ -7,21 +7,21 @@ import {
   SET_STATE,
   // msTaskDelay
 } from "./commands"
-// import { __URL_DOM__ROUTE, __URL_ROUTE } from "./tasks"
+// export { __URL_DOM__ROUTE, __URL_ROUTE } from "./tasks"
 // prettier-ignore
-import { 
+export { 
   fURL, 
   // unfURL 
 } from "./utils"
 // prettier-ignore
-import {
+export {
   // registerRouter,
   // registerRouterDOM,
   registerCMD,
   boot
 } from "./register"
 // prettier-ignore
-import {
+export {
   // DOMContentLoaded$,
   // DOMnavigated$,
   // command$,
@@ -32,28 +32,11 @@ import {
   run$
 } from "./streams"
 // prettier-ignore
-import { 
+export { 
   FLIPkid 
 } from "./components"
 // prettier-ignore
-import { 
+export { 
   $store$, 
   set$State 
 } from "./store"
-
-export default {
-  HURL,
-  INJECT_HEAD,
-  _F_LIP,
-  F_LIP_,
-  SET_STATE,
-  fURL,
-  registerCMD,
-  boot,
-  run$,
-  out$,
-  task$,
-  $store$,
-  set$State,
-  FLIPkid
-}
