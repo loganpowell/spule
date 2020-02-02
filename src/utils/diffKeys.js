@@ -5,7 +5,7 @@ export function diffKeys(known_keys = [], known_obj = {}) {
     if (!known_keys.includes(k)) return { ...a, [k]: v }
     else return a
   }, {})
-  return [uknown_keys, uknown_obj]
+  return [uknown_keys || [], uknown_obj || {}]
 }
 
 // keys_diff(["a", "b"], { a: 1, b: 2, c: 3, d: 4 })

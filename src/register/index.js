@@ -169,7 +169,7 @@ export function registerCMD(command) {
 
   let knowns = [sub$, args, reso, erro, source$, handler]
   let [unknowns] = diffKeys(knowns, command)
-  // console.log({ knowns, all, unknowns })
+  console.log({ knowns, unknowns })
 
   /**
    * destructure the args component out of the emissions
