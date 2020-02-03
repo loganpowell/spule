@@ -5,7 +5,7 @@
 
 import { fromDOMEvent, merge, pubsub, stream, trace } from "@thi.ng/rstream"
 import { map } from "@thi.ng/transducers"
-import { spule } from "."
+import { spule } from "./spule.js"
 import { URL_, DOM_ } from "../store"
 
 export const log$ = stream().subscribe(trace("log$ -> "), { id: "log$" })

@@ -19,16 +19,16 @@ export {
 , registerRouterDOM
 , registerCMD
 , boot
-} from "./register/primaries"
+} from "./register"
 
 export {
-  DOMContentLoaded$
-, DOMnavigated$
-, command$
-, log$
-, popstate$
+  DOMnavigated$
+// , DOMContentLoaded$
+// , command$
+// , log$
+// , popstate$
 , task$
-, out$
+// , out$
 , run$
 } from "./core"
 
