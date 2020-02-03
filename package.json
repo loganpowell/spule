@@ -12,7 +12,7 @@
     "build": "npm run clean && cross-env NODE_ENV=production parcel build src/index.js --no-source-maps --no-cache --public-url ./",
     "start": "npm run clean && parcel src/index.js --global md -p 8080 --open -d dist watch",
     "docs": "jsdoc --configure jsdoc.json --verbose",
-    "pages": "gh-pages -d docs"
+    "pages": "gh-pages -d docs/spule"
   },
   "keywords": [
     "thi.ng",

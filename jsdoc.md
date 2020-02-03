@@ -67,8 +67,8 @@ Markdown is enabled by creating a `jsdoc.json` file (I use root, but wherevs):
     "private": true,
     // recur through files/folders in the `"source": { "include":` path
     "recurse": true,
-    // the weird bit:
-    "template": "./node_modules/jsdoc/templates/jsdoc-template"
+    // clone the braintree template repo into a `.gitignore`d /jsdoc/ folder:
+    "template": "./jsdoc/jsdoc-template"
   }
 }
 ```
@@ -77,19 +77,7 @@ Markdown is enabled by creating a `jsdoc.json` file (I use root, but wherevs):
 
 ### Step 1: Clone a template ([example](https://github.com/braintree/jsdoc-template)) into the _local_ `node_modules/jsdoc/templates` directory
 
-This is the weirdest part of the process. 
-
-Dealing with absolute paths and node is a nightmare, especially on Windows. Though you may clone your template into the global jsdoc node_modules folder, the way I did it was to actually clone the template into the local (dev dependency) in the jsdoc/templates directory:
-
-In the above `jsdoc.json` config, note the `"opts": { "template": "./node_modules/jsdoc/templates" }` directory. This is where you'll clone your copy of your desired template.
-
-I know, it's weird, but I couldn't figure out any other way of doing it.
-
-### Step 2: Add the `"template"` key to your `jsdoc.json` config file
-
-As shown above
-
-### Step 3: Run the command
+### Step 2: Run the command
 
 ```
 npm run docs

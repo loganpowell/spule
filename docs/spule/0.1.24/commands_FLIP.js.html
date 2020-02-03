@@ -193,6 +193,9 @@ const zoom_paths = uid => ({
  * 3. el released: if clicked, calc flip rect and lookup for id:
  *  - if first === last, no change (on nav e.g.)
  *  - if first !== last, nav change (store rect for id)
+ * @example
+ * FLIPFirst({ state: "bloop"})
+ * 
  */
 const FLIPFirst = ({ state, id, target }) => {
   // 📌 TODO: GOOD PLACE FOR AN `onStart` hook animation/callback
