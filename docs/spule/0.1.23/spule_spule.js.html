@@ -1,4 +1,48 @@
-/**
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>spule/spule.js - Documentation</title>
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <script src="scripts/nav.js" defer></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav >
+    
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-constants.html">constants</a></li><li><a href="module-registerCMD.html">registerCMD</a></li><li><a href="module-spule.html">spule</a></li><li><a href="module-Streams.html">Streams</a></li></ul><h3>Global</h3><ul><li><a href="global.html#__HREF_PUSHSTATE_DOM">__HREF_PUSHSTATE_DOM</a></li><li><a href="global.html#__NOTIFY_PRERENDER_DOM">__NOTIFY_PRERENDER_DOM</a></li><li><a href="global.html#__SET_LINK_ATTRS_DOM">__SET_LINK_ATTRS_DOM</a></li><li><a href="global.html#__URL__ROUTE">__URL__ROUTE</a></li><li><a href="global.html#__URL_DOM__ROUTE">__URL_DOM__ROUTE</a></li><li><a href="global.html#diff_keys">diff_keys</a></li><li><a href="global.html#err_str">err_str</a></li><li><a href="global.html#FLIPFirst">FLIPFirst</a></li><li><a href="global.html#FLIPLastInvertPlay">FLIPLastInvertPlay</a></li><li><a href="global.html#fURL">fURL</a></li><li><a href="global.html#HURLer">HURLer</a></li><li><a href="global.html#set$$tate">set$$tate</a></li><li><a href="global.html#state">state</a></li><li><a href="global.html#stringify_type">stringify_type</a></li><li><a href="global.html#stringify_w_functions">stringify_w_functions</a></li><li><a href="global.html#trace$">trace$</a></li><li><a href="global.html#unfURL">unfURL</a></li><li><a href="global.html#x_key_ERR">x_key_ERR</a></li><li><a href="global.html#zIndex">zIndex</a></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">spule/spule.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
  * @module spule
  * @format
  */
@@ -7,7 +51,7 @@ import { stringify_type, x_key_ERR, key_index_err, diff_keys } from "../utils"
 import { command$ } from "../streams"
 import { sub$_, args_, reso_, erro_, source$_, handler_ } from "../store"
 
-const err_str = "Spool Interupted" // <- add doc link to error strings
+const err_str = "Spool Interupted" // &lt;- add doc link to error strings
 
 const nosub$_err = (c, i) =>
   console.warn(`
@@ -165,7 +209,7 @@ const nosub$_err = (c, i) =>
  *
  * // task
  * let task = [
- *  { args: { href: "https://my.io/auth" } }, // <- no sub$, just pass data
+ *  { args: { href: "https://my.io/auth" } }, // &lt;- no sub$, just pass data
  *  { sub$: login , args: () => "logging in..." },
  *  { sub$: "AUTH"
  *  , args: ({ href }) => fetch(href).then(r => r.json())
@@ -177,8 +221,8 @@ const nosub$_err = (c, i) =>
  *
  * // subtask
  * let subtask_login = ({ token }) => [
- *  { sub$: login // <- stream
- *  , args: () => ({ token }) } // <- use acc
+ *  { sub$: login // &lt;- stream
+ *  , args: () => ({ token }) } // &lt;- use acc
  * ]
  * ```
  *
@@ -215,14 +259,14 @@ export const spule = task_array =>
     let result = args
 
     /* RESOLVING ARGS */
-    if (arg_type !== "PROMISE" && reso) {
+    if (arg_type !== "PROMISE" &amp;&amp; reso) {
       // if some signature needs to deal with both promises
       // and non-promises, non-promises are wrapped in a
       // Promise to "lift" them into the proper context for
       // handling
       result = Promise.resolve(args)
     }
-    if (args !== Object(args) && !sub$) {
+    if (args !== Object(args) &amp;&amp; !sub$) {
       nosub$_err(c, i)
       return acc
     }
@@ -257,7 +301,7 @@ export const spule = task_array =>
     /* RESULT HANDLERS */
     if (reso) {
       // promise rejection handler
-      if (erro & (result instanceof Error)) {
+      if (erro &amp; (result instanceof Error)) {
         let error = erro_(acc, result)
         if (error.sub$) return command$.next(error)
         console.warn(err_str, "[ Promise rejected ]:", result)
@@ -274,8 +318,8 @@ export const spule = task_array =>
       }
       console.warn(`no 'erro' (Error handler) set for ${c}`)
     }
-    // no sub$ key & not a promise -> just spread into acc
-    if (!reso && !sub$) return { ...acc, ...result }
+    // no sub$ key &amp; not a promise -> just spread into acc
+    if (!reso &amp;&amp; !sub$) return { ...acc, ...result }
 
     // error, but no error handler
     if (result instanceof Error) {
@@ -298,3 +342,28 @@ export const spule = task_array =>
     command$.next({ [sub$_]: sub$, [args_]: result })
     return { ...acc, ...result }
   }, Promise.resolve({}))
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+    
+    
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Sun Feb 02 2020 21:34:51 GMT-0500 (Eastern Standard Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/polyfill.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+
+
+</body>
+</html>

@@ -22,6 +22,7 @@
   "dependencies": {
     "@thi.ng/rstream": "^3.0.2",
     "@thi.ng/transducers-hdom": "^2.0.34",
+    "docdash": "^1.2.0",
     "querystring": "^0.2.0"
   },
   "devDependencies": {

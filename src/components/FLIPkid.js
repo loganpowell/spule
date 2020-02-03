@@ -69,7 +69,6 @@ export const FLIPkid = Object.freeze({
     //   firstChild: el.firstChild,
     //   id: el.firstChild.getAttribute("href")
     // }),
-    console.log("FLIPkid_init")
     ctx[run_]({
       ...FLIP_LAST_INVERSE_PLAY,
       [args_]: {

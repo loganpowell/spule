@@ -48,8 +48,8 @@ export const key_index_err = (c, i) => {
  */
 export const x_key_ERR = (str, c, unknown, sub$, index) => {
 
-  let { source$ } = c
-  let count = Object.entries(c).length
+  const { source$ } = c
+  const count = Object.entries(c).length
 
   return `
 
