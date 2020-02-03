@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>commands/head.js - Documentation</title>
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <script src="scripts/nav.js" defer></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav >
+    
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-constants.html">constants</a></li><li><a href="module-registerCMD.html">registerCMD</a></li><li><a href="module-spule.html">spule</a></li><li><a href="module-Streams.html">Streams</a></li></ul><h3>Global</h3><ul><li><a href="global.html#__HREF_PUSHSTATE_DOM">__HREF_PUSHSTATE_DOM</a></li><li><a href="global.html#__NOTIFY_PRERENDER_DOM">__NOTIFY_PRERENDER_DOM</a></li><li><a href="global.html#__SET_LINK_ATTRS_DOM">__SET_LINK_ATTRS_DOM</a></li><li><a href="global.html#__URL__ROUTE">__URL__ROUTE</a></li><li><a href="global.html#__URL_DOM__ROUTE">__URL_DOM__ROUTE</a></li><li><a href="global.html#diff_keys">diff_keys</a></li><li><a href="global.html#err_str">err_str</a></li><li><a href="global.html#FLIPFirst">FLIPFirst</a></li><li><a href="global.html#FLIPLastInvertPlay">FLIPLastInvertPlay</a></li><li><a href="global.html#fURL">fURL</a></li><li><a href="global.html#HURLer">HURLer</a></li><li><a href="global.html#set$$tate">set$$tate</a></li><li><a href="global.html#state">state</a></li><li><a href="global.html#stringify_type">stringify_type</a></li><li><a href="global.html#stringify_w_functions">stringify_w_functions</a></li><li><a href="global.html#trace$">trace$</a></li><li><a href="global.html#unfURL">unfURL</a></li><li><a href="global.html#x_key_ERR">x_key_ERR</a></li><li><a href="global.html#zIndex">zIndex</a></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">commands/head.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/** @format */
+
+import { registerCMD } from "../register"
+import { URL_data_, sub$_, args_, handler_, HEAD_ } from "../store"
+
+const setFavicon = href => {
+  let link =
+    document.querySelector("link[rel*='icon']") ||
+    document.createElement("link")
+  link.type = "image/x-icon"
+  link.rel = "shortcut icon"
+  link.href = href
+  document.getElementsByTagName("head")[0].appendChild(link)
+}
+
+const replaceMeta = (obj = defalt_cfg) => {
+  Object.entries(obj).forEach(([key, val]) => {
+    try {
+      return {
+        HEAD_title: () => {
+          document.title = val
+        },
+        HEAD_meta: () => {
+          Object.entries(val).forEach(([prop, content]) => {
+            document.head.querySelector(
+              `meta[property="${prop}"]`
+            ).content = content
+          })
+        },
+        HEAD_favicon: () => setFavicon(val)
+      }[key]()
+    } catch (e) {
+      console.warn(e)
+    }
+  })
+}
+
+const defalt_cfg = {
+  meta: {
+    "og:title": "My thi.ng",
+    "og:image":
+      "https://github.com/loganpowell/ac/raw/master/assets/thing400x400.png",
+    "og:image:width": 400,
+    "og:image:height": 400,
+    "og:description": "web app",
+    "og:type": "website"
+  },
+  title: "My thi.ng",
+  favicon: "https://github.com/loganpowell/ac/raw/master/assets/favicon.ico"
+}
+
+const conform_head = ({
+  title = defalt_cfg.meta.title,
+  description = defalt_cfg.meta["og:description"],
+  image: {
+    url = defalt_cfg.meta["og:image"],
+    height = defalt_cfg.meta["og:image:height"],
+    width = defalt_cfg.meta["og:image:width"]
+  },
+  favicon = defalt_cfg.favicon,
+  type = defalt_cfg.meta["og:type"]
+}) => ({
+  HEAD_meta: {
+    /**
+     * og:url can tell scrapers to ignore the page and
+     * scrape this instead. Would save scraping the whole
+     * page and might be friendlier for `jsdom`
+     */
+    // "og:url": history.state.URL,
+    "og:title": title,
+    "og:type": type,
+    "og:description": description,
+    "og:image:width": width,
+    "og:image:height": height,
+    "og:image": url
+  },
+  HEAD_title: title,
+  HEAD_favicon: favicon
+})
+
+export const INJECT_HEAD = registerCMD({
+  // source$: DOMnavigated$,
+  [sub$_]: "INJECT_HEAD",
+  [args_]: acc => ({ [URL_data_]: acc[URL_data_] }),
+  [handler_]: ({
+    [URL_data_]: {
+      [HEAD_]: { title, description, image, favicon, type }
+    }
+  }) => replaceMeta(conform_head({ title, description, image, favicon, type }))
+})
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+    
+    
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Sun Feb 02 2020 21:34:51 GMT-0500 (Eastern Standard Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/polyfill.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+
+
+</body>
+</html>

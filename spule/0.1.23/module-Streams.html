@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>Streams - Documentation</title>
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <script src="scripts/nav.js" defer></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav >
+    
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-constants.html">constants</a></li><li><a href="module-registerCMD.html">registerCMD</a></li><li><a href="module-spule.html">spule</a></li><li><a href="module-Streams.html">Streams</a></li></ul><h3>Global</h3><ul><li><a href="global.html#__HREF_PUSHSTATE_DOM">__HREF_PUSHSTATE_DOM</a></li><li><a href="global.html#__NOTIFY_PRERENDER_DOM">__NOTIFY_PRERENDER_DOM</a></li><li><a href="global.html#__SET_LINK_ATTRS_DOM">__SET_LINK_ATTRS_DOM</a></li><li><a href="global.html#__URL__ROUTE">__URL__ROUTE</a></li><li><a href="global.html#__URL_DOM__ROUTE">__URL_DOM__ROUTE</a></li><li><a href="global.html#diff_keys">diff_keys</a></li><li><a href="global.html#err_str">err_str</a></li><li><a href="global.html#FLIPFirst">FLIPFirst</a></li><li><a href="global.html#FLIPLastInvertPlay">FLIPLastInvertPlay</a></li><li><a href="global.html#fURL">fURL</a></li><li><a href="global.html#HURLer">HURLer</a></li><li><a href="global.html#set$$tate">set$$tate</a></li><li><a href="global.html#state">state</a></li><li><a href="global.html#stringify_type">stringify_type</a></li><li><a href="global.html#stringify_w_functions">stringify_w_functions</a></li><li><a href="global.html#trace$">trace$</a></li><li><a href="global.html#unfURL">unfURL</a></li><li><a href="global.html#x_key_ERR">x_key_ERR</a></li><li><a href="global.html#zIndex">zIndex</a></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">Streams</h1>
+    
+
+    
+
+
+
+
+<section>
+
+<header>
+    
+        
+    
+</header>
+
+<article>
+    
+        <div class="container-overview">
+        
+            
+
+            
+        
+        </div>
+    
+
+    
+
+    
+
+    
+    
+    
+
+     
+
+    
+
+    
+        <h3 class="subsection-title">Members</h3>
+
+        
+            
+<h4 class="name" id=".command$"><span class="type-signature">(static, constant) </span>command$<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="streams_multiplex.js.html">streams/multiplex.js</a>, <a href="streams_multiplex.js.html#line103">line 103</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <h2><code>command$</code></h2>
+<p>Primary fork/bisect stream for indivual commands.
+attached to a <code>pubsub</code> stemming from this stream. The
+<code>topic</code> function used to alert downstream handlers is a
+simple lookup of the <code>sub$</code> key of the command</p>
+</div>
+
+
+
+
+
+
+
+
+        
+            
+<h4 class="name" id=".DOMnavigated$"><span class="type-signature">(static, constant) </span>DOMnavigated$<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="streams_multiplex.js.html">streams/multiplex.js</a>, <a href="streams_multiplex.js.html#line156">line 156</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>There are three types of navigation we need to handle:</p>
+<ol>
+<li>DOMContentLoaded (entering the site) events</li>
+<li>popstate (browser back/forward button clicks) events</li>
+<li><a hurl="x"> (link clicking)</li>
+</ol>
+<p>These events have different payloads and need to be
+harmonized in order to use them consistently</p>
+<h2>getting the <code>hurl</code> property from the various events:</h2>
+<ol>
+<li>ev.target.location.hurl</li>
+<li>ev.target.location.hurl</li>
+<li>ev.target.hurl</li>
+</ol>
+<p>for raw events, we can just transform them, but for link
+clicking we need to convert/wrap it to align with the
+destructuring of the others</p>
+<p>see _HURL in <code>/commands/routing.js</code> for ad-hoc stream
+injection example</p>
+</div>
+
+
+
+
+
+
+
+
+        
+            
+<h4 class="name" id=".out$"><span class="type-signature">(static, constant) </span>out$<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="streams_multiplex.js.html">streams/multiplex.js</a>, <a href="streams_multiplex.js.html#line88">line 88</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <h2><code>out$</code></h2>
+<p>Primary user-land <em>READ</em> stream. For attaching handlers
+for responding to emmitted Commands</p>
+</div>
+
+
+
+
+
+
+
+
+        
+            
+<h4 class="name" id=".run$"><span class="type-signature">(static, constant) </span>run$<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="streams_multiplex.js.html">streams/multiplex.js</a>, <a href="streams_multiplex.js.html#line75">line 75</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <h1>Stream Architecture:</h1>
+<p><code>run$</code> is the primary event stream exposed to the user
+via the <code>ctx</code> object injected into every <code>hdom</code> component
+the command stream is the only way the user changes
+anything in <code>hurl</code></p>
+<h2>Marble Diagram</h2>
+<pre class="prettyprint source"><code>0>- |------c-----------c--[~a~b~a~]-a----c-> : calls
+1>- |ps|---1-----------1----------0-1----1-> : run$
+2>- |t0|---------a~~b~~~~~~~~~~~a~*--------> : task$
+3>- |t1|---c-----------c------------a----c-> : command$
+4>- ---|ps|c-----a--b--c--------a---a----c-> : out$
+Handlers
+a>- ---|ta|------*--------------*---*------> : registerCMD
+b>- ---|tb|---------*----------------------> : registerCMD
+c>- ---|tc|*-----------*-----------------*-> : registerCMD
+</code></pre>
+<h2>Streams</h2>
+<ul>
+<li><code>0&gt;-</code>: <code>ctx.run$.next(x)</code> userland dispatches</li>
+<li><code>1&gt;-</code>: <code>pubsub({ topic: x =&gt; x.length === 0 })</code> <code>run$</code>
+stream</li>
+<li><code>2&gt;-</code>: pubsub = <code>false</code> ? -&gt; <code>task$</code> stream</li>
+<li><code>3&gt;-</code>: pubsub = <code>true</code> ? -&gt;<code>command$</code> stream</li>
+<li><code>4&gt;-</code>: <code>pubsub({ topic: x =&gt; x.sub$ })</code>: <code>out$</code> stream
+-&gt; <code>register_command</code></li>
+</ul>
+<h2>Handlers</h2>
+<p><code>4&gt;-</code> this is the stream to which the user (and
+framework) attaches handlers. Handlers receive events
+they subscribe to as topics based on a <code>sub$</code> key in a
+Command object.</p>
+<h3>Handlers (framework provided):</h3>
+<ul>
+<li>&quot;state&quot;: Global state mutations</li>
+<li>&quot;route&quot;: Routing</li>
+<li>&quot;FLIP&quot; :
+<a href="https://aerotwist.com/blog/flip-your-animations/">F.L.I.P.</a>
+animations</li>
+</ul>
+<p>TODO:</p>
+<ul>
+<li>add <strong>Examples</strong></li>
+<li>add <code>beforeunload</code> event handler within #4 (orphan):
+SEE https://youtu.be/QQukWZcIptM</li>
+<li>enable ctx.run.cancel() via external or internal events
+(e.g., popstate / { sub$:  &quot;cancel&quot; })</li>
+</ul>
+<h2><code>run$</code></h2>
+<p>User-land event dispatch stream</p>
+<p>This stream is directly exposed to users via <code>ctx</code> Any
+one-off Commands <code>next</code>ed into this stream are sent to
+the <code>command$</code> stream. Arrays of Commands (Tasks) are
+sent to the <code>task$</code> stream.</p>
+</div>
+
+
+
+
+
+
+
+
+        
+            
+<h4 class="name" id=".task$"><span class="type-signature">(static, constant) </span>task$<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="streams_multiplex.js.html">streams/multiplex.js</a>, <a href="streams_multiplex.js.html#line121">line 121</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <h2><code>task$</code></h2>
+<p>Batch processing stream, listens for Tasks sent as an
+array of Commands (including subtask functions)</p>
+<p>stream (if array of event objects)</p>
+</div>
+
+
+
+
+
+
+
+
+        
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+    
+    
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Sun Feb 02 2020 21:34:51 GMT-0500 (Eastern Standard Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/polyfill.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+
+
+</body>
+</html>
