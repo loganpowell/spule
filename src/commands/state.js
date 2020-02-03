@@ -1,4 +1,7 @@
-/** @format */
+/**
+ * @module Commands: SET_STATE
+ * @format
+ */
 
 import { registerCMD } from "../register"
 import { set$$tate, sub$_, args_, handler_ } from "../store"

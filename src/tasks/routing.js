@@ -1,4 +1,7 @@
-/** @format */
+/**
+ * @module Tasks: Routing
+ * @format
+ */
 
 import { isObject } from "@thi.ng/checks"
 import { fURL } from "../utils"

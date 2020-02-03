@@ -1,4 +1,7 @@
-/** @format */
+/**
+ * @module set$$tate
+ * @format
+ */
 
 import { Atom } from "@thi.ng/atom"
 import { isPlainObject } from "@thi.ng/checks"

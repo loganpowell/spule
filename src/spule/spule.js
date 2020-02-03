@@ -1,7 +1,8 @@
 /**
- * @module spule
+ * @module Spule:core
  * @format
  */
+
 import { isFunction, isPromise } from "@thi.ng/checks"
 import { stringify_type, x_key_ERR, key_index_err, diff_keys } from "../utils"
 import { command$ } from "../streams"

@@ -1,3 +1,7 @@
+/** 
+ * @module Utilities
+ */
+
 export { 
   fURL
 , unfURL 

@@ -1,4 +1,7 @@
-/** @format */
+/**
+ * @module Commands: INJECT_HEAD
+ * @format
+ */
 
 import { registerCMD } from "../register"
 import { URL_data_, sub$_, args_, handler_, HEAD_ } from "../store"

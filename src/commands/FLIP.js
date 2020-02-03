@@ -1,4 +1,7 @@
-/** @module Commands: FLIP */
+/**
+ * @module Commands: FLIP
+ * @format
+ */
 
 import { Atom } from "@thi.ng/atom"
 import { getIn } from "@thi.ng/paths"
@@ -96,7 +99,7 @@ const zoom_paths = uid => ({
  *  - if first !== last, nav change (store rect for id)
  * @example
  * FLIPFirst({ state: "bloop"})
- * 
+ *
  */
 const FLIPFirst = ({ state, id, target }) => {
   // 📌 TODO: GOOD PLACE FOR AN `onStart` hook animation/callback

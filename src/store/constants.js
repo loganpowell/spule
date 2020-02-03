@@ -1,4 +1,4 @@
-/** @module constants */
+/** @module Constants */
 
 
 export const DOM_ = "DOM"

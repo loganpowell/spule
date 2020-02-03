@@ -1,4 +1,7 @@
-/** @format */
+/**
+ * @module Commands: Routing
+ * @format
+ */
 
 import { registerCMD } from "../register"
 import { fURL } from "../utils"

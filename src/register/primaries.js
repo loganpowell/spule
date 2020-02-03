@@ -1,6 +1,6 @@
 /**
+ * @module Registration
  * @format
- * @module registerCMD
  */
 
 import { fromAtom, sidechainPartition, fromRAF } from "@thi.ng/rstream"

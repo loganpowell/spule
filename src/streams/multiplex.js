@@ -1,6 +1,6 @@
 /**
+ * @module Multiplex
  * @format
- * @module Streams
  */
 
 import { fromDOMEvent, merge, pubsub, stream, trace } from "@thi.ng/rstream"

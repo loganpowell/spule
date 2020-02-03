@@ -1,4 +1,7 @@
-/** @format */
+/**
+ * @module Components: FLIP
+ * @format
+ */
 
 import { FLIP_FIRST, FLIP_LAST_INVERSE_PLAY, HURL } from "../commands"
 import { run_, args_ } from "../store"
