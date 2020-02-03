@@ -3,7 +3,7 @@
  * @format
  */
 
-import { registerCMD } from "../register"
+import { registerCMD } from "../core"
 import { URL_data_, sub$_, args_, handler_, HEAD_ } from "../store"
 
 const setFavicon = href => {
