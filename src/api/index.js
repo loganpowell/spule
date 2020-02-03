@@ -87,6 +87,9 @@ export {
 } from "../store/constants.js"
 
 export {
+  msTaskPromiseDelay
+} from "../utils/taskDelay"
+export {
   diff_keys
 } from "../utils/diff_keys.js"
 export {
