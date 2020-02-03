@@ -1,4 +1,4 @@
-/** @module Commands:FLIP */
+/** @module Commands: FLIP */
 
 import { Atom } from "@thi.ng/atom"
 import { getIn } from "@thi.ng/paths"
