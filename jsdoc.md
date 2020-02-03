@@ -40,7 +40,7 @@ Markdown is enabled by creating a `jsdoc.json` file (I use root, but wherevs):
   },
   "source": {
     // which files and folders to parse
-    "include": ["src", "package.json", "README.md"],
+    "include": ["src", "package.json", "README.md", "guides"],
     "includePattern": ".js$",
     "excludePattern": "(node_modules/|docs)"
   },
@@ -51,7 +51,7 @@ Markdown is enabled by creating a `jsdoc.json` file (I use root, but wherevs):
   // TEMPLATE SPECIFIC CONFIG ➡ https://github.com/braintree/jsdoc-template
   "templates": {
     // shows up right below the 🏠 link of your doc site
-    "referenceTitle": "HURL Documentation",
+    "referenceTitle": "spule documentation",
     // `false` will sort the docs alphabetically, which I didn't want
     "disableSort": true, 
     //  When set to true only the active component's members are expanded.
@@ -64,7 +64,7 @@ Markdown is enabled by creating a `jsdoc.json` file (I use root, but wherevs):
   "opts": {
     "destination": "./docs/",
     "encoding": "utf8",
-    "private": true,
+    "private": false,
     // recur through files/folders in the `"source": { "include":` path
     "recurse": true,
     // clone the braintree template repo into a `.gitignore`d /jsdoc/ folder:

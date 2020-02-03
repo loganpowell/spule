@@ -8,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>
-      components/FLIPkid.js - Documentation
+      utils/xKey.js - Documentation
   </title>
 
   <link href="https://www.braintreepayments.com/images/favicon-ccda0b14.png" rel="icon" type="image/png">
@@ -72,7 +72,7 @@
 
   <nav>
     <h3 class="reference-title">
-      HURL Documentation
+      spule documentation
     </h3>
 
     
@@ -90,7 +90,7 @@
   <div id="main">
     
       <h1 class="page-title">
-        components/FLIPkid.js
+        utils/xKey.js
       </h1>
     
 
@@ -99,86 +99,122 @@
 
 <section>
   <article>
-    <pre class="prettyprint source linenums"><code>/** @format */
-
-import { FLIP_FIRST, FLIP_LAST_INVERSE_PLAY, HURL } from "../commands"
-import { run_, args_ } from "../store"
-
-/**
- * There're only 3 lifecycle hooks. render is called for
- * every update and is just providing the actual hiccup for
- * that component. if that component is used the first time,
- * the order is normalizeTree ->  render -> diff ->  init.
- * The actual DOM element is only known when init is called,
- * NEVER during render (though you could cache it as local
- * component state). If during diffing it turns out the
- * component is not used anymore, then release will be
- * called
+    <pre class="prettyprint source linenums"><code>/**
+ * Uses a JSON.stringify "replacer" function to preserve a
+ * small (truncated) version of the function signature for
+ * Object values that contain them
  *
- * if the object identity of your life cycle component
- * changes with every update then that count as full
- * replacement and would trigger init each time:
- *
- * https://github.com/thi-ng/umbrella/wiki/Higher-order-components
- *
- * init is called in so called "post-order", i.e. when it
- * executes all children are already present in the DOM (and
- * might have had their init hooks called) first time = 1st
- * frame the component appears in the DOM
- *
+ * @format
  */
-const err_str = prop => `
-  No '${prop}' property found on FLIPkid firstChild. 
-  Ensure you are providing FLIPkid a component with an 
-  attributes object as its second argument with a ${prop}
-  property for proper FLIP routing.
-`
 
-// const [tag, attrs, ..._args] = kid(ctx, ...args)
-// const { href } = attrs
-
-const sim_event = href => ({
-  currentTarget: { document: null },
-  target: {
-    href
-  }
-})
-
-export const FLIPkid = Object.freeze({
-  render: (ctx, ...rest) =>
-    // console.log("FLIPkid"),
-    [
-      "div",
-      {
-        onclick: ev => {
-          ev.preventDefault()
-          const target = ev.target
-          const href = target.getAttribute("href")
-          // console.log({ target, href })
-          if (!href) return new Error(err_str("href"))
-          ctx[run_]([
-            { ...HURL, [args_]: sim_event(href) },
-            { ...FLIP_FIRST, [args_]: { id: href, target } }
-          ])
-        }
-      },
-      ...rest
-    ],
-  init: (el, ctx) => {
-    // console.log({
-    //   el,
-    //   firstChild: el.firstChild,
-    //   id: el.firstChild.getAttribute("href")
-    // }),
-    ctx[run_]({
-      ...FLIP_LAST_INVERSE_PLAY,
-      [args_]: {
-        element: el.firstChild,
-        id: el.firstChild.getAttribute("href")
+export const stringify_w_functions = (x, indent) =>
+  JSON.stringify(
+    x,
+    (key, value) => {
+      if (typeof value === "function") {
+        return (
+          value
+            .toString()
+            .replace(/\r?\n|\r/g, "")
+            .replace(/\s\s+/g, " ")
+            .slice(0, 12) + "..."
+        )
+      } else {
+        return value
       }
-    })
+    },
+    indent
+  )
+
+export const key_index_err = (c, i) => {
+  const idx_dict0 = Array.from(Array(19).keys()).reduce(
+    (a, idx) => ({ ...a, [idx]: `${idx + 1}th` }),
+    {}
+  )
+
+  const idx_dict = { ...idx_dict0, 0: "1st", 1: "2nd", 2: "3rd" }
+  const idx_str = idx_dict[i]
+  return `🔍 it was the ${idx_str} Command in a Task or ${
+    idx_dict[i - 1]
+  } in a Subtask.`
+}
+
+// prettier-ignore
+/**
+ *
+ * `uknown_key_ERR`
+ *
+ * Just a  little error for people defining commands
+ * that makes sure their keys don't contain typos
+ */
+export const x_key_ERR = (str, c, unknown, sub$, index) => {
+
+  const { source$ } = c
+  const count = Object.entries(c).length
+
+  return `
+
+  🔥 ${ str } ERROR:
+  
+  🔥 Unrecognized Command Key(s)
+  
+  FAULTY sub$: "${ sub$ }" 
+  ${ Object.keys(unknown)[0][0] 
+  ? `
+  ${ index ? key_index_err(c, index) : "" }
+
+  The problematic entry/entries: 
+
+  🤔 ${!index &amp;&amp; count > 3 &amp;&amp; !source$ ? `${Object.entries(unknown)[0][0]}: &lt;Stream>`:   stringify_w_functions(unknown, 2)}` 
+  : "" } 🤔
+
+  ACCEPTABLE ENTRY KEYS ${ index ? "WITHIN A COMMAND" : "DURING REGISTRATION"}: 
+
+  'sub$' 
+    - optional 
+    - topic key for for registering &amp; targeting Commands 
+    - signatures:
+      - "X"    : String: Topic key
+      - XX$    : Stream: for dispatching args to custom stream
+
+  'args' 
+    - required 
+    - payload or accumulator reshaping payload function (Promises OK)
+    - signatures:
+      - PRI    : primitive: static payload -> is NOT accumulated
+      - {?}    : object: static payload -> is accumulated 
+      - (+) => : function (non-nullary): dispatch payload from 
+                values accumulated from prior Command payloads
+      - (0) => : thunk (nullary): dispatch to custom stream
+      - {P}    : Promise or (#) => {P} Promise returning function
+      
+  'reso' 
+    - required for Promise handling 
+    - converts resolved Promise payloads to Command args
+    - signature:
+      - ({A: accumulator}, {P: resolved Promise}) =>  
+
+  'erro' 
+    - recommended for Promise rejections 
+    - handles rejected Promise payloads
+    - signature:
+      - ({A: accumulator}, {E: error object}) =>  
+  ${ index ? ``
+  : `
+  'handler' 
+    - required 
+    - function that is called on payload's arrival
+    - signature: 
+      - (#) => : function instruments actual side-effects/work 
+  
+  'source$' 
+    - advanced/optional 
+    - source stream (see http://thi.ng/rstream)`
   }
-})
+
+  Hope that helps!
+  `
+}
 </code></pre>
   </article>
 </section>

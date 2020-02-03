@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>
-      streams/multiplex.js - Documentation
+      constants - Documentation
   </title>
 
   <link href="https://www.braintreepayments.com/images/favicon-ccda0b14.png" rel="icon" type="image/png">
@@ -72,7 +70,7 @@
 
   <nav>
     <h3 class="reference-title">
-      HURL Documentation
+      spule documentation
     </h3>
 
     
@@ -90,180 +88,267 @@
   <div id="main">
     
       <h1 class="page-title">
-        streams/multiplex.js
+        constants
       </h1>
     
 
     
-      
 
 <section>
+  <header>
+    
+      
+  </header>
+
   <article>
-    <pre class="prettyprint source linenums"><code>/**
- * @format
- * @module Streams
- */
+    <div class="container-overview">
+      
+        
 
-import { fromDOMEvent, merge, pubsub, stream, trace } from "@thi.ng/rstream"
-import { map } from "@thi.ng/transducers"
-import { spule } from "../spule"
-import { URL_, DOM_ } from "../store"
+        
+      
+    </div>
 
-export const log$ = stream().subscribe(trace("log$ -> "), { id: "log$" })
-/**
- * # Stream Architecture:
- *
- * `run$` is the primary event stream exposed to the user
- * via the `ctx` object injected into every `hdom` component
- * the command stream is the only way the user changes
- * anything in `hurl`
- *
- * ## Marble Diagram
- *
- * ```
- * 0>- |------c-----------c--[~a~b~a~]-a----c-> : calls
- * 1>- |ps|---1-----------1----------0-1----1-> : run$
- * 2>- |t0|---------a~~b~~~~~~~~~~~a~*--------> : task$
- * 3>- |t1|---c-----------c------------a----c-> : command$
- * 4>- ---|ps|c-----a--b--c--------a---a----c-> : out$
- * Handlers
- * a>- ---|ta|------*--------------*---*------> : registerCMD
- * b>- ---|tb|---------*----------------------> : registerCMD
- * c>- ---|tc|*-----------*-----------------*-> : registerCMD
- * ```
- *
- * ## Streams
- *
- * - `0>-`: `ctx.run$.next(x)` userland dispatches
- * - `1>-`: `pubsub({ topic: x => x.length === 0 })` `run$`
- *   stream
- * - `2>-`: pubsub = `false` ? -> `task$` stream
- * - `3>-`: pubsub = `true` ? ->`command$` stream
- * - `4>-`: `pubsub({ topic: x => x.sub$ })`: `out$` stream
- *   -> `register_command`
- *
- * ## Handlers
- *
- * `4>-` this is the stream to which the user (and
- * framework) attaches handlers. Handlers receive events
- * they subscribe to as topics based on a `sub$` key in a
- * Command object.
- *
- * ### Handlers (framework provided):
- * - "state": Global state mutations
- * - "route": Routing
- * - "FLIP" :
- *   [F.L.I.P.](https://aerotwist.com/blog/flip-your-animations/)
- *   animations
- *
- * TODO:
- * - add __Examples__
- * - add `beforeunload` event handler within #4 (orphan):
- *    SEE https://youtu.be/QQukWZcIptM
- * - enable ctx.run.cancel() via external or internal events
- *    (e.g., popstate / { sub$:  "cancel" })
- *
- * ## `run$`
- *
- * User-land event dispatch stream
- *
- * This stream is directly exposed to users via `ctx` Any
- * one-off Commands `next`ed into this stream are sent to
- * the `command$` stream. Arrays of Commands (Tasks) are
- * sent to the `task$` stream.
- *
- */
-export const run$ = pubsub({
-  topic: x => !!x.sub$,
-  id: "run$_stream",
-  equiv: (x, y) => x === y || y === "_TRACE_STREAM"
-})
+    
 
-/**
- * ## `out$`
- *
- * Primary user-land _READ_ stream. For attaching handlers
- * for responding to emmitted Commands
- *
- */
-export const out$ = pubsub({
-  topic: x => x.sub$,
-  id: "out$_stream",
-  equiv: (x, y) => x === y || y === "_TRACE_STREAM"
-})
+    
 
-/**
- * ## `command$`
- *
- * Primary fork/bisect stream for indivual commands.
- * attached to a `pubsub` stemming from this stream. The
- * `topic` function used to alert downstream handlers is a
- * simple lookup of the `sub$` key of the command
- *
- */
-export const command$ = run$.subscribeTopic(
-  true,
-  {
-    next: x => out$.next(x),
-    error: console.warn
-  },
-  { id: "command$_stream" }
-)
+    
 
-/**
- * ## `task$`
- *
- * Batch processing stream, listens for Tasks sent as an
- * array of Commands (including subtask functions)
- *
- * stream (if array of event objects)
- *
- */
-export const task$ = run$.subscribeTopic(
-  false,
-  {
-    next: spule,
-    error: console.warn
-  },
-  { id: "task$_stream" }
-)
+     
 
-export const popstate$ = fromDOMEvent(window, "popstate")
-export const DOMContentLoaded$ = fromDOMEvent(window, "DOMContentLoaded")
+    
 
-// example of custom stream dispatch (logging)
-/**
- *
- * There are three types of navigation we need to handle:
- * 1. DOMContentLoaded (entering the site) events
- * 2. popstate (browser back/forward button clicks) events
- * 3. `&lt;a hurl="x">` (link clicking)
- *
- * These events have different payloads and need to be
- * harmonized in order to use them consistently
- *
- * ## getting the `hurl` property from the various events:
- * 1. ev.target.location.hurl
- * 2. ev.target.location.hurl
- * 3. ev.target.hurl
- *
- * for raw events, we can just transform them, but for link
- * clicking we need to convert/wrap it to align with the
- * destructuring of the others
- *
- * see _HURL in `/commands/routing.js` for ad-hoc stream
- * injection example
- */
-export const DOMnavigated$ = merge({
-  src: [popstate$, DOMContentLoaded$]
-}).transform(
-  map(x => ({ [URL_]: x.target.location.href, [DOM_]: x.currentTarget }))
-)
-</code></pre>
+    
+        <h3 class="subsection-title">Members</h3>
+
+        
+            
+
+<h4 class="name" id=".DEFAULT_CFG">
+  <span class="type-signature">(static, constant) </span>DEFAULT_CFG<span class="type-signature"></span>
+</h4>
+
+
+
+
+  <div class="description">
+    <p>parse_URL constants</p>
+<table>
+<thead>
+<tr>
+<th>URL component key</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DOM</td>
+<td>DOM node target</td>
+</tr>
+<tr>
+<td>URL</td>
+<td>full URL/route</td>
+</tr>
+<tr>
+<td>URL_path</td>
+<td>route path as array</td>
+</tr>
+<tr>
+<td>URL_domain</td>
+<td>top-level domain as array</td>
+</tr>
+<tr>
+<td>URL_subdomain</td>
+<td>subdomain as array</td>
+</tr>
+<tr>
+<td>URL_query</td>
+<td>node querystring parsed URL parameters</td>
+</tr>
+<tr>
+<td>URL_hash</td>
+<td>hash string to/from URL if any</td>
+</tr>
+<tr>
+<td>URL_data</td>
+<td>data returned by router</td>
+</tr>
+<tr>
+<td>URL_page</td>
+<td>page component to render URL_data with</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>router config key</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>HEAD</td>
+<td>metadata wrapper for router (targets DOM <head>)</td>
+</tr>
+<tr>
+<td>BODY</td>
+<td>data wrapper for router</td>
+</tr>
+<tr>
+<td>prep</td>
+<td>pre-router behavior Task/Command injection</td>
+</tr>
+<tr>
+<td>post</td>
+<td>post=router behavior Task/Command injection</td>
+</tr>
+<tr>
+<td>prefix</td>
+<td>URL path string for the router to ignore</td>
+</tr>
+<tr>
+<td>router</td>
+<td>@thi.ng/EquivMap pattern matching function</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Command key</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>sub$</td>
+<td>Command primary/unique key (topic subscription)</td>
+</tr>
+<tr>
+<td>args</td>
+<td>multiple signature intra-Task Command state see <a href="">Spule</a></td>
+</tr>
+<tr>
+<td>reso</td>
+<td>intra-Command resolver of Promise args</td>
+</tr>
+<tr>
+<td>erro</td>
+<td>intra-Command handler for Promise args rejetions</td>
+</tr>
+<tr>
+<td>handler</td>
+<td>where Commands' actual &quot;work&quot; is done (side-fx/mutations)</td>
+</tr>
+<tr>
+<td>source$</td>
+<td>upstream (source stream) Command connector</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>boot config key</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>run</td>
+<td>primary userland dispatch function</td>
+</tr>
+<tr>
+<td>state</td>
+<td>global immutable state container</td>
+</tr>
+<tr>
+<td>root</td>
+<td>DOM mount node for application</td>
+</tr>
+<tr>
+<td>app</td>
+<td>root application view</td>
+</tr>
+<tr>
+<td>trace</td>
+<td>enable logging of every global state update</td>
+</tr>
+<tr>
+<td>draft</td>
+<td>state shape scaffolding</td>
+</tr>
+</tbody>
+</table>
+  </div>
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="store_constants.js.html">store/constants.js</a>, <a href="store_constants.js.html#line87">line 87</a>
+        </li>
+      </ul>
+    </dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+          
+        
+    
+
+    
+
+    
+
+    
   </article>
 </section>
 
-    
+
 
 
   </div>

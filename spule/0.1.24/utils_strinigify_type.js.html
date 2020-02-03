@@ -8,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>
-      utils/trace$.js - Documentation
+      utils/strinigify_type.js - Documentation
   </title>
 
   <link href="https://www.braintreepayments.com/images/favicon-ccda0b14.png" rel="icon" type="image/png">
@@ -72,7 +72,7 @@
 
   <nav>
     <h3 class="reference-title">
-      HURL Documentation
+      spule documentation
     </h3>
 
     
@@ -90,7 +90,7 @@
   <div id="main">
     
       <h1 class="page-title">
-        utils/trace$.js
+        utils/strinigify_type.js
       </h1>
     
 
@@ -99,24 +99,26 @@
 
 <section>
   <article>
-    <pre class="prettyprint source linenums"><code>import { trace } from "@thi.ng/rstream"
+    <pre class="prettyprint source linenums"><code>import { isObject, isFunction, isPromise } from "@thi.ng/checks"
 
+// prettier-ignore
 /**
- * ## `trace_stream`
+ * ### `stringify_type`
  *
- * simple ad-hoc tracer to log one of the streams emmissions
- * @param {string} log_prefix A string that is prepended to
- *                  console.log's of emissions from the
- *                  stream
- * @param {stream}
- * */
-export const trace$ = (log_prefix, stream) =>
-  stream.subscribeTopic
-    ? stream.subscribeTopic("_TRACE_STREAM", {
-        next: x => console.log(log_prefix, x),
-        error: console.warn
-      })
-    : stream.subscribe(trace(log_prefix))
+ * just a little convenience function
+ * takes some value and returns a string representation of its type
+ * this makes it easier to create a switch statement using types
+ *
+ * powered by [@thi.ng/checks](http://thi.ng/checks)
+ *
+ */
+export const stringify_type = x => {
+  if (isFunction(x) &amp;&amp; x.length === 0)  return "THUNK"
+  if (isFunction(x) &amp;&amp; x.length > 0)    return "FUNCTION"
+  if (isPromise(x))                     return "PROMISE"
+  if (isObject(x))                      return "OBJECT"
+                                        return "type_str NOT FOUND"
+}
 </code></pre>
   </article>
 </section>
