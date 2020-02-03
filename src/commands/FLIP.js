@@ -1,3 +1,5 @@
+/** @module Commands:FLIP */
+
 import { Atom } from "@thi.ng/atom"
 import { getIn } from "@thi.ng/paths"
 import { registerCMD } from "../register/primaries"
