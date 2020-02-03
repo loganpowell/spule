@@ -1,5 +1,5 @@
 /**
- * @module Commands: Routing
+ * @module Routing
  * @format
  */
 

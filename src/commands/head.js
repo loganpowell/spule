@@ -1,5 +1,5 @@
 /**
- * @module Commands: INJECT_HEAD
+ * @module INJECT_HEAD
  * @format
  */
 

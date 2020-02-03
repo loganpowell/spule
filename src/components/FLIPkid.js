@@ -1,5 +1,5 @@
 /**
- * @module Components: FLIP
+ * @module FLIP
  * @format
  */
 

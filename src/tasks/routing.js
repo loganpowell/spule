@@ -1,5 +1,5 @@
 /**
- * @module Tasks: Routing
+ * @module Routing
  * @format
  */
 

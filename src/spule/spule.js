@@ -1,5 +1,5 @@
 /**
- * @module Spule:core
+ * @module Core
  * @format
  */
 

@@ -1,5 +1,5 @@
 /**
- * @module Commands: SET_STATE
+ * @module SET_STATE
  * @format
  */
 

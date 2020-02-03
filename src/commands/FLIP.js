@@ -1,5 +1,5 @@
 /**
- * @module Commands: FLIP
+ * @module FLIP
  * @format
  */
 
