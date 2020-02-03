@@ -30,7 +30,7 @@ import {
   BODY_,
   STATE_,
   PATH_
-} from "../api"
+} from "../api.js"
 
 /**
  *

@@ -6,7 +6,7 @@
 import { Atom } from "@thi.ng/atom"
 import { isPlainObject } from "@thi.ng/checks"
 
-import { DEFAULT_CFG } from "../api"
+import { DEFAULT_CFG } from "../api.js"
 
 // Global $store$ Container from [@thi.ng/atom](http://thi.ng/atom)
 export const $store$ = new Atom(DEFAULT_CFG)

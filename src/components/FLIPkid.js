@@ -3,7 +3,13 @@
  * @format
  */
 
-import { FLIP_FIRST, FLIP_LAST_INVERSE_PLAY, HURL, run_, args_ } from "../api"
+import {
+  FLIP_FIRST,
+  FLIP_LAST_INVERSE_PLAY,
+  HURL,
+  run_,
+  args_
+} from "../api.js"
 
 /**
  * There're only 3 lifecycle hooks. render is called for

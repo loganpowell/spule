@@ -1,11 +1,11 @@
 export {
   FLIP_FIRST
 , FLIP_LAST_INVERSE_PLAY
-} from "../commands/FLIP.js"
+} from "./commands/FLIP.js"
 
 export {
   INJECT_HEAD
-} from "../commands/head.js"
+} from "./commands/head.js"
 
 export {
   HURL
@@ -13,18 +13,18 @@ export {
 , __HREF_PUSHSTATE_DOM
 , __NOTIFY_PRERENDER_DOM
 , __SET_LINK_ATTRS_DOM
-} from "../commands/routing.js"
+} from "./commands/routing.js"
 
 export {
   SET_STATE
-} from "../commands/state.js"
+} from "./commands/state.js"
 
 export {
   boot
 , registerCMD
 , registerRouter
 , registerRouterDOM
-} from "../core/registers.js"
+} from "./core/registers.js"
 
 export {
   DOMnavigated$
@@ -35,21 +35,21 @@ export {
 , popstate$
 , run$
 , task$
-} from "../core/spule.js"
+} from "./core/spule.js"
 
 export {
   $store$
   , set$$tate
-} from "../store/state.js"
+} from "./store/state.js"
 
 export {
   __URL_DOM__ROUTE
   , __URL__ROUTE
-} from "../tasks/routing.js"
+} from "./tasks/routing.js"
 
 export {
   FLIPkid
-} from "../components/FLIPkid.js"
+} from "./components/FLIPkid.js"
 
 export {
   BODY_
@@ -84,26 +84,26 @@ export {
 , state_
 , sub$_
 , trace_
-} from "../store/constants.js"
+} from "./store/constants.js"
 
 export {
   msTaskPromiseDelay
-} from "../utils/taskDelay"
+} from "./utils/taskDelay"
 export {
   diff_keys
-} from "../utils/diff_keys.js"
+} from "./utils/diff_keys.js"
 export {
   stringify_type
-} from "../utils/strinigify_type.js"
+} from "./utils/strinigify_type.js"
 export {
   trace$
-} from "../utils/trace$.js"
+} from "./utils/trace$.js"
 export {
   fURL,
   unfURL
-} from "../utils/URL.js"
+} from "./utils/URL.js"
 export {
   key_index_err,
   stringify_w_functions,
   x_key_ERR
-} from "../utils/xKey.js"
+} from "./utils/xKey.js"

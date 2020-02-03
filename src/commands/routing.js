@@ -13,7 +13,7 @@ import {
   sub$_,
   args_,
   handler_
-} from "../api"
+} from "../api.js"
 /**
  * we need to transform the payload to align with the
  * object structure of the native DOM events ('popstate'
