@@ -34,7 +34,7 @@ import { $store$ } from "../store"
 
 import { registerCMD } from "../commands"
 
-import { __URL_DOM__ROUTE, __URL__ROUTE } from "../tasks/task$.js"
+import { __URL_DOM__ROUTE, __URL__ROUTE } from "../tasks/routing.js"
 
 import { fURL, diff_keys } from "../utils"
 
