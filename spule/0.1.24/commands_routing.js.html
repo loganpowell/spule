@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>
-      registerCMD - Documentation
+      commands/routing.js - Documentation
   </title>
 
   <link href="https://www.braintreepayments.com/images/favicon-ccda0b14.png" rel="icon" type="image/png">
@@ -88,262 +90,157 @@
   <div id="main">
     
       <h1 class="page-title">
-        registerCMD
+        commands/routing.js
       </h1>
     
 
     
+      
 
 <section>
-  <header>
-    
-      
-  </header>
-
   <article>
-    <div class="container-overview">
-      
-        
+    <pre class="prettyprint source linenums"><code>/** @format */
 
-        
-      
-    </div>
+import { registerCMD } from "../register"
+import { fURL } from "../utils"
+import { DOMnavigated$ } from "../streams"
+import { DOM_, URL_, URL_path_, sub$_, args_, handler_ } from "../store"
+/**
+ * we need to transform the payload to align with the
+ * object structure of the native DOM events ('popstate'
+ * and 'DOMContentLoaded') payloads, so they're
+ * transformed correctly by the `navigated$` stream
+ * transforms
+ */
+export const HURLer = ev => {
+  // ev.preventDefault()
+  // console.log({ e })
+  let href = ev.target.href
+  let w_href = window.location.href
+  let parsed = fURL(w_href)
+  let w_path = `/${parsed[URL_path_].join("/")}`
+  // handle both absolute and root relative paths
+  if (href === w_href || href === w_path) return
 
-    
-
-    
-
-    
-
-     
-
-    
-
-    
-        <h3 class="subsection-title">Members</h3>
-
-        
-            
-
-<h4 class="name" id="~registered">
-  <span class="type-signature">(inner) </span>registered<span class="type-signature"></span>
-</h4>
-
-
-
-
-  <div class="description">
-    <h2><code>registerCMD</code></h2>
-<p>Takes a Command object with some additional information
-and returns a Command usable in a Task or as-is. This
-also serves the additional benefit of giving the user a
-constant to use instead of making any typos in keys
-during use.</p>
-<h3>Destructuring Behavior</h3>
-<p>During a <code>sub$</code> registration, the keys in the Command
-object are used to determine the signature of incoming
-Commands. In order to reduce the amount of boilerplate
-for Commands that only contain the <code>sub$</code> and <code>args</code> key,
-the <code>args</code> key is
-<a href="https://github.com/thi-ng/umbrella/blob/master/packages/transducers/src/xform/pluck.ts">pluck</a>ed
-from the incoming Commands. This pulls the <code>args</code> value
-out from the incoming Command objects to be used directly
-(without the need for dstructuring).</p>
-<h3>Example</h3>
-<pre class="prettyprint source lang-js"><code>import { registerCMD, run$ } from &quot;🍎&quot;
-
-const cmd_pathless = {
-  sub$: &quot;PATHLESS&quot;,
-  args: { static: &quot;payload&quot; }
+  DOMnavigated$.next({
+    target: { location: { href } },
+    currentTarget: ev.currentTarget
+  })
+  return ev
 }
 
-const pathless_handler = x => console.log(&quot;pathless ->&quot;, x)
+export const HURL = registerCMD({
+  [sub$_]: "HURL",
+  [args_]: ev => ev,
+  [handler_]: HURLer
+})
 
-const CMD_PATHLESS = registerCMD(cmd_pathless, pathless_handler)
-
-run$.next(CMD_PATHLESS) // 🏃
-// pathless -> { static: 'payload' }
-
-const cmd_path = {
-  sub$: &quot;PATH&quot;,
-  args: { static: &quot;payload&quot; },
-  path: [&quot;default&quot;, &quot;path&quot;]
+const setLinkAttrs = target => {
+  document.body.querySelectorAll("a[visited]").forEach(el => {
+    if (el.href === window.location.href) el.setAttribute("active", "")
+    else el.removeAttribute("active")
+  })
+  if (target.setAttribute) {
+    target.setAttribute("visited", "")
+    target.setAttribute("active", "")
+  }
 }
 
-const path_handler = x => console.log(&quot;path ->&quot;, x)
+/**
+ * ## `_SET_LINK_ATTRS_DOM`
+ *
+ * Routing Command: DOM-specific
+ *
+ * ### Payload: function
+ * default payload `args` signature:
+ * ```
+ * args: ({ DOM }) => ({ DOM }),
+ * ```
+ * Input = DOM node reference
+ *
+ * ### Handler: side-effecting
+ * Takes a DOM reference and queries all visited links. Sets
+ * current/clicked link as active and sets visted links that
+ * don't match current URL to inactive see `setLinkAttrs`
+ * function
+ *
+ */
+export const __SET_LINK_ATTRS_DOM = registerCMD({
+  [sub$_]: "__SET_LINK_ATTRS_DOM",
+  [args_]: acc => ({ [DOM_]: acc[DOM_] }),
+  [handler_]: args => setLinkAttrs(args[DOM_])
+})
 
-const CMD_PATH = registerCMD(cmd_path, path_handler)
+/**
+ * ## `_HREF_PUSHSTATE_DOM`
+ *
+ * Routing Command: DOM-specific
+ *
+ * ### Payload: function
+ * default payload `args` signature:
+ * ```
+ * args: ({ URL, DOM }) => ({ URL, DOM }),
+ * ```
+ * Takes a URL and a DOM reference
+ *
+ * ### Handler: side-effecting
+ * If the DOM reference is an `&lt;a>` element, uses
+ * `history.pushState` to add the clicked URL (plus the
+ * parsed URL from `parse_URL(URL)`) to the `history` object
+ *
+ * export const DOMnavigated$ = merge({
+ *   src: [popstate$, DOMContentLoaded$]
+ * }).transform(map(x => ({ URL: x.target.location.href, DOM: x.currentTarget })))
+ *
+ *
+ */
+export const __HREF_PUSHSTATE_DOM = registerCMD({
+  [sub$_]: "__HREF_PUSHSTATE_DOM",
+  [args_]: acc => ({ [URL_]: acc[URL_], [DOM_]: acc[DOM_] }),
+  [handler_]: args =>
+    !args[DOM_].document
+      ? history.pushState(fURL(args[URL_]), null, args[URL_])
+      : null
+})
 
-run$.next(CMD_PATH) // 🏃
-// path -> { args: { static: 'payload' }, path: [ 'default', 'path' ] }
-
-const test_pathless = {
-  sub$: &quot;PATHLESS&quot;,
-  args: &quot;🔥&quot;
-}
-
-run$.next(test_pathless) // 🏃
-// pathless -> &quot;🔥&quot;
-// as you can see, the Command args have been plucked out
-
-const test_path = {
-  sub$: &quot;PATH&quot;,
-  args: &quot;🌊&quot;,
-  path: [&quot;new&quot;, &quot;path&quot;]
-}
-
-run$.next(test_path) // 🏃
-// path -> { args: '🌊', path: [ 'new', 'path' ] }
-// only the sub$ entry has been removed leaving the rest
-
-// NOW: Let's stick these into a Task
-let TASK_1 = [
-  { ...CMD_PATH, path: &quot;overwritten&quot; },
-  CMD_PATHLESS,
-  { ...test_path, args: &quot;🍝&quot; }
-]
-run$.next(TASK_1)
-// path -> { args: { static: 'payload' }, path: 'overwritten' }
-// pathless -> { static: 'payload' }
-// path -> { args: '🍝', path: [ 'new', 'path' ] }
-
+/**
+ * ## `_NOTIFY_PRERENDER_DOM`
+ *
+ * ### Payload: static
+ * default payload `args` signature
+ * ```
+ * args: true,
+ * ```
+ * ### Handler: side-effecting
+ * Routing Command: DOM-specific (used for manually
+ * triggering `rendertron` prerenderer for bots/web-crawlers
+ *
+ *
+ * TODO: `jsdom` prerender testing
+ *
+ * basic `http` server that returns static content for
+ * certain user-agents
+ *
+ * import { JSDOM } from "jsdom"
+ *
+ * const document = (new JSDOM(...)).window.document
+ * document.addEventListener("rendered", () => {...scrape
+ * stuff here...
+ * })
+ *
+ *
+ */
+export const __NOTIFY_PRERENDER_DOM = registerCMD({
+  [sub$_]: "__NOTIFY_PRERENDER_DOM",
+  [args_]: true,
+  //👀 for prerenderer,
+  [handler_]: () => document.dispatchEvent(new Event("rendered"))
+})
 </code></pre>
-  </div>
-
-
-
-
-<dl class="details">
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source">
-      <ul class="dummy">
-        <li>
-          <a href="register_primaries.js.html">register/primaries.js</a>, <a href="register_primaries.js.html#line160">line 160</a>
-        </li>
-      </ul>
-    </dd>
-  
-
-  
-
-  
-
-  
-</dl>
-
-
-
-
-
-
-          
-        
-            
-
-<h4 class="name" id=".registerRouterDOM">
-  <span class="type-signature">(static, constant) </span>registerRouterDOM<span class="type-signature"></span>
-</h4>
-
-
-
-
-  <div class="description">
-    <p>expects payload of</p>
-<pre class="prettyprint source"><code>{ target: { location: { href } }, currentTarget }
-</code></pre>
-  </div>
-
-
-
-
-<dl class="details">
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source">
-      <ul class="dummy">
-        <li>
-          <a href="register_primaries.js.html">register/primaries.js</a>, <a href="register_primaries.js.html#line246">line 246</a>
-        </li>
-      </ul>
-    </dd>
-  
-
-  
-
-  
-
-  
-</dl>
-
-
-
-
-
-
-          
-        
-    
-
-    
-
-    
-
-    
   </article>
 </section>
 
-
+    
 
 
   </div>

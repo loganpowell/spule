@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>
-      registerCMD - Documentation
+      components/FLIPkid.js - Documentation
   </title>
 
   <link href="https://www.braintreepayments.com/images/favicon-ccda0b14.png" rel="icon" type="image/png">
@@ -88,262 +90,100 @@
   <div id="main">
     
       <h1 class="page-title">
-        registerCMD
+        components/FLIPkid.js
       </h1>
     
 
     
+      
 
 <section>
-  <header>
-    
-      
-  </header>
-
   <article>
-    <div class="container-overview">
-      
-        
+    <pre class="prettyprint source linenums"><code>/** @format */
 
-        
-      
-    </div>
+import { FLIP_FIRST, FLIP_LAST_INVERSE_PLAY, HURL } from "../commands"
+import { run_, args_ } from "../store"
 
-    
+/**
+ * There're only 3 lifecycle hooks. render is called for
+ * every update and is just providing the actual hiccup for
+ * that component. if that component is used the first time,
+ * the order is normalizeTree ->  render -> diff ->  init.
+ * The actual DOM element is only known when init is called,
+ * NEVER during render (though you could cache it as local
+ * component state). If during diffing it turns out the
+ * component is not used anymore, then release will be
+ * called
+ *
+ * if the object identity of your life cycle component
+ * changes with every update then that count as full
+ * replacement and would trigger init each time:
+ *
+ * https://github.com/thi-ng/umbrella/wiki/Higher-order-components
+ *
+ * init is called in so called "post-order", i.e. when it
+ * executes all children are already present in the DOM (and
+ * might have had their init hooks called) first time = 1st
+ * frame the component appears in the DOM
+ *
+ */
+const err_str = prop => `
+  No '${prop}' property found on FLIPkid firstChild. 
+  Ensure you are providing FLIPkid a component with an 
+  attributes object as its second argument with a ${prop}
+  property for proper FLIP routing.
+`
 
-    
+// const [tag, attrs, ..._args] = kid(ctx, ...args)
+// const { href } = attrs
 
-    
+const sim_event = href => ({
+  currentTarget: { document: null },
+  target: {
+    href
+  }
+})
 
-     
-
-    
-
-    
-        <h3 class="subsection-title">Members</h3>
-
-        
-            
-
-<h4 class="name" id="~registered">
-  <span class="type-signature">(inner) </span>registered<span class="type-signature"></span>
-</h4>
-
-
-
-
-  <div class="description">
-    <h2><code>registerCMD</code></h2>
-<p>Takes a Command object with some additional information
-and returns a Command usable in a Task or as-is. This
-also serves the additional benefit of giving the user a
-constant to use instead of making any typos in keys
-during use.</p>
-<h3>Destructuring Behavior</h3>
-<p>During a <code>sub$</code> registration, the keys in the Command
-object are used to determine the signature of incoming
-Commands. In order to reduce the amount of boilerplate
-for Commands that only contain the <code>sub$</code> and <code>args</code> key,
-the <code>args</code> key is
-<a href="https://github.com/thi-ng/umbrella/blob/master/packages/transducers/src/xform/pluck.ts">pluck</a>ed
-from the incoming Commands. This pulls the <code>args</code> value
-out from the incoming Command objects to be used directly
-(without the need for dstructuring).</p>
-<h3>Example</h3>
-<pre class="prettyprint source lang-js"><code>import { registerCMD, run$ } from &quot;🍎&quot;
-
-const cmd_pathless = {
-  sub$: &quot;PATHLESS&quot;,
-  args: { static: &quot;payload&quot; }
-}
-
-const pathless_handler = x => console.log(&quot;pathless ->&quot;, x)
-
-const CMD_PATHLESS = registerCMD(cmd_pathless, pathless_handler)
-
-run$.next(CMD_PATHLESS) // 🏃
-// pathless -> { static: 'payload' }
-
-const cmd_path = {
-  sub$: &quot;PATH&quot;,
-  args: { static: &quot;payload&quot; },
-  path: [&quot;default&quot;, &quot;path&quot;]
-}
-
-const path_handler = x => console.log(&quot;path ->&quot;, x)
-
-const CMD_PATH = registerCMD(cmd_path, path_handler)
-
-run$.next(CMD_PATH) // 🏃
-// path -> { args: { static: 'payload' }, path: [ 'default', 'path' ] }
-
-const test_pathless = {
-  sub$: &quot;PATHLESS&quot;,
-  args: &quot;🔥&quot;
-}
-
-run$.next(test_pathless) // 🏃
-// pathless -> &quot;🔥&quot;
-// as you can see, the Command args have been plucked out
-
-const test_path = {
-  sub$: &quot;PATH&quot;,
-  args: &quot;🌊&quot;,
-  path: [&quot;new&quot;, &quot;path&quot;]
-}
-
-run$.next(test_path) // 🏃
-// path -> { args: '🌊', path: [ 'new', 'path' ] }
-// only the sub$ entry has been removed leaving the rest
-
-// NOW: Let's stick these into a Task
-let TASK_1 = [
-  { ...CMD_PATH, path: &quot;overwritten&quot; },
-  CMD_PATHLESS,
-  { ...test_path, args: &quot;🍝&quot; }
-]
-run$.next(TASK_1)
-// path -> { args: { static: 'payload' }, path: 'overwritten' }
-// pathless -> { static: 'payload' }
-// path -> { args: '🍝', path: [ 'new', 'path' ] }
-
+export const FLIPkid = Object.freeze({
+  render: (ctx, ...rest) =>
+    // console.log("FLIPkid"),
+    [
+      "div",
+      {
+        onclick: ev => {
+          ev.preventDefault()
+          const target = ev.target
+          const href = target.getAttribute("href")
+          // console.log({ target, href })
+          if (!href) return new Error(err_str("href"))
+          ctx[run_]([
+            { ...HURL, [args_]: sim_event(href) },
+            { ...FLIP_FIRST, [args_]: { id: href, target } }
+          ])
+        }
+      },
+      ...rest
+    ],
+  init: (el, ctx) => {
+    // console.log({
+    //   el,
+    //   firstChild: el.firstChild,
+    //   id: el.firstChild.getAttribute("href")
+    // }),
+    ctx[run_]({
+      ...FLIP_LAST_INVERSE_PLAY,
+      [args_]: {
+        element: el.firstChild,
+        id: el.firstChild.getAttribute("href")
+      }
+    })
+  }
+})
 </code></pre>
-  </div>
-
-
-
-
-<dl class="details">
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source">
-      <ul class="dummy">
-        <li>
-          <a href="register_primaries.js.html">register/primaries.js</a>, <a href="register_primaries.js.html#line160">line 160</a>
-        </li>
-      </ul>
-    </dd>
-  
-
-  
-
-  
-
-  
-</dl>
-
-
-
-
-
-
-          
-        
-            
-
-<h4 class="name" id=".registerRouterDOM">
-  <span class="type-signature">(static, constant) </span>registerRouterDOM<span class="type-signature"></span>
-</h4>
-
-
-
-
-  <div class="description">
-    <p>expects payload of</p>
-<pre class="prettyprint source"><code>{ target: { location: { href } }, currentTarget }
-</code></pre>
-  </div>
-
-
-
-
-<dl class="details">
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source">
-      <ul class="dummy">
-        <li>
-          <a href="register_primaries.js.html">register/primaries.js</a>, <a href="register_primaries.js.html#line246">line 246</a>
-        </li>
-      </ul>
-    </dd>
-  
-
-  
-
-  
-
-  
-</dl>
-
-
-
-
-
-
-          
-        
-    
-
-    
-
-    
-
-    
   </article>
 </section>
 
-
+    
 
 
   </div>

@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>
-      registerCMD - Documentation
+      store/constants.js - Documentation
   </title>
 
   <link href="https://www.braintreepayments.com/images/favicon-ccda0b14.png" rel="icon" type="image/png">
@@ -88,262 +90,111 @@
   <div id="main">
     
       <h1 class="page-title">
-        registerCMD
+        store/constants.js
       </h1>
     
 
     
+      
 
 <section>
-  <header>
-    
-      
-  </header>
-
   <article>
-    <div class="container-overview">
-      
-        
-
-        
-      
-    </div>
-
-    
-
-    
-
-    
-
-     
-
-    
-
-    
-        <h3 class="subsection-title">Members</h3>
-
-        
-            
-
-<h4 class="name" id="~registered">
-  <span class="type-signature">(inner) </span>registered<span class="type-signature"></span>
-</h4>
-
-
-
-
-  <div class="description">
-    <h2><code>registerCMD</code></h2>
-<p>Takes a Command object with some additional information
-and returns a Command usable in a Task or as-is. This
-also serves the additional benefit of giving the user a
-constant to use instead of making any typos in keys
-during use.</p>
-<h3>Destructuring Behavior</h3>
-<p>During a <code>sub$</code> registration, the keys in the Command
-object are used to determine the signature of incoming
-Commands. In order to reduce the amount of boilerplate
-for Commands that only contain the <code>sub$</code> and <code>args</code> key,
-the <code>args</code> key is
-<a href="https://github.com/thi-ng/umbrella/blob/master/packages/transducers/src/xform/pluck.ts">pluck</a>ed
-from the incoming Commands. This pulls the <code>args</code> value
-out from the incoming Command objects to be used directly
-(without the need for dstructuring).</p>
-<h3>Example</h3>
-<pre class="prettyprint source lang-js"><code>import { registerCMD, run$ } from &quot;🍎&quot;
-
-const cmd_pathless = {
-  sub$: &quot;PATHLESS&quot;,
-  args: { static: &quot;payload&quot; }
-}
-
-const pathless_handler = x => console.log(&quot;pathless ->&quot;, x)
-
-const CMD_PATHLESS = registerCMD(cmd_pathless, pathless_handler)
-
-run$.next(CMD_PATHLESS) // 🏃
-// pathless -> { static: 'payload' }
-
-const cmd_path = {
-  sub$: &quot;PATH&quot;,
-  args: { static: &quot;payload&quot; },
-  path: [&quot;default&quot;, &quot;path&quot;]
-}
-
-const path_handler = x => console.log(&quot;path ->&quot;, x)
-
-const CMD_PATH = registerCMD(cmd_path, path_handler)
-
-run$.next(CMD_PATH) // 🏃
-// path -> { args: { static: 'payload' }, path: [ 'default', 'path' ] }
-
-const test_pathless = {
-  sub$: &quot;PATHLESS&quot;,
-  args: &quot;🔥&quot;
-}
-
-run$.next(test_pathless) // 🏃
-// pathless -> &quot;🔥&quot;
-// as you can see, the Command args have been plucked out
-
-const test_path = {
-  sub$: &quot;PATH&quot;,
-  args: &quot;🌊&quot;,
-  path: [&quot;new&quot;, &quot;path&quot;]
-}
-
-run$.next(test_path) // 🏃
-// path -> { args: '🌊', path: [ 'new', 'path' ] }
-// only the sub$ entry has been removed leaving the rest
-
-// NOW: Let's stick these into a Task
-let TASK_1 = [
-  { ...CMD_PATH, path: &quot;overwritten&quot; },
-  CMD_PATHLESS,
-  { ...test_path, args: &quot;🍝&quot; }
-]
-run$.next(TASK_1)
-// path -> { args: { static: 'payload' }, path: 'overwritten' }
-// pathless -> { static: 'payload' }
-// path -> { args: '🍝', path: [ 'new', 'path' ] }
-
-</code></pre>
-  </div>
-
-
-
-
-<dl class="details">
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source">
-      <ul class="dummy">
-        <li>
-          <a href="register_primaries.js.html">register/primaries.js</a>, <a href="register_primaries.js.html#line160">line 160</a>
-        </li>
-      </ul>
-    </dd>
-  
-
-  
-
-  
-
-  
-</dl>
-
-
-
-
-
-
-          
-        
-            
-
-<h4 class="name" id=".registerRouterDOM">
-  <span class="type-signature">(static, constant) </span>registerRouterDOM<span class="type-signature"></span>
-</h4>
-
-
-
-
-  <div class="description">
-    <p>expects payload of</p>
-<pre class="prettyprint source"><code>{ target: { location: { href } }, currentTarget }
-</code></pre>
-  </div>
-
-
-
-
-<dl class="details">
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source">
-      <ul class="dummy">
-        <li>
-          <a href="register_primaries.js.html">register/primaries.js</a>, <a href="register_primaries.js.html#line246">line 246</a>
-        </li>
-      </ul>
-    </dd>
-  
-
-  
-
-  
-
-  
-</dl>
-
-
-
-
-
-
-          
-        
-    
-
-    
-
-    
-
-    
+    <pre class="prettyprint source linenums"><code>/** @module constants */
+
+
+export const DOM_ = "DOM"
+export const URL_ = "URL"
+export const URL_path_ = "URL_path"
+export const URL_data_ = "URL_data"
+export const URL_domain_ = "URL_domain"
+export const URL_subdomain_ = "URL_subdomain"
+export const URL_query_ = "URL_query"
+export const URL_hash_ = "URL_hash"
+export const URL_page_ = "URL_page"
+
+// userland router metadata constants
+export const BODY_ = "BODY"
+export const HEAD_ = "HEAD"
+export const prep_ = "prep"
+export const post_ = "post"
+export const prefix_ = "prefix"
+export const router_ = "router"
+
+// state setting Command constants
+export const sub$_ = "sub$"
+export const args_ = "args"
+export const reso_ = "reso"
+export const erro_ = "erro"
+export const handler_ = "handler"
+export const source$_ = "source$"
+
+// boot config constants
+export const run_ = "run"
+export const state_ = "state"
+export const root_ = "root"
+export const app_ = "app"
+export const draft_ = "draft"
+export const trace_ = "trace"
+
+// Global state keys/constants
+export const ROUTE_PATH_ = "_ROUTE_PATH"
+export const ROUTE_LOADING_ = "_ROUTE_LOADING"
+export const PAGE_TEMPLATE_ = "_PAGE_TEMPLATE"
+export const ROOT_ = "_ROOT"
+
+/** 
+ * parse_URL constants
+ * 
+ * | URL component key | description |
+ * | --- | --- |        
+ * | DOM           | DOM node target                                           |
+ * | URL           | full URL/route                                            |
+ * | URL_path      | route path as array                                       |
+ * | URL_domain    | top-level domain as array                                 |
+ * | URL_subdomain | subdomain as array                                        |
+ * | URL_query     | node querystring parsed URL parameters                    |
+ * | URL_hash      | hash string to/from URL if any                            |
+ * | URL_data      | data returned by router                                   |
+ * | URL_page      | page component to render URL_data with                    |
+ * 
+ * | router config key | description |
+ * | --- | --- |        
+ * | HEAD          | metadata wrapper for router (targets DOM &lt;head>)          |
+ * | BODY          | data wrapper for router                                   |                        
+ * | prep          | pre-router behavior Task/Command injection                |
+ * | post          | post=router behavior Task/Command injection               |
+ * | prefix        | URL path string for the router to ignore                  |
+ * | router        | @thi.ng/EquivMap pattern matching function                |
+ * 
+ * | Command key | description |
+ * | --- | --- |        
+ * | sub$          | Command primary/unique key (topic subscription)           |
+ * | args          | multiple signature intra-Task Command state see [Spule]() |
+ * | reso          | intra-Command resolver of Promise args                    | 
+ * | erro          | intra-Command handler for Promise args rejetions          |
+ * | handler       | where Commands' actual "work" is done (side-fx/mutations) |
+ * | source$       | upstream (source stream) Command connector                |
+ * 
+ * | boot config key | description |
+ * | --- | --- |        
+ * | run           | primary userland dispatch function                        |
+ * | state         | global immutable state container                          |
+ * | root          | DOM mount node for application                            |
+ * | app           | root application view                                     |
+ * | trace         | enable logging of every global state update               |
+ * | draft         | state shape scaffolding                                   |
+ * 
+ */
+export const DEFAULT_CFG = {
+  [ROUTE_PATH_]: null, // home page / defaults to empty path
+  [ROUTE_LOADING_]: true,
+  [PAGE_TEMPLATE_]: null,
+  [ROOT_]: null
+}</code></pre>
   </article>
 </section>
 
-
+    
 
 
   </div>

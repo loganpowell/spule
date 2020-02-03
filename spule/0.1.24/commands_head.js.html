@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>
-      registerCMD - Documentation
+      commands/head.js - Documentation
   </title>
 
   <link href="https://www.braintreepayments.com/images/favicon-ccda0b14.png" rel="icon" type="image/png">
@@ -88,262 +90,110 @@
   <div id="main">
     
       <h1 class="page-title">
-        registerCMD
+        commands/head.js
       </h1>
     
 
     
+      
 
 <section>
-  <header>
-    
-      
-  </header>
-
   <article>
-    <div class="container-overview">
-      
-        
+    <pre class="prettyprint source linenums"><code>/** @format */
 
-        
-      
-    </div>
+import { registerCMD } from "../register"
+import { URL_data_, sub$_, args_, handler_, HEAD_ } from "../store"
 
-    
-
-    
-
-    
-
-     
-
-    
-
-    
-        <h3 class="subsection-title">Members</h3>
-
-        
-            
-
-<h4 class="name" id="~registered">
-  <span class="type-signature">(inner) </span>registered<span class="type-signature"></span>
-</h4>
-
-
-
-
-  <div class="description">
-    <h2><code>registerCMD</code></h2>
-<p>Takes a Command object with some additional information
-and returns a Command usable in a Task or as-is. This
-also serves the additional benefit of giving the user a
-constant to use instead of making any typos in keys
-during use.</p>
-<h3>Destructuring Behavior</h3>
-<p>During a <code>sub$</code> registration, the keys in the Command
-object are used to determine the signature of incoming
-Commands. In order to reduce the amount of boilerplate
-for Commands that only contain the <code>sub$</code> and <code>args</code> key,
-the <code>args</code> key is
-<a href="https://github.com/thi-ng/umbrella/blob/master/packages/transducers/src/xform/pluck.ts">pluck</a>ed
-from the incoming Commands. This pulls the <code>args</code> value
-out from the incoming Command objects to be used directly
-(without the need for dstructuring).</p>
-<h3>Example</h3>
-<pre class="prettyprint source lang-js"><code>import { registerCMD, run$ } from &quot;🍎&quot;
-
-const cmd_pathless = {
-  sub$: &quot;PATHLESS&quot;,
-  args: { static: &quot;payload&quot; }
+const setFavicon = href => {
+  let link =
+    document.querySelector("link[rel*='icon']") ||
+    document.createElement("link")
+  link.type = "image/x-icon"
+  link.rel = "shortcut icon"
+  link.href = href
+  document.getElementsByTagName("head")[0].appendChild(link)
 }
 
-const pathless_handler = x => console.log(&quot;pathless ->&quot;, x)
-
-const CMD_PATHLESS = registerCMD(cmd_pathless, pathless_handler)
-
-run$.next(CMD_PATHLESS) // 🏃
-// pathless -> { static: 'payload' }
-
-const cmd_path = {
-  sub$: &quot;PATH&quot;,
-  args: { static: &quot;payload&quot; },
-  path: [&quot;default&quot;, &quot;path&quot;]
+const replaceMeta = (obj = defalt_cfg) => {
+  Object.entries(obj).forEach(([key, val]) => {
+    try {
+      return {
+        HEAD_title: () => {
+          document.title = val
+        },
+        HEAD_meta: () => {
+          Object.entries(val).forEach(([prop, content]) => {
+            document.head.querySelector(
+              `meta[property="${prop}"]`
+            ).content = content
+          })
+        },
+        HEAD_favicon: () => setFavicon(val)
+      }[key]()
+    } catch (e) {
+      console.warn(e)
+    }
+  })
 }
 
-const path_handler = x => console.log(&quot;path ->&quot;, x)
-
-const CMD_PATH = registerCMD(cmd_path, path_handler)
-
-run$.next(CMD_PATH) // 🏃
-// path -> { args: { static: 'payload' }, path: [ 'default', 'path' ] }
-
-const test_pathless = {
-  sub$: &quot;PATHLESS&quot;,
-  args: &quot;🔥&quot;
+const defalt_cfg = {
+  meta: {
+    "og:title": "My thi.ng",
+    "og:image":
+      "https://github.com/loganpowell/ac/raw/master/assets/thing400x400.png",
+    "og:image:width": 400,
+    "og:image:height": 400,
+    "og:description": "web app",
+    "og:type": "website"
+  },
+  title: "My thi.ng",
+  favicon: "https://github.com/loganpowell/ac/raw/master/assets/favicon.ico"
 }
 
-run$.next(test_pathless) // 🏃
-// pathless -> &quot;🔥&quot;
-// as you can see, the Command args have been plucked out
+const conform_head = ({
+  title = defalt_cfg.meta.title,
+  description = defalt_cfg.meta["og:description"],
+  image: {
+    url = defalt_cfg.meta["og:image"],
+    height = defalt_cfg.meta["og:image:height"],
+    width = defalt_cfg.meta["og:image:width"]
+  },
+  favicon = defalt_cfg.favicon,
+  type = defalt_cfg.meta["og:type"]
+}) => ({
+  HEAD_meta: {
+    /**
+     * og:url can tell scrapers to ignore the page and
+     * scrape this instead. Would save scraping the whole
+     * page and might be friendlier for `jsdom`
+     */
+    // "og:url": history.state.URL,
+    "og:title": title,
+    "og:type": type,
+    "og:description": description,
+    "og:image:width": width,
+    "og:image:height": height,
+    "og:image": url
+  },
+  HEAD_title: title,
+  HEAD_favicon: favicon
+})
 
-const test_path = {
-  sub$: &quot;PATH&quot;,
-  args: &quot;🌊&quot;,
-  path: [&quot;new&quot;, &quot;path&quot;]
-}
-
-run$.next(test_path) // 🏃
-// path -> { args: '🌊', path: [ 'new', 'path' ] }
-// only the sub$ entry has been removed leaving the rest
-
-// NOW: Let's stick these into a Task
-let TASK_1 = [
-  { ...CMD_PATH, path: &quot;overwritten&quot; },
-  CMD_PATHLESS,
-  { ...test_path, args: &quot;🍝&quot; }
-]
-run$.next(TASK_1)
-// path -> { args: { static: 'payload' }, path: 'overwritten' }
-// pathless -> { static: 'payload' }
-// path -> { args: '🍝', path: [ 'new', 'path' ] }
-
+export const INJECT_HEAD = registerCMD({
+  // source$: DOMnavigated$,
+  [sub$_]: "INJECT_HEAD",
+  [args_]: acc => ({ [URL_data_]: acc[URL_data_] }),
+  [handler_]: ({
+    [URL_data_]: {
+      [HEAD_]: { title, description, image, favicon, type }
+    }
+  }) => replaceMeta(conform_head({ title, description, image, favicon, type }))
+})
 </code></pre>
-  </div>
-
-
-
-
-<dl class="details">
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source">
-      <ul class="dummy">
-        <li>
-          <a href="register_primaries.js.html">register/primaries.js</a>, <a href="register_primaries.js.html#line160">line 160</a>
-        </li>
-      </ul>
-    </dd>
-  
-
-  
-
-  
-
-  
-</dl>
-
-
-
-
-
-
-          
-        
-            
-
-<h4 class="name" id=".registerRouterDOM">
-  <span class="type-signature">(static, constant) </span>registerRouterDOM<span class="type-signature"></span>
-</h4>
-
-
-
-
-  <div class="description">
-    <p>expects payload of</p>
-<pre class="prettyprint source"><code>{ target: { location: { href } }, currentTarget }
-</code></pre>
-  </div>
-
-
-
-
-<dl class="details">
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source">
-      <ul class="dummy">
-        <li>
-          <a href="register_primaries.js.html">register/primaries.js</a>, <a href="register_primaries.js.html#line246">line 246</a>
-        </li>
-      </ul>
-    </dd>
-  
-
-  
-
-  
-
-  
-</dl>
-
-
-
-
-
-
-          
-        
-    
-
-    
-
-    
-
-    
   </article>
 </section>
 
-
+    
 
 
   </div>
