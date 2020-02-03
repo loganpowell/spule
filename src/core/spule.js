@@ -7,8 +7,11 @@ import { isFunction, isPromise } from "@thi.ng/checks"
 import { fromDOMEvent, merge, pubsub } from "@thi.ng/rstream"
 import { map } from "@thi.ng/transducers"
 
-import { stringify_type, x_key_ERR, key_index_err, diff_keys } from "../utils"
 import {
+  stringify_type,
+  x_key_ERR,
+  key_index_err,
+  diff_keys,
   sub$_,
   args_,
   reso_,
@@ -17,7 +20,7 @@ import {
   handler_,
   URL_,
   DOM_
-} from "../store"
+} from "../api"
 
 /**
  * # Stream Architecture:

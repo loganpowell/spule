@@ -3,9 +3,17 @@
  * @format
  */
 
-import { fURL } from "../utils"
-import { DOMnavigated$, registerCMD } from "../core"
-import { DOM_, URL_, URL_path_, sub$_, args_, handler_ } from "../store"
+import {
+  fURL,
+  DOMnavigated$,
+  registerCMD,
+  DOM_,
+  URL_,
+  URL_path_,
+  sub$_,
+  args_,
+  handler_
+} from "../api"
 /**
  * we need to transform the payload to align with the
  * object structure of the native DOM events ('popstate'

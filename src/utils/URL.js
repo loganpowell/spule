@@ -9,7 +9,7 @@ import {
   URL_query_,
   URL_hash_,
   URL_path_
-} from "../store"
+} from "../api"
 
 /**
  * # HREF/URL Parser
