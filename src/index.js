@@ -14,13 +14,16 @@ export {
   registerRouter,
   registerRouterDOM,
   DOMnavigated$,
-  run$
+  run$,
+  command$,
+  out$
 } from "./core"
 
 export { $store$, set$$tate } from "./store"
 
 export { FLIPkid } from "./components"
 
+export { __URL_DOM__ROUTE, __URL__ROUTE, task$ } from "./tasks"
 export {
   BODY_,
   DEFAULT_CFG,
