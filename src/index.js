@@ -11,7 +11,7 @@ export {
 
 export { 
   fURL
-// , unfURL 
+, unfURL 
 } from "./utils"
 
 export {
@@ -30,7 +30,7 @@ export {
 , task$
 , out$
 , run$
-} from "./streams"
+} from "./core"
 
 export { 
   FLIPkid 

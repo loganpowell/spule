@@ -11,7 +11,7 @@ import { updateDOM } from "@thi.ng/transducers-hdom"
 import { isFunction } from "@thi.ng/checks"
 import { getIn } from "@thi.ng/paths"
 
-import { command$, out$, run$, DOMnavigated$ } from "../streams"
+import { command$, out$, run$, DOMnavigated$ } from "../core"
 import {
   $store$,
   ROUTE_LOADING_,

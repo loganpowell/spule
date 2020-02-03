@@ -5,7 +5,7 @@
 
 import { isFunction, isPromise } from "@thi.ng/checks"
 import { stringify_type, x_key_ERR, key_index_err, diff_keys } from "../utils"
-import { command$ } from "../streams"
+import { command$ } from "./multiplex.js"
 import { sub$_, args_, reso_, erro_, source$_, handler_ } from "../store"
 
 const err_str = "Spool Interupted" // <- add doc link to error strings

@@ -29,6 +29,51 @@
 | `reso`    | Function | Promise resolution handler             | [PR]      |
 | `erro`    | Function | Promise rejection handler              | [PR]      |
 
+
+
+parse_URL constants
+
+| URL component key | description |
+| --- | --- |        
+| DOM           | DOM node target                                           |
+| URL           | full URL/route                                            |
+| URL_path      | route path as array                                       |
+| URL_domain    | top-level domain as array                                 |
+| URL_subdomain | subdomain as array                                        |
+| URL_query     | node querystring parsed URL parameters                    |
+| URL_hash      | hash string to/from URL if any                            |
+| URL_data      | data returned by router                                   |
+| URL_page      | page component to render URL_data with                    |
+
+| router config key | description |
+| --- | --- |        
+| HEAD          | metadata wrapper for router (targets DOM <head>)          |
+| BODY          | data wrapper for router                                   |
+| prep          | pre-router behavior Task/Command injection                |
+| post          | post=router behavior Task/Command injection               |
+| prefix        | URL path string for the router to ignore                  |
+| router        | @thi.ng/EquivMap pattern matching function                |
+
+| Command key | description |
+| --- | --- |        
+| sub$          | Command primary/unique key (topic subscription)           |
+| args          | multiple signature intra-Task Command state see [Spule]() |
+| reso          | intra-Command resolver of Promise args                    |
+| erro          | intra-Command handler for Promise args rejetions          |
+| handler       | where Commands' actual "work" is done (side-fx/mutations) |
+| source$       | upstream (source stream) Command connector                |
+
+| boot config key | description |
+| --- | --- |        
+| run           | primary userland dispatch function                        |
+| state         | global immutable state container                          |
+| root          | DOM mount node for application                            |
+| app           | root application view                                     |
+| trace         | enable logging of every global state update               |
+| draft         | state shape scaffolding                                   |
+
+
+
 ##### RG: Command _Registration_
 ##### DP: Command _Dispatch_
 ##### PR: Commands Containing _Promises_ (during dispatch)
