@@ -151,25 +151,7 @@ export const DOMnavigated$ = merge({
   map(x => ({ [URL_]: x.target.location.href, [DOM_]: x.currentTarget }))
 )
 
-/**
- * ## `task$`
- *
- * Batch processing stream, listens for Tasks sent as an
- * array of Commands (including subtask functions)
- *
- * stream (if array of event objects)
- *
- */
-export const task$ = run$.subscribeTopic(
-  false,
-  {
-    next: multiplex,
-    error: console.warn
-  },
-  { id: "task$_stream" }
-)
-
-const err_str = "Spool Interupted" // <- add doc link to error strings
+const err_str = "Spooling Interupted" // <- add doc link to error strings
 
 const nosub$_err = (c, i) =>
   console.warn(`
@@ -460,3 +442,21 @@ export const multiplex = task_array =>
     command$.next({ [sub$_]: sub$, [args_]: result })
     return { ...acc, ...result }
   }, Promise.resolve({}))
+
+/**
+ * ## `task$`
+ *
+ * Batch processing stream, listens for Tasks sent as an
+ * array of Commands (including subtask functions)
+ *
+ * stream (if array of event objects)
+ *
+ */
+export const task$ = run$.subscribeTopic(
+  false,
+  {
+    next: multiplex,
+    error: console.warn
+  },
+  { id: "task$_stream" }
+)
