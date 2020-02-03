@@ -5,12 +5,12 @@ export {
   INJECT_HEAD,
   HURL,
   HURLer,
-  SET_STATE
+  SET_STATE,
+  registerCMD
 } from "./commands"
 
 export {
   boot,
-  registerCMD,
   registerRouter,
   registerRouterDOM,
   DOMnavigated$,
