@@ -11,7 +11,6 @@ import { updateDOM } from "@thi.ng/transducers-hdom"
 import { isFunction } from "@thi.ng/checks"
 import { getIn } from "@thi.ng/paths"
 
-import { command$, out$, run$, DOMnavigated$ } from "../core"
 import {
   $store$,
   ROUTE_LOADING_,
@@ -37,6 +36,7 @@ import {
 } from "../store"
 import { __URL_DOM__ROUTE, __URL__ROUTE } from "../tasks"
 import { x_key_ERR, fURL, stringify_w_functions, diff_keys } from "../utils"
+import { command$, out$, run$, DOMnavigated$ } from "./spule.js"
 
 const err_str = "registerCMD"
 
@@ -171,7 +171,7 @@ export function registerCMD(command) {
 
   const knowns = [sub$_, args_, reso_, erro_, source$_, handler_]
   const [unknowns] = diff_keys(knowns, command)
-  console.log({ knowns, unknowns })
+  // console.log({ knowns, unknowns })
 
   /**
    * destructure the args component out of the emissions

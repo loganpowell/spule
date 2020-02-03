@@ -1,13 +1,18 @@
 export {
-  spule
+  multiplex
+, DOMContentLoaded$
+, DOMnavigated$
+, popstate$
+, command$
+, task$
+, log$
+, out$
+, run$
 } from "./spule.js"
+
 export {
-  DOMContentLoaded$
-  , DOMnavigated$
-  , popstate$
-  , command$
-  , task$
-  , log$
-  , out$
-  , run$
-} from "./multiplex.js"
+  boot
+, registerCMD
+, registerRouter
+, registerRouterDOM
+} from "./registers.js"

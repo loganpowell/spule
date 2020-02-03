@@ -3,9 +3,8 @@
  * @format
  */
 
-import { registerCMD } from "../register"
 import { fURL } from "../utils"
-import { DOMnavigated$ } from "../core"
+import { DOMnavigated$, registerCMD } from "../core"
 import { DOM_, URL_, URL_path_, sub$_, args_, handler_ } from "../store"
 /**
  * we need to transform the payload to align with the

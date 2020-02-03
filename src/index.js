@@ -15,21 +15,18 @@ export {
 } from "./utils"
 
 export {
-  registerRouter
-, registerRouterDOM
-, registerCMD
-, boot
-} from "./register"
-
-export {
   DOMnavigated$
-// , DOMContentLoaded$
-// , command$
-// , log$
-// , popstate$
-, task$
-// , out$
-, run$
+  , task$
+  , run$
+  , registerRouter
+  , registerRouterDOM
+  , registerCMD
+  , boot
+  // , DOMContentLoaded$
+  // , command$
+  // , log$
+  // , popstate$
+  // , out$
 } from "./core"
 
 export { 

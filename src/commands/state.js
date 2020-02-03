@@ -3,7 +3,7 @@
  * @format
  */
 
-import { registerCMD } from "../register"
+import { registerCMD } from "../core"
 import { set$$tate, sub$_, args_, handler_ } from "../store"
 
 export const SET_STATE = registerCMD({

@@ -4,6 +4,7 @@
  */
 
 import { isObject } from "@thi.ng/checks"
+
 import { fURL } from "../utils"
 import {
   __HREF_PUSHSTATE_DOM,
