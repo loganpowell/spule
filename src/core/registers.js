@@ -43,7 +43,7 @@ import {
   out$,
   run$,
   DOMnavigated$
-} from "../_api"
+} from "../api"
 
 const err_str = "registerCMD"
 

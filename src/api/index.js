@@ -47,8 +47,12 @@ export {
   , __URL__ROUTE
 } from "../tasks/routing.js"
 
+export {
+  FLIPkid
+} from "../components/FLIPkid.js"
+
 export * from "../store/constants.js"
-export * from "../components/FLIPkid.js"
+
 export * from "../utils/diff_keys.js"
 export * from "../utils/strinigify_type.js"
 export * from "../utils/trace$.js"

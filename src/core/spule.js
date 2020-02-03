@@ -20,7 +20,7 @@ import {
   handler_,
   URL_,
   DOM_
-} from "../_api"
+} from "../api"
 
 /**
  * # Stream Architecture:

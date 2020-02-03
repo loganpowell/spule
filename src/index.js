@@ -16,4 +16,4 @@ export {
 , FLIPkid 
 , $store$
 , set$$tate 
-} from "./_api"
+} from "./api"

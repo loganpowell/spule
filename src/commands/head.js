@@ -3,7 +3,7 @@
  * @format
  */
 
-import { registerCMD, URL_data_, sub$_, args_, handler_, HEAD_ } from "../_api"
+import { registerCMD, URL_data_, sub$_, args_, handler_, HEAD_ } from "../api"
 
 const setFavicon = href => {
   let link =
