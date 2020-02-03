@@ -51,10 +51,56 @@ export {
   FLIPkid
 } from "../components/FLIPkid.js"
 
-export * from "../store/constants.js"
+export {
+  BODY_
+, DEFAULT_CFG
+, DOM_
+, HEAD_
+, PAGE_TEMPLATE_
+, ROOT_
+, ROUTE_LOADING_
+, ROUTE_PATH_
+, URL_
+, URL_data_
+, URL_domain_
+, URL_hash_
+, URL_page_
+, URL_path_
+, URL_query_
+, URL_subdomain_
+, app_
+, args_
+, draft_
+, erro_
+, handler_
+, post_
+, prefix_
+, prep_
+, reso_
+, root_
+, router_
+, run_
+, source$_
+, state_
+, sub$_
+, trace_
+} from "../store/constants.js"
 
-export * from "../utils/diff_keys.js"
-export * from "../utils/strinigify_type.js"
-export * from "../utils/trace$.js"
-export * from "../utils/URL.js"
-export * from "../utils/xKey.js"
+export {
+  diff_keys
+} from "../utils/diff_keys.js"
+export {
+  stringify_type
+} from "../utils/strinigify_type.js"
+export {
+  trace$
+} from "../utils/trace$.js"
+export {
+  fURL,
+  unfURL
+} from "../utils/URL.js"
+export {
+  key_index_err,
+  stringify_w_functions,
+  x_key_ERR
+} from "../utils/xKey.js"
