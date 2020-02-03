@@ -136,7 +136,7 @@ export const DOMContentLoaded$ = fromDOMEvent(window, "DOMContentLoaded")
  * There are three types of navigation we need to handle:
  * 1. DOMContentLoaded (entering the site) events
  * 2. popstate (browser back/forward button clicks) events
- * 3. <a hurl="x"> (link clicking)
+ * 3. `<a hurl="x">` (link clicking)
  *
  * These events have different payloads and need to be
  * harmonized in order to use them consistently
