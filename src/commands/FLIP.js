@@ -211,13 +211,13 @@ const FLIPLastInvertPlay = ({
 /**
  * What's happening:
  * - on first click (render)
- *  - rect registered
- *  - frame registered
+ * - rect registered
+ * - frame registered
  * - navs
  * - on init of new DOM
- *  - checks for rect & frame
- *  - uses rect & frame to calc diff
- *  - PLAY
+ * - checks for rect & frame
+ * - uses rect & frame to calc diff
+ * - PLAY
  */
 
 const state = new Atom({})

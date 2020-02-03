@@ -9,7 +9,7 @@ import { FLIP_FIRST, FLIP_LAST_INVERSE_PLAY, HURL, run_, args_ } from "../api"
  * There're only 3 lifecycle hooks. render is called for
  * every update and is just providing the actual hiccup for
  * that component. if that component is used the first time,
- * the order is normalizeTree ->  render -> diff ->  init.
+ * the order is normalizeTree -> render -> diff -> init.
  * The actual DOM element is only known when init is called,
  * NEVER during render (though you could cache it as local
  * component state). If during diffing it turns out the
