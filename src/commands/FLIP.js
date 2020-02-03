@@ -5,7 +5,7 @@
 
 import { Atom } from "@thi.ng/atom"
 import { getIn } from "@thi.ng/paths"
-import { registerCMD, sub$_, args_, handler_ } from "../api"
+import { registerCMD, sub$_, args_, handler_ } from "../_api"
 
 //
 //    d8                  888
