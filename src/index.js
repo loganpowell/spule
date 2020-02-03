@@ -58,7 +58,7 @@ import {
 
 import { trace$, fURL, unfURL } from "./utils"
 
-export default {
+module.exports = {
   FLIP_FIRST,
   FLIP_LAST_INVERSE_PLAY,
   INJECT_HEAD,
