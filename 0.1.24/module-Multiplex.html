@@ -82,7 +82,7 @@
       
     
 
-    <h3>Modules</h3><ul><li id="FLIP-nav"><a href="module-FLIP.html">FLIP</a><ul class='methods'><li data-type="method" id="FLIP-FLIPFirst-nav"><a href="module-FLIP.html#~FLIPFirst">FLIPFirst</a></li><li data-type="method" id="FLIP-zIndex-nav"><a href="module-FLIP.html#~zIndex">zIndex</a></li><li data-type="method" id="FLIP-FLIPLastInvertPlay-nav"><a href="module-FLIP.html#~FLIPLastInvertPlay">FLIPLastInvertPlay</a></li><li data-type="method" id="FLIP-err_str-nav"><a href="module-FLIP.html#~err_str">err_str</a></li></ul></li><li id="INJECT_HEAD-nav"><a href="module-INJECT_HEAD.html">INJECT_HEAD</a></li><li id="Routing-nav"><a href="module-Routing.html">Routing</a></li><li id="SET_STATE-nav"><a href="module-SET_STATE.html">SET_STATE</a></li><li id="Registration-nav"><a href="module-Registration.html">Registration</a></li><li id="Core-nav"><a href="module-Core.html">Core</a></li><li id="Constants-nav"><a href="module-Constants.html">Constants</a></li><li id="set$$tate-nav"><a href="module-set$tate.html">set$$tate</a></li><li id="Multiplex-nav"><a href="module-Multiplex.html">Multiplex</a></li></ul><h3 id="global-nav">Global</h3><ul><li><a href="global.html#diff_keys">diff_keys</a></li><li><a href="global.html#stringify_type">stringify_type</a></li><li><a href="global.html#trace$">trace$</a></li><li><a href="global.html#fURL">fURL</a></li><li><a href="global.html#unfURL">unfURL</a></li><li><a href="global.html#stringify_w_functions">stringify_w_functions</a></li><li><a href="global.html#x_key_ERR">x_key_ERR</a></li></ul>
+    <h3>Modules</h3><ul><li id="Constants-nav"><a href="module-Constants.html">Constants</a></li><li id="Core-nav"><a href="module-Core.html">Core</a></li><li id="FLIP-nav"><a href="module-FLIP.html">FLIP</a><ul class='methods'><li data-type="method" id="FLIP-err_str-nav"><a href="module-FLIP.html#~err_str">err_str</a></li><li data-type="method" id="FLIP-FLIPFirst-nav"><a href="module-FLIP.html#~FLIPFirst">FLIPFirst</a></li><li data-type="method" id="FLIP-FLIPLastInvertPlay-nav"><a href="module-FLIP.html#~FLIPLastInvertPlay">FLIPLastInvertPlay</a></li><li data-type="method" id="FLIP-zIndex-nav"><a href="module-FLIP.html#~zIndex">zIndex</a></li></ul></li><li id="INJECT_HEAD-nav"><a href="module-INJECT_HEAD.html">INJECT_HEAD</a></li><li id="Multiplex-nav"><a href="module-Multiplex.html">Multiplex</a></li><li id="Registration-nav"><a href="module-Registration.html">Registration</a></li><li id="Routing-nav"><a href="module-Routing.html">Routing</a></li><li id="set$$tate-nav"><a href="module-set$tate.html">set$$tate</a></li><li id="SET_STATE-nav"><a href="module-SET_STATE.html">SET_STATE</a></li></ul><h3 id="global-nav">Global</h3><ul><li><a href="global.html#diff_keys">diff_keys</a></li><li><a href="global.html#fURL">fURL</a></li><li><a href="global.html#stringify_type">stringify_type</a></li><li><a href="global.html#stringify_w_functions">stringify_w_functions</a></li><li><a href="global.html#trace$">trace$</a></li><li><a href="global.html#unfURL">unfURL</a></li><li><a href="global.html#x_key_ERR">x_key_ERR</a></li></ul>
   </nav>
 
   <div id="main">
@@ -122,6 +122,231 @@
     
         <h3 class="subsection-title">Members</h3>
 
+        
+            
+
+<h4 class="name" id=".command$">
+  <span class="type-signature">(static, constant) </span>command$<span class="type-signature"></span>
+</h4>
+
+
+
+
+  <div class="description">
+    <h2><code>command$</code></h2>
+<p>Primary fork/bisect stream for indivual commands.
+attached to a <code>pubsub</code> stemming from this stream. The
+<code>topic</code> function used to alert downstream handlers is a
+simple lookup of the <code>sub$</code> key of the command</p>
+  </div>
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="streams_multiplex.js.html">streams/multiplex.js</a>, <a href="streams_multiplex.js.html#line103">line 103</a>
+        </li>
+      </ul>
+    </dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+          
+        
+            
+
+<h4 class="name" id=".DOMnavigated$">
+  <span class="type-signature">(static, constant) </span>DOMnavigated$<span class="type-signature"></span>
+</h4>
+
+
+
+
+  <div class="description">
+    <p>There are three types of navigation we need to handle:</p>
+<ol>
+<li>DOMContentLoaded (entering the site) events</li>
+<li>popstate (browser back/forward button clicks) events</li>
+<li><code>&lt;a hurl=&quot;x&quot;&gt;</code> (link clicking)</li>
+</ol>
+<p>These events have different payloads and need to be
+harmonized in order to use them consistently</p>
+<h2>getting the <code>hurl</code> property from the various events:</h2>
+<ol>
+<li>ev.target.location.hurl</li>
+<li>ev.target.location.hurl</li>
+<li>ev.target.hurl</li>
+</ol>
+<p>for raw events, we can just transform them, but for link
+clicking we need to convert/wrap it to align with the
+destructuring of the others</p>
+<p>see _HURL in <code>/commands/routing.js</code> for ad-hoc stream
+injection example</p>
+  </div>
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="streams_multiplex.js.html">streams/multiplex.js</a>, <a href="streams_multiplex.js.html#line156">line 156</a>
+        </li>
+      </ul>
+    </dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+          
+        
+            
+
+<h4 class="name" id=".out$">
+  <span class="type-signature">(static, constant) </span>out$<span class="type-signature"></span>
+</h4>
+
+
+
+
+  <div class="description">
+    <h2><code>out$</code></h2>
+<p>Primary user-land <em>READ</em> stream. For attaching handlers
+for responding to emmitted Commands</p>
+  </div>
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="streams_multiplex.js.html">streams/multiplex.js</a>, <a href="streams_multiplex.js.html#line88">line 88</a>
+        </li>
+      </ul>
+    </dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+          
         
             
 
@@ -244,146 +469,6 @@ sent to the <code>task$</code> stream.</p>
         
             
 
-<h4 class="name" id=".out$">
-  <span class="type-signature">(static, constant) </span>out$<span class="type-signature"></span>
-</h4>
-
-
-
-
-  <div class="description">
-    <h2><code>out$</code></h2>
-<p>Primary user-land <em>READ</em> stream. For attaching handlers
-for responding to emmitted Commands</p>
-  </div>
-
-
-
-
-<dl class="details">
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source">
-      <ul class="dummy">
-        <li>
-          <a href="streams_multiplex.js.html">streams/multiplex.js</a>, <a href="streams_multiplex.js.html#line88">line 88</a>
-        </li>
-      </ul>
-    </dd>
-  
-
-  
-
-  
-
-  
-</dl>
-
-
-
-
-
-
-          
-        
-            
-
-<h4 class="name" id=".command$">
-  <span class="type-signature">(static, constant) </span>command$<span class="type-signature"></span>
-</h4>
-
-
-
-
-  <div class="description">
-    <h2><code>command$</code></h2>
-<p>Primary fork/bisect stream for indivual commands.
-attached to a <code>pubsub</code> stemming from this stream. The
-<code>topic</code> function used to alert downstream handlers is a
-simple lookup of the <code>sub$</code> key of the command</p>
-  </div>
-
-
-
-
-<dl class="details">
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source">
-      <ul class="dummy">
-        <li>
-          <a href="streams_multiplex.js.html">streams/multiplex.js</a>, <a href="streams_multiplex.js.html#line103">line 103</a>
-        </li>
-      </ul>
-    </dd>
-  
-
-  
-
-  
-
-  
-</dl>
-
-
-
-
-
-
-          
-        
-            
-
 <h4 class="name" id=".task$">
   <span class="type-signature">(static, constant) </span>task$<span class="type-signature"></span>
 </h4>
@@ -433,91 +518,6 @@ array of Commands (including subtask functions)</p>
       <ul class="dummy">
         <li>
           <a href="streams_multiplex.js.html">streams/multiplex.js</a>, <a href="streams_multiplex.js.html#line121">line 121</a>
-        </li>
-      </ul>
-    </dd>
-  
-
-  
-
-  
-
-  
-</dl>
-
-
-
-
-
-
-          
-        
-            
-
-<h4 class="name" id=".DOMnavigated$">
-  <span class="type-signature">(static, constant) </span>DOMnavigated$<span class="type-signature"></span>
-</h4>
-
-
-
-
-  <div class="description">
-    <p>There are three types of navigation we need to handle:</p>
-<ol>
-<li>DOMContentLoaded (entering the site) events</li>
-<li>popstate (browser back/forward button clicks) events</li>
-<li><code>&lt;a hurl=&quot;x&quot;&gt;</code> (link clicking)</li>
-</ol>
-<p>These events have different payloads and need to be
-harmonized in order to use them consistently</p>
-<h2>getting the <code>hurl</code> property from the various events:</h2>
-<ol>
-<li>ev.target.location.hurl</li>
-<li>ev.target.location.hurl</li>
-<li>ev.target.hurl</li>
-</ol>
-<p>for raw events, we can just transform them, but for link
-clicking we need to convert/wrap it to align with the
-destructuring of the others</p>
-<p>see _HURL in <code>/commands/routing.js</code> for ad-hoc stream
-injection example</p>
-  </div>
-
-
-
-
-<dl class="details">
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source">
-      <ul class="dummy">
-        <li>
-          <a href="streams_multiplex.js.html">streams/multiplex.js</a>, <a href="streams_multiplex.js.html#line156">line 156</a>
         </li>
       </ul>
     </dd>
