@@ -2,7 +2,7 @@
   "name": "spule",
   "author": "Logan Powell",
   "license": "MIT",
-  "version": "0.1.37",
+  "version": "0.1.38",
   "description": "a state management library for single page applications",
   "main": "src/index.js",
   "repository": "https://github.com/loganpowell/spule",
