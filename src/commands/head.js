@@ -3,14 +3,9 @@
  * @format
  */
 
-import {
-  registerCMD,
-  URL_data_,
-  sub$_,
-  args_,
-  handler_,
-  HEAD_
-} from "../api.js"
+import { URL_data_, sub$_, args_, handler_, HEAD_ } from "../constants.js"
+
+import { registerCMD } from "./register.js"
 
 const setFavicon = href => {
   let link =

@@ -9,12 +9,14 @@ import {
   __HREF_PUSHSTATE_DOM,
   __NOTIFY_PRERENDER_DOM,
   __SET_LINK_ATTRS_DOM,
-  SET_STATE,
+  SET_STATE
   // msTaskPromiseDelay,
+} from "../commands"
+
+import {
   PAGE_TEMPLATE_,
   ROUTE_LOADING_,
   ROUTE_PATH_,
-  fURL,
   DOM_,
   URL_,
   URL_data_,
@@ -30,7 +32,9 @@ import {
   BODY_,
   STATE_,
   PATH_
-} from "../api.js"
+} from "../constants.js"
+
+import { fURL } from "../utils"
 
 /**
  *

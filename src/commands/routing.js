@@ -2,18 +2,11 @@
  * @module Routing
  * @format
  */
+import { fURL } from "../utils"
+import { DOMnavigated$ } from "../core/stream$.js"
+import { DOM_, URL_, URL_path_, sub$_, args_, handler_ } from "../constants.js"
 
-import {
-  fURL,
-  DOMnavigated$,
-  registerCMD,
-  DOM_,
-  URL_,
-  URL_path_,
-  sub$_,
-  args_,
-  handler_
-} from "../api.js"
+import { registerCMD } from "./register.js"
 /**
  * we need to transform the payload to align with the
  * object structure of the native DOM events ('popstate'

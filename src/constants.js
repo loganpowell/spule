@@ -16,6 +16,10 @@ export const post_ = "post"
 export const prefix_ = "prefix"
 export const router_ = "router"
 
+// set$$tate constants
+export const PATH_ = "PATH"
+export const STATE_ = "STATE"
+
 // state setting Command constants
 export const sub$_ = "sub$"
 export const args_ = "args"
@@ -37,6 +41,7 @@ export const ROUTE_PATH_ = "_ROUTE_PATH"
 export const ROUTE_LOADING_ = "_ROUTE_LOADING"
 export const PAGE_TEMPLATE_ = "_PAGE_TEMPLATE"
 export const ROOT_ = "_ROOT"
+
 
 export const DEFAULT_CFG = {
   [ROUTE_PATH_]: null, // home page / defaults to empty path

@@ -1,41 +1,28 @@
 export {
   FLIP_FIRST
 , FLIP_LAST_INVERSE_PLAY
-} from "./commands/FLIP.js"
-
-export {
-  INJECT_HEAD
-} from "./commands/head.js"
-
-export {
-  HURL
-, HURLer
-} from "./commands/routing.js"
-
-export {
-  SET_STATE
-} from "./commands/state.js"
+, INJECT_HEAD
+, HURL
+, HURLer, SET_STATE
+} from "./commands"
 
 export {
   boot
 , registerCMD
 , registerRouter
 , registerRouterDOM
-} from "./core/registers.js"
-
-export {
-  DOMnavigated$
+, DOMnavigated$
 , run$
-} from "./core/spule.js"
+} from "./core"
 
 export {
   $store$
 , set$$tate
-} from "./store/state.js"
+} from "./store"
 
 export {
   FLIPkid
-} from "./components/FLIPkid.js"
+} from "./components"
 
 export {
   BODY_
@@ -70,12 +57,10 @@ export {
 , state_
 , sub$_
 , trace_
-} from "./store/constants.js"
+} from "./constants.js"
 
 export {
   trace$
-} from "./utils/trace$.js"
-export {
-  fURL,
-  unfURL
-} from "./utils/URL.js"
+, fURL
+, unfURL
+} from "./utils"
