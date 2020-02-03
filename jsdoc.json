@@ -13,7 +13,7 @@
   ],
   "templates": {
     "referenceTitle": "spule documentation",
-    "disableSort": true, 
+    "disableSort": false, 
     "collapse": true,
     "resources": {
       "@thi.ng/umbrella": "http://thi.ng/umbrella"

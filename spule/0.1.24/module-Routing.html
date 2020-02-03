@@ -82,7 +82,7 @@
       
     
 
-    <h3>Modules</h3><ul><li id="FLIP-nav"><a href="module-FLIP.html">FLIP</a><ul class='methods'><li data-type="method" id="FLIP-FLIPFirst-nav"><a href="module-FLIP.html#~FLIPFirst">FLIPFirst</a></li><li data-type="method" id="FLIP-zIndex-nav"><a href="module-FLIP.html#~zIndex">zIndex</a></li><li data-type="method" id="FLIP-FLIPLastInvertPlay-nav"><a href="module-FLIP.html#~FLIPLastInvertPlay">FLIPLastInvertPlay</a></li><li data-type="method" id="FLIP-err_str-nav"><a href="module-FLIP.html#~err_str">err_str</a></li></ul></li><li id="INJECT_HEAD-nav"><a href="module-INJECT_HEAD.html">INJECT_HEAD</a></li><li id="Routing-nav"><a href="module-Routing.html">Routing</a></li><li id="SET_STATE-nav"><a href="module-SET_STATE.html">SET_STATE</a></li><li id="Registration-nav"><a href="module-Registration.html">Registration</a></li><li id="Core-nav"><a href="module-Core.html">Core</a></li><li id="Constants-nav"><a href="module-Constants.html">Constants</a></li><li id="set$$tate-nav"><a href="module-set$tate.html">set$$tate</a></li><li id="Multiplex-nav"><a href="module-Multiplex.html">Multiplex</a></li></ul><h3 id="global-nav">Global</h3><ul><li><a href="global.html#diff_keys">diff_keys</a></li><li><a href="global.html#stringify_type">stringify_type</a></li><li><a href="global.html#trace$">trace$</a></li><li><a href="global.html#fURL">fURL</a></li><li><a href="global.html#unfURL">unfURL</a></li><li><a href="global.html#stringify_w_functions">stringify_w_functions</a></li><li><a href="global.html#x_key_ERR">x_key_ERR</a></li></ul>
+    <h3>Modules</h3><ul><li id="Constants-nav"><a href="module-Constants.html">Constants</a></li><li id="Core-nav"><a href="module-Core.html">Core</a></li><li id="FLIP-nav"><a href="module-FLIP.html">FLIP</a><ul class='methods'><li data-type="method" id="FLIP-err_str-nav"><a href="module-FLIP.html#~err_str">err_str</a></li><li data-type="method" id="FLIP-FLIPFirst-nav"><a href="module-FLIP.html#~FLIPFirst">FLIPFirst</a></li><li data-type="method" id="FLIP-FLIPLastInvertPlay-nav"><a href="module-FLIP.html#~FLIPLastInvertPlay">FLIPLastInvertPlay</a></li><li data-type="method" id="FLIP-zIndex-nav"><a href="module-FLIP.html#~zIndex">zIndex</a></li></ul></li><li id="INJECT_HEAD-nav"><a href="module-INJECT_HEAD.html">INJECT_HEAD</a></li><li id="Multiplex-nav"><a href="module-Multiplex.html">Multiplex</a></li><li id="Registration-nav"><a href="module-Registration.html">Registration</a></li><li id="Routing-nav"><a href="module-Routing.html">Routing</a></li><li id="set$$tate-nav"><a href="module-set$tate.html">set$$tate</a></li><li id="SET_STATE-nav"><a href="module-SET_STATE.html">SET_STATE</a></li></ul><h3 id="global-nav">Global</h3><ul><li><a href="global.html#diff_keys">diff_keys</a></li><li><a href="global.html#fURL">fURL</a></li><li><a href="global.html#stringify_type">stringify_type</a></li><li><a href="global.html#stringify_w_functions">stringify_w_functions</a></li><li><a href="global.html#trace$">trace$</a></li><li><a href="global.html#unfURL">unfURL</a></li><li><a href="global.html#x_key_ERR">x_key_ERR</a></li></ul>
   </nav>
 
   <div id="main">
@@ -122,155 +122,6 @@
     
         <h3 class="subsection-title">Members</h3>
 
-        
-            
-
-<h4 class="name" id=".HURLer">
-  <span class="type-signature">(static, constant) </span>HURLer<span class="type-signature"></span>
-</h4>
-
-
-
-
-  <div class="description">
-    <p>we need to transform the payload to align with the
-object structure of the native DOM events ('popstate'
-and 'DOMContentLoaded') payloads, so they're
-transformed correctly by the <code>navigated$</code> stream
-transforms</p>
-  </div>
-
-
-
-
-<dl class="details">
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source">
-      <ul class="dummy">
-        <li>
-          <a href="commands_routing.js.html">commands/routing.js</a>, <a href="commands_routing.js.html#line17">line 17</a>
-        </li>
-      </ul>
-    </dd>
-  
-
-  
-
-  
-
-  
-</dl>
-
-
-
-
-
-
-          
-        
-            
-
-<h4 class="name" id=".__SET_LINK_ATTRS_DOM">
-  <span class="type-signature">(static, constant) </span>__SET_LINK_ATTRS_DOM<span class="type-signature"></span>
-</h4>
-
-
-
-
-  <div class="description">
-    <h2><code>_SET_LINK_ATTRS_DOM</code></h2>
-<p>Routing Command: DOM-specific</p>
-<h3>Payload: function</h3>
-<p>default payload <code>args</code> signature:</p>
-<pre class="prettyprint source"><code>args: ({ DOM }) => ({ DOM }),
-</code></pre>
-<p>Input = DOM node reference</p>
-<h3>Handler: side-effecting</h3>
-<p>Takes a DOM reference and queries all visited links. Sets
-current/clicked link as active and sets visted links that
-don't match current URL to inactive see <code>setLinkAttrs</code>
-function</p>
-  </div>
-
-
-
-
-<dl class="details">
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source">
-      <ul class="dummy">
-        <li>
-          <a href="commands_routing.js.html">commands/routing.js</a>, <a href="commands_routing.js.html#line70">line 70</a>
-        </li>
-      </ul>
-    </dd>
-  
-
-  
-
-  
-
-  
-</dl>
-
-
-
-
-
-
-          
         
             
 
@@ -415,6 +266,84 @@ stuff here...
       <ul class="dummy">
         <li>
           <a href="commands_routing.js.html">commands/routing.js</a>, <a href="commands_routing.js.html#line135">line 135</a>
+        </li>
+      </ul>
+    </dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+          
+        
+            
+
+<h4 class="name" id=".__SET_LINK_ATTRS_DOM">
+  <span class="type-signature">(static, constant) </span>__SET_LINK_ATTRS_DOM<span class="type-signature"></span>
+</h4>
+
+
+
+
+  <div class="description">
+    <h2><code>_SET_LINK_ATTRS_DOM</code></h2>
+<p>Routing Command: DOM-specific</p>
+<h3>Payload: function</h3>
+<p>default payload <code>args</code> signature:</p>
+<pre class="prettyprint source"><code>args: ({ DOM }) => ({ DOM }),
+</code></pre>
+<p>Input = DOM node reference</p>
+<h3>Handler: side-effecting</h3>
+<p>Takes a DOM reference and queries all visited links. Sets
+current/clicked link as active and sets visted links that
+don't match current URL to inactive see <code>setLinkAttrs</code>
+function</p>
+  </div>
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="commands_routing.js.html">commands/routing.js</a>, <a href="commands_routing.js.html#line70">line 70</a>
         </li>
       </ul>
     </dd>
@@ -593,6 +522,77 @@ Commands to leverage the returned data (<code>{ data, page }</code>)</p>
       <ul class="dummy">
         <li>
           <a href="tasks_routing.js.html">tasks/routing.js</a>, <a href="tasks_routing.js.html#line176">line 176</a>
+        </li>
+      </ul>
+    </dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+          
+        
+            
+
+<h4 class="name" id=".HURLer">
+  <span class="type-signature">(static, constant) </span>HURLer<span class="type-signature"></span>
+</h4>
+
+
+
+
+  <div class="description">
+    <p>we need to transform the payload to align with the
+object structure of the native DOM events ('popstate'
+and 'DOMContentLoaded') payloads, so they're
+transformed correctly by the <code>navigated$</code> stream
+transforms</p>
+  </div>
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="commands_routing.js.html">commands/routing.js</a>, <a href="commands_routing.js.html#line17">line 17</a>
         </li>
       </ul>
     </dd>
@@ -656,155 +656,6 @@ Commands to leverage the returned data (<code>{ data, page }</code>)</p>
         
             
 
-<h4 class="name" id=".HURLer">
-  <span class="type-signature">(static, constant) </span>HURLer<span class="type-signature"></span>
-</h4>
-
-
-
-
-  <div class="description">
-    <p>we need to transform the payload to align with the
-object structure of the native DOM events ('popstate'
-and 'DOMContentLoaded') payloads, so they're
-transformed correctly by the <code>navigated$</code> stream
-transforms</p>
-  </div>
-
-
-
-
-<dl class="details">
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source">
-      <ul class="dummy">
-        <li>
-          <a href="commands_routing.js.html">commands/routing.js</a>, <a href="commands_routing.js.html#line17">line 17</a>
-        </li>
-      </ul>
-    </dd>
-  
-
-  
-
-  
-
-  
-</dl>
-
-
-
-
-
-
-          
-        
-            
-
-<h4 class="name" id=".__SET_LINK_ATTRS_DOM">
-  <span class="type-signature">(static, constant) </span>__SET_LINK_ATTRS_DOM<span class="type-signature"></span>
-</h4>
-
-
-
-
-  <div class="description">
-    <h2><code>_SET_LINK_ATTRS_DOM</code></h2>
-<p>Routing Command: DOM-specific</p>
-<h3>Payload: function</h3>
-<p>default payload <code>args</code> signature:</p>
-<pre class="prettyprint source"><code>args: ({ DOM }) => ({ DOM }),
-</code></pre>
-<p>Input = DOM node reference</p>
-<h3>Handler: side-effecting</h3>
-<p>Takes a DOM reference and queries all visited links. Sets
-current/clicked link as active and sets visted links that
-don't match current URL to inactive see <code>setLinkAttrs</code>
-function</p>
-  </div>
-
-
-
-
-<dl class="details">
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source">
-      <ul class="dummy">
-        <li>
-          <a href="commands_routing.js.html">commands/routing.js</a>, <a href="commands_routing.js.html#line70">line 70</a>
-        </li>
-      </ul>
-    </dd>
-  
-
-  
-
-  
-
-  
-</dl>
-
-
-
-
-
-
-          
-        
-            
-
 <h4 class="name" id=".__HREF_PUSHSTATE_DOM">
   <span class="type-signature">(static, constant) </span>__HREF_PUSHSTATE_DOM<span class="type-signature"></span>
 </h4>
@@ -946,6 +797,84 @@ stuff here...
       <ul class="dummy">
         <li>
           <a href="commands_routing.js.html">commands/routing.js</a>, <a href="commands_routing.js.html#line135">line 135</a>
+        </li>
+      </ul>
+    </dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+          
+        
+            
+
+<h4 class="name" id=".__SET_LINK_ATTRS_DOM">
+  <span class="type-signature">(static, constant) </span>__SET_LINK_ATTRS_DOM<span class="type-signature"></span>
+</h4>
+
+
+
+
+  <div class="description">
+    <h2><code>_SET_LINK_ATTRS_DOM</code></h2>
+<p>Routing Command: DOM-specific</p>
+<h3>Payload: function</h3>
+<p>default payload <code>args</code> signature:</p>
+<pre class="prettyprint source"><code>args: ({ DOM }) => ({ DOM }),
+</code></pre>
+<p>Input = DOM node reference</p>
+<h3>Handler: side-effecting</h3>
+<p>Takes a DOM reference and queries all visited links. Sets
+current/clicked link as active and sets visted links that
+don't match current URL to inactive see <code>setLinkAttrs</code>
+function</p>
+  </div>
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="commands_routing.js.html">commands/routing.js</a>, <a href="commands_routing.js.html#line70">line 70</a>
         </li>
       </ul>
     </dd>
@@ -1124,6 +1053,77 @@ Commands to leverage the returned data (<code>{ data, page }</code>)</p>
       <ul class="dummy">
         <li>
           <a href="tasks_routing.js.html">tasks/routing.js</a>, <a href="tasks_routing.js.html#line176">line 176</a>
+        </li>
+      </ul>
+    </dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+          
+        
+            
+
+<h4 class="name" id=".HURLer">
+  <span class="type-signature">(static, constant) </span>HURLer<span class="type-signature"></span>
+</h4>
+
+
+
+
+  <div class="description">
+    <p>we need to transform the payload to align with the
+object structure of the native DOM events ('popstate'
+and 'DOMContentLoaded') payloads, so they're
+transformed correctly by the <code>navigated$</code> stream
+transforms</p>
+  </div>
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="commands_routing.js.html">commands/routing.js</a>, <a href="commands_routing.js.html#line17">line 17</a>
         </li>
       </ul>
     </dd>
