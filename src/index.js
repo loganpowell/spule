@@ -1,4 +1,4 @@
-export {
+import {
   HURL
 , INJECT_HEAD
 , FLIP_LAST_INVERSE_PLAY
@@ -17,3 +17,23 @@ export {
 , $store$
 , set$$tate 
 } from "./api.js"
+
+export default {
+  HURL
+, INJECT_HEAD
+, FLIP_LAST_INVERSE_PLAY
+, FLIP_FIRST
+, SET_STATE
+, fURL
+, unfURL 
+, DOMnavigated$
+, task$
+, run$
+, registerRouter
+, registerRouterDOM
+, registerCMD
+, boot
+, FLIPkid 
+, $store$
+, set$$tate 
+}

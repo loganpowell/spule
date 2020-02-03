@@ -45,7 +45,7 @@ import {
   DOMnavigated$
 } from "../api.js"
 
-const err_str = "registerCMD"
+const err_str = "command Registration `registerCMD`"
 
 const feedCMD$fromSource$ = cmd => {
   const _sub$ = cmd[sub$_]
