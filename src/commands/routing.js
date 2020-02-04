@@ -4,7 +4,14 @@
  */
 import { fURL } from "../utils"
 import { DOMnavigated$ } from "../core/stream$.js"
-import { DOM_, URL_, URL_path_, sub$_, args_, handler_ } from "../constants.js"
+import {
+  DOM_,
+  URL_,
+  URL_path_,
+  sub$_,
+  args_,
+  handler_
+} from "../keys.js"
 
 import { registerCMD } from "./register.js"
 /**

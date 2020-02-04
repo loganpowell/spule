@@ -32,7 +32,7 @@ import {
   BODY_,
   STATE_,
   PATH_
-} from "../constants.js"
+} from "../keys.js"
 
 import { fURL } from "../utils"
 

@@ -3,7 +3,7 @@
  * @format
  */
 
-import { URL_data_, sub$_, args_, handler_, HEAD_ } from "../constants.js"
+import { URL_data_, sub$_, args_, handler_, HEAD_ } from "../keys.js"
 
 import { registerCMD } from "./register.js"
 

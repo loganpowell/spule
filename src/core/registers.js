@@ -28,7 +28,7 @@ import {
   router_,
   draft_,
   trace_
-} from "../constants.js"
+} from "../keys.js"
 
 import { $store$ } from "../store"
 

@@ -7,7 +7,14 @@ import { EquivMap } from "@thi.ng/associative"
 import { map } from "@thi.ng/transducers"
 import { isFunction } from "@thi.ng/checks"
 
-import { sub$_, args_, reso_, erro_, source$_, handler_ } from "../constants.js"
+import {
+  sub$_,
+  args_,
+  reso_,
+  erro_,
+  source$_,
+  handler_
+} from "../keys.js"
 
 import { command$, out$ } from "../core/stream$.js"
 

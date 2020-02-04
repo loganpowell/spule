@@ -5,7 +5,14 @@
 
 import { isFunction, isPromise } from "@thi.ng/checks"
 
-import { sub$_, args_, reso_, erro_, source$_, handler_ } from "../constants.js"
+import {
+  sub$_,
+  args_,
+  reso_,
+  erro_,
+  source$_,
+  handler_
+} from "../keys.js"
 
 import { stringify_type, x_key_ERR, key_index_err, diff_keys } from "../utils"
 

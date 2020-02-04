@@ -6,7 +6,7 @@
 import { Atom } from "@thi.ng/atom"
 import { getIn } from "@thi.ng/paths"
 
-import { sub$_, args_, handler_ } from "../constants.js"
+import { sub$_, args_, handler_ } from "../keys.js"
 import { registerCMD } from "./register.js"
 
 //

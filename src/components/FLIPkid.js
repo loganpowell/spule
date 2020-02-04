@@ -5,7 +5,7 @@
 
 import { FLIP_FIRST, FLIP_LAST_INVERSE_PLAY, HURL } from "../commands"
 
-import { run_, args_ } from "../constants.js"
+import { run_, args_ } from "../keys.js"
 /**
  * There're only 3 lifecycle hooks. render is called for
  * every update and is just providing the actual hiccup for

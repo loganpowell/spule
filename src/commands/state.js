@@ -3,7 +3,7 @@
  * @format
  */
 
-import { sub$_, args_, handler_ } from "../constants.js"
+import { sub$_, args_, handler_ } from "../keys.js"
 import { set$$tate } from "../store"
 
 import { registerCMD } from "./register.js"

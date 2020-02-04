@@ -6,7 +6,7 @@
 import { fromDOMEvent, merge, pubsub } from "@thi.ng/rstream"
 import { map } from "@thi.ng/transducers"
 
-import { URL_, DOM_ } from "../constants.js"
+import { URL_, DOM_ } from "../keys.js"
 
 /**
  * # Stream Architecture:
