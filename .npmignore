@@ -2,6 +2,6 @@ node_modules
 .cache
 spule/
 jsdoc/
+jsdoc.md
 guides/
-assets/
-**/test.js
+test
