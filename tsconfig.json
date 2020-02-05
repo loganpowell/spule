@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "lib": ["es2017", "es7", "es6", "dom"],
+    "declaration": true,
+    "rootDir": "./src",
+    "outDir": "./lib",
+    "esModuleInterop": true,
+    "downlevelIteration": true,
+    "watch": true,
+    "skipLibCheck": true
+  }
+}

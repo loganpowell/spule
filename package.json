@@ -4,7 +4,8 @@
   "license": "MIT",
   "version": "0.2.4",
   "description": "a state management library for single page applications",
-  "main": "src/index.js",
+  "main": "./lib/index.js",
+  "types": "./lib/index.d.ts",
   "repository": "https://github.com/loganpowell/spule",
   "homepage": "https://github.com/loganpowell/spule",
   "scripts": {
@@ -12,6 +13,7 @@
     "build": "npm run clean && cross-env NODE_ENV=production parcel build src/index.js --no-source-maps --no-cache --public-url ./",
     "start": "npm run clean && parcel src/index.js --global md -p 8080 --open -d dist watch",
     "docs": "jsdoc --configure jsdoc.json --verbose",
+    "types": "jsdoc -t node_modules/tsd-jsdoc/dist -r .",
     "pages": "gh-pages -d spule"
   },
   "keywords": [
@@ -31,13 +33,15 @@
     "@babel/runtime-corejs3": "^7.8.4",
     "cross-env": "^7.0.0",
     "eslint": "^6.8.0",
-    "gh-pages": "^2.2.0"
+    "gh-pages": "^2.2.0",
+    "tsd-jsdoc": "^2.4.0"
   },
   "prettier": {
     "endOfLine": "lf",
     "printWidth": 80,
     "semi": false,
     "singleQuote": false,
-    "requirePragma": true
+    "requirePragma": true,
+    "tabWidth": 2
   }
 }
