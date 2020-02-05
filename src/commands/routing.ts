@@ -75,7 +75,7 @@ const setLinkAttrs = target => {
  * function
  *
  */
-export const _SET_LINK_ATTRS_DOM = registerCMD({
+export const SET_LINK_ATTRS_DOM = registerCMD({
   [CMD_SUB$]: "_SET_LINK_ATTRS_DOM",
   [CMD_ARGS]: acc => ({ [DOM_NODE]: acc[DOM_NODE] }),
   [CMD_WORK]: args => setLinkAttrs(args[DOM_NODE])
@@ -104,7 +104,7 @@ export const _SET_LINK_ATTRS_DOM = registerCMD({
  *
  *
  */
-export const _HREF_PUSHSTATE_DOM = registerCMD({
+export const HREF_PUSHSTATE_DOM = registerCMD({
   [CMD_SUB$]: "_HREF_PUSHSTATE_DOM",
   [CMD_ARGS]: acc => ({ [URL_FULL]: acc[URL_FULL], [DOM_NODE]: acc[DOM_NODE] }),
   [CMD_WORK]: args =>
@@ -140,7 +140,7 @@ export const _HREF_PUSHSTATE_DOM = registerCMD({
  *
  *
  */
-export const _NOTIFY_PRERENDER_DOM = registerCMD({
+export const NOTIFY_PRERENDER_DOM = registerCMD({
   [CMD_SUB$]: "_NOTIFY_PRERENDER_DOM",
   [CMD_ARGS]: true,
   //👀 for prerenderer,

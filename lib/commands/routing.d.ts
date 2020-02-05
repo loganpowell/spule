@@ -28,7 +28,7 @@ export declare const HURL: {
  * function
  *
  */
-export declare const _SET_LINK_ATTRS_DOM: {
+export declare const SET_LINK_ATTRS_DOM: {
     [x: string]: any;
 };
 /**
@@ -54,7 +54,7 @@ export declare const _SET_LINK_ATTRS_DOM: {
  *
  *
  */
-export declare const _HREF_PUSHSTATE_DOM: {
+export declare const HREF_PUSHSTATE_DOM: {
     [x: string]: any;
 };
 /**
@@ -84,6 +84,6 @@ export declare const _HREF_PUSHSTATE_DOM: {
  *
  *
  */
-export declare const _NOTIFY_PRERENDER_DOM: {
+export declare const NOTIFY_PRERENDER_DOM: {
     [x: string]: any;
 };

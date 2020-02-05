@@ -227,13 +227,13 @@ const FLIPLastInvertPlay = ({
 const state = new Atom({})
 
 export const FLIP_FIRST = registerCMD({
-  [CMD_SUB$]: "FLIP_FIRST",
+  [CMD_SUB$]: "_FLIP_FIRST",
   [CMD_ARGS]: x => x,
   [CMD_WORK]: ({ id, target }) => FLIPFirst({ id, target, state })
 })
 
 export const FLIP_LAST_INVERSE_PLAY = registerCMD({
-  [CMD_SUB$]: "FLIP_LAST_INVERSE_PLAY",
+  [CMD_SUB$]: "_FLIP_LAST_INVERSE_PLAY",
   [CMD_ARGS]: x => x,
   [CMD_WORK]: ({ id, element }) => FLIPLastInvertPlay({ id, element, state })
 })

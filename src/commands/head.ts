@@ -97,7 +97,7 @@ interface apiURL {
   }
 }
 export const INJECT_HEAD = registerCMD({
-  [CMD_SUB$]: "INJECT_HEAD",
+  [CMD_SUB$]: "_INJECT_HEAD",
   [CMD_ARGS]: acc => ({ [URL_DATA]: acc[URL_DATA] }),
   [CMD_WORK]: ({
     [URL_DATA]: {
