@@ -7,6 +7,7 @@ export declare const URL_subdomain_: string;
 export declare const URL_query_: string;
 export declare const URL_hash_: string;
 export declare const URL_page_: string;
+export declare const FURL: string;
 export declare const BODY_: string;
 export declare const HEAD_: string;
 export declare const prep_: string;

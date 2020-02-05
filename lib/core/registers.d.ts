@@ -27,4 +27,4 @@ export declare const registerRouter: (router: any) => {
  *  which is triggered by any updates to the global
  *  `$store$`
  */
-export declare const boot: (CFG: any) => Promise<void>;
+export declare const boot: (CFG: any) => void;
