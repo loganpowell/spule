@@ -1,5 +1,4 @@
-import { run$ } from "../core/stream$.js"
-import { multiplex } from "../core/multiplex.js"
+import { run$, multiplex } from "../core"
 
 export const task$ = run$.subscribeTopic(
   false,

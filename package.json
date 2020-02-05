@@ -14,6 +14,7 @@
     "start": "npm run clean && parcel src/index.js --global md -p 8080 --open -d dist watch",
     "docs": "jsdoc --configure jsdoc.json --verbose",
     "types": "jsdoc -t node_modules/tsd-jsdoc/dist -r .",
+    "madge": "madge --circular src/",
     "pages": "gh-pages -d spule"
   },
   "keywords": [
@@ -31,6 +32,8 @@
     "@babel/plugin-transform-runtime": "^7.8.3",
     "@babel/preset-env": "^7.8.4",
     "@babel/runtime-corejs3": "^7.8.4",
+    "@typescript-eslint/eslint-plugin": "^2.19.0",
+    "@typescript-eslint/parser": "^2.19.0",
     "cross-env": "^7.0.0",
     "eslint": "^6.8.0",
     "gh-pages": "^2.2.0",

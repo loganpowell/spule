@@ -34,7 +34,7 @@ import { $store$ } from "../store"
 
 import { registerCMD } from "../commands"
 
-import { __URL_DOM__ROUTE, __URL__ROUTE } from "../tasks"
+import { _URL_DOM__ROUTE, _URL__ROUTE } from "../tasks"
 
 import { fURL, diff_keys } from "../utils"
 
@@ -50,7 +50,7 @@ import { run$, DOMnavigated$ } from "./stream$.js"
 export const registerRouterDOM = router => {
   console.log("DOM Router Registered")
 
-  const taskFrom = __URL_DOM__ROUTE(router)
+  const taskFrom = _URL_DOM__ROUTE(router)
   return registerCMD({
     [source$_]: DOMnavigated$,
     [sub$_]: "_URL_NAVIGATED$_DOM",
@@ -63,7 +63,7 @@ export const registerRouterDOM = router => {
 export const registerRouter = router => {
   console.log("Router Registered")
 
-  const taskFrom = __URL__ROUTE(router)
+  const taskFrom = _URL__ROUTE(router)
   return registerCMD({
     [sub$_]: "_URL_NAVIGATED$",
     // 📌 TODO: add source for API access/server source$

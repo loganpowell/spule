@@ -24,10 +24,11 @@ import { registerCMD } from "./register.js"
 export const HURLer = ev => {
   // ev.preventDefault()
   // console.log({ e })
-  let href = ev.target.href
-  let w_href = window.location.href
-  let parsed = fURL(w_href)
-  let w_path = `/${parsed[URL_path_].join("/")}`
+  const href = ev.target.href
+  
+  const w_href = window.location.href
+  const parsed = fURL(w_href)
+  const w_path = `/${parsed[URL_path_].join("/")}`
   // handle both absolute and root relative paths
   if (href === w_href || href === w_path) return
 
@@ -45,7 +46,7 @@ export const HURL = registerCMD({
 })
 
 const setLinkAttrs = target => {
-  document.body.querySelectorAll("a[visited]").forEach((el : HTMLLinkElement) => {
+  document.body.querySelectorAll("a[visited]").forEach((el: HTMLLinkElement) => {
     if (el.href === window.location.href) el.setAttribute("active", "")
     else el.removeAttribute("active")
   })
@@ -74,7 +75,7 @@ const setLinkAttrs = target => {
  * function
  *
  */
-export const __SET_LINK_ATTRS_DOM = registerCMD({
+export const _SET_LINK_ATTRS_DOM = registerCMD({
   [sub$_]: "__SET_LINK_ATTRS_DOM",
   [args_]: acc => ({ [DOM_]: acc[DOM_] }),
   [handler_]: args => setLinkAttrs(args[DOM_])
@@ -103,7 +104,7 @@ export const __SET_LINK_ATTRS_DOM = registerCMD({
  *
  *
  */
-export const __HREF_PUSHSTATE_DOM = registerCMD({
+export const _HREF_PUSHSTATE_DOM = registerCMD({
   [sub$_]: "__HREF_PUSHSTATE_DOM",
   [args_]: acc => ({ [URL_]: acc[URL_], [DOM_]: acc[DOM_] }),
   [handler_]: args =>
@@ -139,7 +140,7 @@ export const __HREF_PUSHSTATE_DOM = registerCMD({
  *
  *
  */
-export const __NOTIFY_PRERENDER_DOM = registerCMD({
+export const _NOTIFY_PRERENDER_DOM = registerCMD({
   [sub$_]: "__NOTIFY_PRERENDER_DOM",
   [args_]: true,
   //👀 for prerenderer,

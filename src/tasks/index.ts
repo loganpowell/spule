@@ -1,6 +1,6 @@
 export {
-  __URL_DOM__ROUTE
-, __URL__ROUTE
+  _URL_DOM__ROUTE
+, _URL__ROUTE
 } from "./routing.js"
 
 export {

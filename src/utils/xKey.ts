@@ -6,7 +6,7 @@
  * @format
  */
 
-export const stringify_w_functions = (x, indent) =>
+export const stringify_w_functions = (x, indent?) =>
   JSON.stringify(
     x,
     (key, value) => {

@@ -23,7 +23,7 @@ export { $store$, set$$tate } from "./store"
 
 export { FLIPkid } from "./components"
 
-export { __URL_DOM__ROUTE, __URL__ROUTE, task$ } from "./tasks"
+export { _URL_DOM__ROUTE, _URL__ROUTE, task$ } from "./tasks"
 import * as keys from "./keys.js"
 export { keys }
 

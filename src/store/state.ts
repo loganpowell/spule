@@ -22,7 +22,7 @@ export const $store$ = new Atom(DEFAULT_CFG)
  *
  */
 export const set$$tate = (path, val, store = $store$) =>
-  store.swapIn(path, (x: Object) =>
+  store.swapIn(path, (x: Object) => 
     !path.length && !isPlainObject(val)
       ? { ...x, [Object.keys(val)[0]]: val }
       : isPlainObject(x) && isPlainObject(val)

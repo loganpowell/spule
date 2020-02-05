@@ -10,9 +10,9 @@ export {
 export {
   HURL
 , HURLer
-, __HREF_PUSHSTATE_DOM
-, __NOTIFY_PRERENDER_DOM
-, __SET_LINK_ATTRS_DOM
+, _HREF_PUSHSTATE_DOM
+, _NOTIFY_PRERENDER_DOM
+, _SET_LINK_ATTRS_DOM
 } from "./routing.js"
 
 export {

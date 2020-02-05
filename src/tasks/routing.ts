@@ -7,9 +7,9 @@ import { isObject } from "@thi.ng/checks"
 
 import { $store$ } from "../store"
 import {
-  __HREF_PUSHSTATE_DOM,
-  __NOTIFY_PRERENDER_DOM,
-  __SET_LINK_ATTRS_DOM,
+  _HREF_PUSHSTATE_DOM,
+  _NOTIFY_PRERENDER_DOM,
+  _SET_LINK_ATTRS_DOM,
   createSetStateCMD
   // msTaskPromiseDelay,
 } from "../commands"
@@ -67,7 +67,7 @@ import { fURL } from "../utils"
  */
 const SET_STATE = createSetStateCMD($store$)
 
-export const __URL__ROUTE = CFG => {
+export const _URL__ROUTE = CFG => {
   let __router, __pre, __post, __prefix
 
   if (isObject(CFG)) {
@@ -179,12 +179,12 @@ export const __URL__ROUTE = CFG => {
  * - `URL_path`
  * - `URL_data`
  */
-export const __URL_DOM__ROUTE = CFG => {
+export const _URL_DOM__ROUTE = CFG => {
   // autoscroll view into position
   // scrolly.start()
 
   // instantiate router
-  const match = __URL__ROUTE(CFG)
+  const match = _URL__ROUTE(CFG)
 
   return acc => [
     {
@@ -195,7 +195,7 @@ export const __URL_DOM__ROUTE = CFG => {
       }
     },
     {
-      ...__HREF_PUSHSTATE_DOM,
+      ..._HREF_PUSHSTATE_DOM,
       [args_]: { [URL_]: acc[URL_], [DOM_]: acc[DOM_] }
     },
     // example Subtask injection
@@ -231,7 +231,7 @@ export const __URL_DOM__ROUTE = CFG => {
     // { ...__SET_ROUTER_LOADING_STATE, args: _ => false },
     // example ad-hoc stream injection
     // { sub$: log$, args: () => ({ DOM }) },
-    __SET_LINK_ATTRS_DOM,
+    _SET_LINK_ATTRS_DOM,
     {
       ...SET_STATE,
       [args_]: _ => ({
@@ -239,6 +239,6 @@ export const __URL_DOM__ROUTE = CFG => {
         [STATE_]: false
       })
     },
-    __NOTIFY_PRERENDER_DOM
+    _NOTIFY_PRERENDER_DOM
   ]
 }

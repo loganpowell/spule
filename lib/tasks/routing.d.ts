@@ -2,7 +2,7 @@
  * @module Routing
  * @format
  */
-export declare const __URL__ROUTE: (CFG: any) => (acc: any) => any[];
+export declare const _URL__ROUTE: (CFG: any) => (acc: any) => any[];
 /**
  *
  * `_URL__ROUTE_DOM`
@@ -33,6 +33,6 @@ export declare const __URL__ROUTE: (CFG: any) => (acc: any) => any[];
  * - `URL_path`
  * - `URL_data`
  */
-export declare const __URL_DOM__ROUTE: (CFG: any) => (acc: any) => {
+export declare const _URL_DOM__ROUTE: (CFG: any) => (acc: any) => {
     [x: string]: any;
 }[];

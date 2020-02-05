@@ -10,5 +10,5 @@ export function diff_keys(nKeys = [], nObj = {}) {
   return [xKeys, xObj]
 }
 
-diff_keys(["a", "b"], { a: 1, b: 2, c: 3, d: 4 }) //?
-diff_keys([1, 2, 3]) //?
+// diff_keys(["a", "b"], { a: 1, b: 2, c: 3, d: 4 }) //?
+// diff_keys([1, 2, 3]) //?
