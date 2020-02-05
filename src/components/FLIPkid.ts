@@ -5,7 +5,7 @@
 
 import { FLIP_FIRST, FLIP_LAST_INVERSE_PLAY, HURL } from "../commands"
 
-import { run_, args_ } from "../keys.js"
+import { CFG_RUN$, CMD_ARGS } from "../keys.js"
 /**
  * There're only 3 lifecycle hooks. render is called for
  * every update and is just providing the actual hiccup for
@@ -58,9 +58,9 @@ export const FLIPkid = Object.freeze({
           const href = target.getAttribute("href")
           // console.log({ target, href })
           if (!href) return new Error(err_str("href"))
-          ctx[run_]([
-            { ...HURL, [args_]: sim_event(href) },
-            { ...FLIP_FIRST, [args_]: { id: href, target } }
+          ctx[CFG_RUN$]([
+            { ...HURL, [CMD_ARGS]: sim_event(href) },
+            { ...FLIP_FIRST, [CMD_ARGS]: { id: href, target } }
           ])
         }
       },
@@ -72,9 +72,9 @@ export const FLIPkid = Object.freeze({
     //   firstChild: el.firstChild,
     //   id: el.firstChild.getAttribute("href")
     // }),
-    ctx[run_]({
+    ctx[CFG_RUN$]({
       ...FLIP_LAST_INVERSE_PLAY,
-      [args_]: {
+      [CMD_ARGS]: {
         element: el.firstChild,
         id: el.firstChild.getAttribute("href")
       }

@@ -86,7 +86,7 @@
  * @param {string} URL - full or partial URL/href
  *
  * */
-export declare const fURL: (_URL: any, prefixRGX?: any) => {
+export declare const fURL: (URL_full: any, prefixRGX?: any) => {
     [x: string]: any;
 };
 /**

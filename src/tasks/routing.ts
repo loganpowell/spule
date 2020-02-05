@@ -15,24 +15,24 @@ import {
 } from "../commands"
 
 import {
-  PAGE_TEMPLATE_,
-  ROUTE_LOADING_,
-  ROUTE_PATH_,
-  DOM_,
-  URL_,
-  URL_data_,
-  URL_path_,
-  URL_page_,
-  prep_,
-  post_,
-  prefix_,
-  router_,
-  args_,
-  reso_,
-  erro_,
-  BODY_,
-  STATE_,
-  PATH_
+  ROUTE_VIEW,
+  ROUTE_LOAD,
+  ROUTE_PATH,
+  DOM_NODE,
+  URL_FULL,
+  URL_DATA,
+  URL_PATH,
+  URL_PAGE,
+  ROUTER_PREP,
+  ROUTER_POST,
+  ROUTER_PRFX,
+  ROUTER_RUTS,
+  CMD_ARGS,
+  CMD_RESO,
+  CMD_ERRO,
+  DOM_BODY,
+  STATE_DATA,
+  STATE_PATH
 } from "../keys.js"
 
 import { fURL } from "../utils"
@@ -68,30 +68,34 @@ const SET_STATE = createSetStateCMD($store$)
  * - `DOM`
  */
 export const _URL__ROUTE = CFG => {
-  let __router, __pre, __post, __prefix
+  let router, preroute, postroute, prefix
 
   if (isObject(CFG)) {
-    const _router = CFG[router_]
-    const _pre = CFG[prep_]
-    const _post = CFG[post_]
-    const _prefix = CFG[prefix_] || null
+    const ruts = CFG[ROUTER_RUTS]
+    const prep = CFG[ROUTER_PREP]
+    const post = CFG[ROUTER_POST]
+    const prfx = CFG[ROUTER_PRFX] || null
+
     const escRGX = /[-/\\^$*+?.()|[\]{}]/g
     const escaped = string => string.replace(escRGX, "\\$&")
 
-    const RGX = _prefix ? new RegExp(escaped(_prefix), "g") : null
     // console.log({ router, pre, post })
-    __router = _router
-    __pre = isObject(_pre) ? [_pre] : _pre || []
-    __post = isObject(_post) ? [_post] : _post || []
-    __prefix = RGX
+
+    router = ruts
+    preroute = isObject(prep) ? [prep] : prep || []
+    postroute = isObject(post) ? [post] : post || []
+    prefix = prfx ? new RegExp(escaped(prfx), "g") : null
+
   } else {
-    __router = CFG
-    __pre = []
-    __post = []
-    __prefix = null
+
+    router = CFG
+    preroute = []
+    postroute = []
+    prefix = null
+    
   }
   return acc => [
-    ...__pre, // 📌 enable progress observation
+    ...preroute, // 📌 enable progress observation
     /**
      * ## `_SET_ROUTER_LOADING_STATE`cod
      *
@@ -109,17 +113,17 @@ export const _URL__ROUTE = CFG => {
      *
      */
     {
-      [args_]: __prefix
-        ? __router(acc[URL_].replace(__prefix, ""))
-        : __router(acc[URL_]),
-      [reso_]: (_acc, _res) => ({
-        [URL_page_]: _res[URL_page_],
-        [URL_data_]: _res[URL_data_]
+      [CMD_ARGS]: prefix
+        ? router(acc[URL_FULL].replace(prefix, ""))
+        : router(acc[URL_FULL]),
+      [CMD_RESO]: (_acc, _res) => ({
+        [URL_PAGE]: _res[URL_PAGE],
+        [URL_DATA]: _res[URL_DATA]
       }),
-      [erro_]: (_acc, _err) =>
+      [CMD_ERRO]: (_acc, _err) =>
         console.warn("Error in __URL__ROUTE:", _err, "constructed:", _acc)
     },
-    { [args_]: __prefix ? fURL(acc[URL_], __prefix) : fURL(acc[URL_]) },
+    { [CMD_ARGS]: prefix ? fURL(acc[URL_FULL], prefix) : fURL(acc[URL_FULL]) },
     /**
      * ## `_SET_ROUTER_PATH`
      *
@@ -140,12 +144,12 @@ export const _URL__ROUTE = CFG => {
      */
     {
       ...SET_STATE,
-      [args_]: _acc => ({
-        [STATE_]: _acc[URL_path_],
-        [PATH_]: [ROUTE_PATH_]
+      [CMD_ARGS]: _acc => ({
+        [STATE_DATA]: _acc[URL_PATH],
+        [STATE_PATH]: [ROUTE_PATH]
       })
     },
-    ...__post
+    ...postroute
   ]
 }
 
@@ -189,17 +193,17 @@ export const _URL_DOM__ROUTE = CFG => {
   return acc => [
     {
       ...SET_STATE,
-      [args_]: {
-        [PATH_]: [ROUTE_LOADING_],
-        [STATE_]: true
+      [CMD_ARGS]: {
+        [STATE_PATH]: [ROUTE_LOAD],
+        [STATE_DATA]: true
       }
     },
     {
       ..._HREF_PUSHSTATE_DOM,
-      [args_]: { [URL_]: acc[URL_], [DOM_]: acc[DOM_] }
+      [CMD_ARGS]: { [URL_FULL]: acc[URL_FULL], [DOM_NODE]: acc[DOM_NODE] }
     },
     // example Subtask injection
-    _acc => match({ [URL_]: _acc[URL_] }),
+    _acc => match({ [URL_FULL]: _acc[URL_FULL] }),
     // { args: msTaskDelay(2000) },
     /**
      * takes the result from two sources: the user-provided
@@ -214,16 +218,16 @@ export const _URL_DOM__ROUTE = CFG => {
      */
     {
       ...SET_STATE,
-      [args_]: _acc => ({
-        [PATH_]: [PAGE_TEMPLATE_],
-        [STATE_]: _acc[URL_page_]
+      [CMD_ARGS]: _acc => ({
+        [STATE_PATH]: [ROUTE_VIEW],
+        [STATE_DATA]: _acc[URL_PAGE]
       })
     },
     {
       ...SET_STATE,
-      [args_]: _acc => ({
-        [PATH_]: _acc[URL_path_],
-        [STATE_]: _acc[URL_data_][BODY_] || _acc[URL_data_]
+      [CMD_ARGS]: _acc => ({
+        [STATE_PATH]: _acc[URL_PATH],
+        [STATE_DATA]: _acc[URL_DATA][DOM_BODY] || _acc[URL_DATA]
       })
     },
     // wait on pending promise(s) w/a non-nullary fn (+)=>
@@ -234,9 +238,9 @@ export const _URL_DOM__ROUTE = CFG => {
     _SET_LINK_ATTRS_DOM,
     {
       ...SET_STATE,
-      [args_]: _ => ({
-        [PATH_]: [ROUTE_LOADING_],
-        [STATE_]: false
+      [CMD_ARGS]: _ => ({
+        [STATE_PATH]: [ROUTE_LOAD],
+        [STATE_DATA]: false
       })
     },
     _NOTIFY_PRERENDER_DOM

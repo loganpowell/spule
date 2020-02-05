@@ -6,12 +6,12 @@
 import { isFunction, isPromise } from "@thi.ng/checks"
 
 import {
-  sub$_,
-  args_,
-  reso_,
-  erro_,
-  source$_,
-  handler_
+  CMD_SUB$,
+  CMD_ARGS,
+  CMD_RESO,
+  CMD_ERRO,
+  CMD_SRC$,
+  CMD_WORK
 } from "../keys.js"
 
 import { stringify_type, x_key_ERR, key_index_err, diff_keys } from "../utils"
@@ -203,20 +203,20 @@ export const multiplex = task_array =>
         const recur = c(acc)
         // this ensures the accumulator is preserved between
         // stacks
-        recur.unshift({ [args_]: acc })
+        recur.unshift({ [CMD_ARGS]: acc })
         return multiplex(recur)
       } catch (e) {
         console.warn(err_str, e)
         return
       }
     }
-    const sub$ = c[sub$_]
-    const args = c[args_]
-    const erro = c[erro_]
-    const reso = c[reso_]
+    const sub$ = c[CMD_SUB$]
+    const args = c[CMD_ARGS]
+    const erro = c[CMD_ERRO]
+    const reso = c[CMD_RESO]
     // const _source$ = c[source$]
     // const _handler = c[handler]
-    const knowns = [sub$_, args_, reso_, erro_, source$_, handler_]
+    const knowns = [CMD_SUB$, CMD_ARGS, CMD_RESO, CMD_ERRO, CMD_SRC$, CMD_WORK]
     const [unknowns] = diff_keys(knowns, c)
 
     if (unknowns.length > 0)
@@ -301,11 +301,11 @@ export const multiplex = task_array =>
       // if the final result is primitive, you can't refer
       // to this value in proceeding Commands -> send the
       // Command as-is, return acc as-is.
-      command$.next({ [sub$_]: sub$, [args_]: result })
+      command$.next({ [CMD_SUB$]: sub$, [CMD_ARGS]: result })
       return acc
     }
     // if the result has made it this far, send it along
     // console.log(`${sub$} made it through`)
-    command$.next({ [sub$_]: sub$, [args_]: result })
+    command$.next({ [CMD_SUB$]: sub$, [CMD_ARGS]: result })
     return { ...acc, ...result }
   }, Promise.resolve({}))

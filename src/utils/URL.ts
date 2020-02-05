@@ -3,12 +3,12 @@
 import qs from "querystring"
 // import gql from "nanographql"
 import {
-  URL_,
-  URL_subdomain_,
-  URL_domain_,
-  URL_query_,
-  URL_hash_,
-  URL_path_
+  URL_FULL,
+  URL_SUBD,
+  URL_DOMN,
+  URL_QERY,
+  URL_HASH,
+  URL_PATH
 } from "../keys.js"
 
 /**
@@ -98,7 +98,7 @@ import {
  * @param {string} URL - full or partial URL/href
  *
  * */
-export const fURL = (_URL, prefixRGX?) => {
+export const fURL = (URL_full, prefixRGX?) => {
   // console.log("parsing...")
   let URL_subdomain = []
   let URL_domain = []
@@ -107,14 +107,14 @@ export const fURL = (_URL, prefixRGX?) => {
   const splitRGX = /(?=\?)|(?=#)/g
   // split the path on any `?` and/or `#` chars (1-3 parts)
   const parts = prefixRGX
-    ? _URL.replace(prefixRGX, "").split(splitRGX)
-    : _URL.split(splitRGX)
+    ? URL_full.replace(prefixRGX, "").split(splitRGX)
+    : URL_full.split(splitRGX)
   // take the first component of split: the core URL
   const path_str = parts[0]
   // split the path_str further into individual members and
   // remove the empty string between any adjacent slashes `//`
   const full_path = path_str.split("/").filter(x => x !== "")
-  if (/http/i.test(_URL)) {
+  if (/http/i.test(URL_full)) {
     // if the input URL is HTTP(S), partition into sub components
     // domain is the last two members of the 2nd component
     URL_domain = full_path[1].split(".").slice(-2)
@@ -138,12 +138,12 @@ export const fURL = (_URL, prefixRGX?) => {
   // remove the actual `#` hash character from the string
   const URL_hash = hash_str.slice(1)
   return {
-    [URL_]: _URL,
-    [URL_subdomain_]: URL_subdomain,
-    [URL_domain_]: URL_domain,
-    [URL_path_]: URL_path,
-    [URL_query_]: URL_query,
-    [URL_hash_]: URL_hash
+    [URL_FULL]: URL_full,
+    [URL_SUBD]: URL_subdomain,
+    [URL_DOMN]: URL_domain,
+    [URL_PATH]: URL_path,
+    [URL_QERY]: URL_query,
+    [URL_HASH]: URL_hash
   }
 }
 
@@ -162,12 +162,12 @@ export const unfURL = (parsed, isAbsolute = false) => {
   // console.log("unparsing...")
 
   const {
-    [URL_subdomain_]: URL_subdomain,
-    [URL_domain_]: URL_domain,
-    [URL_path_]: URL_path,
-    [URL_query_]: URL_query,
-    [URL_hash_]: URL_hash
-  } = fURL(parsed[URL_] || window.location.href)
+    [URL_SUBD]: URL_subdomain,
+    [URL_DOMN]: URL_domain,
+    [URL_PATH]: URL_path,
+    [URL_QERY]: URL_query,
+    [URL_HASH]: URL_hash
+  } = fURL(parsed[URL_FULL] || window.location.href)
 
   const {
     _URL_subdomain = URL_subdomain,
@@ -177,7 +177,7 @@ export const unfURL = (parsed, isAbsolute = false) => {
     _URL_hash = URL_hash
   } = parsed
 
-  const [protocol, rest] = URL_.split("//")
+  const [protocol, rest] = URL_FULL.split("//")
   const [root] = rest.split("/")
   const [part_one, ...other_parts] = root.split(".")
   // console.log({ part_one, other_parts })

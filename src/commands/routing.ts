@@ -5,12 +5,12 @@
 import { fURL } from "../utils"
 import { DOMnavigated$ } from "../core/stream$.js"
 import {
-  DOM_,
-  URL_,
-  URL_path_,
-  sub$_,
-  args_,
-  handler_
+  DOM_NODE,
+  URL_FULL,
+  URL_PATH,
+  CMD_SUB$,
+  CMD_ARGS,
+  CMD_WORK
 } from "../keys.js"
 
 import { registerCMD } from "./register.js"
@@ -28,7 +28,7 @@ export const HURLer = ev => {
   
   const w_href = window.location.href
   const parsed = fURL(w_href)
-  const w_path = `/${parsed[URL_path_].join("/")}`
+  const w_path = `/${parsed[URL_PATH].join("/")}`
   // handle both absolute and root relative paths
   if (href === w_href || href === w_path) return
 
@@ -40,9 +40,9 @@ export const HURLer = ev => {
 }
 
 export const HURL = registerCMD({
-  [sub$_]: "HURL",
-  [args_]: ev => ev,
-  [handler_]: HURLer
+  [CMD_SUB$]: "_HURL",
+  [CMD_ARGS]: ev => ev,
+  [CMD_WORK]: HURLer
 })
 
 const setLinkAttrs = target => {
@@ -76,9 +76,9 @@ const setLinkAttrs = target => {
  *
  */
 export const _SET_LINK_ATTRS_DOM = registerCMD({
-  [sub$_]: "__SET_LINK_ATTRS_DOM",
-  [args_]: acc => ({ [DOM_]: acc[DOM_] }),
-  [handler_]: args => setLinkAttrs(args[DOM_])
+  [CMD_SUB$]: "_SET_LINK_ATTRS_DOM",
+  [CMD_ARGS]: acc => ({ [DOM_NODE]: acc[DOM_NODE] }),
+  [CMD_WORK]: args => setLinkAttrs(args[DOM_NODE])
 })
 
 /**
@@ -105,11 +105,11 @@ export const _SET_LINK_ATTRS_DOM = registerCMD({
  *
  */
 export const _HREF_PUSHSTATE_DOM = registerCMD({
-  [sub$_]: "__HREF_PUSHSTATE_DOM",
-  [args_]: acc => ({ [URL_]: acc[URL_], [DOM_]: acc[DOM_] }),
-  [handler_]: args =>
-    !args[DOM_].document
-      ? history.pushState(fURL(args[URL_]), null, args[URL_])
+  [CMD_SUB$]: "_HREF_PUSHSTATE_DOM",
+  [CMD_ARGS]: acc => ({ [URL_FULL]: acc[URL_FULL], [DOM_NODE]: acc[DOM_NODE] }),
+  [CMD_WORK]: args =>
+    !args[DOM_NODE].document
+      ? history.pushState(fURL(args[URL_FULL]), null, args[URL_FULL])
       : null
 })
 
@@ -141,8 +141,8 @@ export const _HREF_PUSHSTATE_DOM = registerCMD({
  *
  */
 export const _NOTIFY_PRERENDER_DOM = registerCMD({
-  [sub$_]: "__NOTIFY_PRERENDER_DOM",
-  [args_]: true,
+  [CMD_SUB$]: "_NOTIFY_PRERENDER_DOM",
+  [CMD_ARGS]: true,
   //👀 for prerenderer,
-  [handler_]: () => document.dispatchEvent(new Event("rendered"))
+  [CMD_WORK]: () => document.dispatchEvent(new Event("rendered"))
 })

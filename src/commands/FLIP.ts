@@ -6,7 +6,7 @@
 import { Atom } from "@thi.ng/atom"
 import { getIn } from "@thi.ng/paths"
 
-import { sub$_, args_, handler_ } from "../keys.js"
+import { CMD_SUB$, CMD_ARGS, CMD_WORK } from "../keys.js"
 import { registerCMD } from "./register.js"
 
 //
@@ -42,9 +42,10 @@ function getRect(element: HTMLElement, frame?) {
   }
 }
 
+const S_path = "FLIP_shuffle"
 const shuffle_paths = uid => ({
-  rects: ["_FLIP_shuffle", "rects", uid],
-  elems: ["_FLIP_shuffle", "elems", uid]
+  rects: [S_path, "rects", uid],
+  elems: [S_path, "elems", uid]
 })
 
 const FLIP_all = (el, state, uid, frameDOMel = null) => {
@@ -77,11 +78,12 @@ const FLIP_all = (el, state, uid, frameDOMel = null) => {
   })
 }
 
+const Z_path = "FLIP_zoom"
 const zoom_paths = uid => ({
-  rects: ["_FLIP_zoom", "rects", uid],
-  elems: ["_FLIP_zoom", "elems", uid],
-  clicks: ["_FLIP_zoom", "clicks", uid],
-  scrolls: ["_FLIP_zoom", "scroll", uid]
+  rects: [Z_path, "rects", uid],
+  elems: [Z_path, "elems", uid],
+  clicks: [Z_path, "clicks", uid],
+  scrolls: [Z_path, "scroll", uid]
 })
 
 /**
@@ -225,13 +227,13 @@ const FLIPLastInvertPlay = ({
 const state = new Atom({})
 
 export const FLIP_FIRST = registerCMD({
-  [sub$_]: "FLIP_FIRST",
-  [args_]: x => x,
-  [handler_]: ({ id, target }) => FLIPFirst({ id, target, state })
+  [CMD_SUB$]: "FLIP_FIRST",
+  [CMD_ARGS]: x => x,
+  [CMD_WORK]: ({ id, target }) => FLIPFirst({ id, target, state })
 })
 
 export const FLIP_LAST_INVERSE_PLAY = registerCMD({
-  [sub$_]: "FLIP_LAST_INVERSE_PLAY",
-  [args_]: x => x,
-  [handler_]: ({ id, element }) => FLIPLastInvertPlay({ id, element, state })
+  [CMD_SUB$]: "FLIP_LAST_INVERSE_PLAY",
+  [CMD_ARGS]: x => x,
+  [CMD_WORK]: ({ id, element }) => FLIPLastInvertPlay({ id, element, state })
 })

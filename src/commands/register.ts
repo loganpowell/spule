@@ -8,12 +8,12 @@ import { map } from "@thi.ng/transducers"
 import { isFunction } from "@thi.ng/checks"
 
 import {
-  sub$_,
-  args_,
-  reso_,
-  erro_,
-  source$_,
-  handler_
+  CMD_SUB$,
+  CMD_ARGS,
+  CMD_RESO,
+  CMD_ERRO,
+  CMD_SRC$,
+  CMD_WORK
 } from "../keys.js"
 
 // explicit import = prevent circular deps
@@ -23,17 +23,17 @@ import { x_key_ERR, stringify_w_functions, diff_keys } from "../utils"
 
 
 const feedCMD$fromSource$ = cmd => {
-  const _sub$ = cmd[sub$_]
-  const _args = cmd[args_]
-  const args_is_fn = isFunction(_args)
-  const deliver = x => ({ [sub$_]: _sub$, [args_]: _args(x) })
-  const delivery = { [sub$_]: _sub$, [args_]: _args }
+  const sub$ = cmd[CMD_SUB$]
+  const args = cmd[CMD_ARGS]
+  const args_is_fn = isFunction(args)
+  const deliver = x => ({ [CMD_SUB$]: sub$, [CMD_ARGS]: args(x) })
+  const delivery = { [CMD_SUB$]: sub$, [CMD_ARGS]: args }
 
   const feed = $ =>
     args_is_fn ? map(x => $.next(deliver(x))) : map(() => $.next(delivery))
 
   // looks for the `sub$` key to determine if its a command
-  return cmd[source$_].subscribe(feed(command$))
+  return cmd[CMD_SRC$].subscribe(feed(command$))
 }
 
 
@@ -133,14 +133,14 @@ const err_str = "command Registration `registerCMD`"
 export function registerCMD(command) {
   // 📌 TODO: register factory function
 
-  const _sub$ = command[sub$_]
-  const _args = command[args_]
-  const _erro = command[erro_]
-  const _reso = command[reso_]
-  const _source$ = command[source$_]
-  const _handler = command[handler_]
+  const sub$ = command[CMD_SUB$]
+  const args = command[CMD_ARGS]
+  const erro = command[CMD_ERRO]
+  const reso = command[CMD_RESO]
+  const src$ = command[CMD_SRC$]
+  const work = command[CMD_WORK]
 
-  const knowns = [sub$_, args_, reso_, erro_, source$_, handler_]
+  const knowns = [CMD_SUB$, CMD_ARGS, CMD_RESO, CMD_ERRO, CMD_SRC$, CMD_WORK]
   const [unknowns] = diff_keys(knowns, command)
   // console.log({ knowns, unknowns })
 
@@ -149,25 +149,25 @@ export function registerCMD(command) {
    * to save the user from having to do that PITA everytime
    */
   if (unknowns.length > 0) {
-    throw new Error(x_key_ERR(err_str, command, unknowns, _sub$, undefined))
+    throw new Error(x_key_ERR(err_str, command, unknowns, sub$, undefined))
   }
 
-  if (_source$) feedCMD$fromSource$(command)
+  if (src$) feedCMD$fromSource$(command)
 
   // more: https://github.com/thi-ng/umbrella/blob/develop/examples/rstream-event-loop/src/events.ts
   // @ts-ignore
   out$.subscribeTopic(
-    _sub$,
-    { next: _handler, error: console.warn },
-    map(emissions => emissions[args_])
+    sub$,
+    { next: work, error: console.warn },
+    map(emissions => emissions[CMD_ARGS])
   )
 
-  const CMD = _reso
-    ? { [sub$_]: _sub$, [args_]: _args, [reso_]: _reso, [erro_]: _erro }
-    : { [sub$_]: _sub$, [args_]: _args }
+  const CMD = reso
+    ? { [CMD_SUB$]: sub$, [CMD_ARGS]: args, [CMD_RESO]: reso, [CMD_ERRO]: erro }
+    : { [CMD_SUB$]: sub$, [CMD_ARGS]: args }
   // Set.add not supported by IE
   if (registered.set) {
-    if (registered.has(_sub$)) {
+    if (registered.has(sub$)) {
       throw new Error(
         `
 
@@ -183,7 +183,7 @@ ${JSON.stringify([...registered.keys()], null, 2)}
         `
       )
     }
-    registered.set(_sub$, CMD)
+    registered.set(sub$, CMD)
   }
   return CMD
 }

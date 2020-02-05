@@ -10,25 +10,25 @@ import { updateDOM } from "@thi.ng/transducers-hdom"
 import { getIn } from "@thi.ng/paths"
 
 import {
-  ROUTE_LOADING_,
-  ROUTE_PATH_,
-  ROOT_,
-  PAGE_TEMPLATE_,
-  DOM_,
-  URL_,
-  sub$_,
-  args_,
-  prefix_,
-  source$_,
-  handler_,
-  run_,
-  state_,
-  root_,
-  app_,
-  router_,
-  draft_,
-  trace_,
-  FURL
+  DOM_NODE,
+  ROUTE_LOAD,
+  ROUTE_PATH,
+  ROUTE_ROOT,
+  ROUTE_VIEW,
+  URL_FULL,
+  URL_PRSE,
+  ROUTER_PRFX,
+  ROUTER_RUTS,
+  CMD_SUB$,
+  CMD_ARGS,
+  CMD_SRC$,
+  CMD_WORK,
+  CFG_RUN$,
+  CFG_STOR,
+  CFG_ROOT,
+  CFG_VIEW,
+  CFG_DRFT,
+  CFG_LOG$,
 } from "../keys.js"
 
 import { $store$ } from "../store"
@@ -53,11 +53,11 @@ export const registerRouterDOM = router => {
 
   const taskFrom = _URL_DOM__ROUTE(router)
   return registerCMD({
-    [source$_]: DOMnavigated$,
-    [sub$_]: "_URL_NAVIGATED$_DOM",
-    [args_]: x => x,
-    [handler_]: args =>
-      run$.next(taskFrom({ [URL_]: args[URL_], [DOM_]: args[DOM_] }))
+    [CMD_SRC$]: DOMnavigated$,
+    [CMD_SUB$]: "_URL_NAVIGATED$_DOM",
+    [CMD_ARGS]: x => x,
+    [CMD_WORK]: args =>
+      run$.next(taskFrom({ [URL_FULL]: args[URL_FULL], [DOM_NODE]: args[DOM_NODE] }))
   })
 }
 
@@ -66,21 +66,22 @@ export const registerRouter = router => {
 
   const taskFrom = _URL__ROUTE(router)
   return registerCMD({
-    [sub$_]: "_URL_NAVIGATED$",
+    [CMD_SUB$]: "_URL_NAVIGATED$",
     // 📌 TODO: add source for API access/server source$
-    [source$_]: DOMnavigated$,
-    [args_]: x => x,
-    [handler_]: args =>
-      run$.next(taskFrom({ [URL_]: args[URL_], [DOM_]: args[DOM_] }))
+    [CMD_SRC$]: DOMnavigated$,
+    [CMD_ARGS]: x => x,
+    [CMD_WORK]: args =>
+      run$.next(taskFrom({ [URL_FULL]: args[URL_FULL], [DOM_NODE]: args[DOM_NODE] }))
   })
 }
 
 const pre = (ctx, body) => (
   console.log(
-    `no \`app\` component provided to \`${boot.name}({${app_}})\`. Rendering state by route path`
+    `no \`app\` component provided to \`${boot.name}({${CFG_VIEW}})\`. Rendering state by route path`
   ),
   ["pre", JSON.stringify(body[1], null, 2)]
 )
+
 /**
  *
  *  Part I: Needs to be a functional component to accept the
@@ -105,47 +106,47 @@ const pre = (ctx, body) => (
 export const boot = CFG => {
   // console.log({ URL_page })
 
-  const _root = CFG[root_] || document.body
-  const _app = CFG[app_] || pre
-  const _draft = CFG[draft_]
-  const _router = CFG[router_]
-  const _trace = CFG[trace_]
+  const root = CFG[CFG_ROOT] || document.body
+  const view = CFG[CFG_VIEW] || pre
+  const drft = CFG[CFG_DRFT]
+  const ruts = CFG[ROUTER_RUTS]
+  const log$ = CFG[CFG_LOG$]
 
-  const knowns = [root_, app_, draft_, router_, trace_]
+  const knowns = [CFG_ROOT, CFG_VIEW, CFG_DRFT, ROUTER_RUTS, CFG_LOG$]
   const [, others] = diff_keys(knowns, CFG)
 
   const escRGX = /[-/\\^$*+?.()|[\]{}]/g
   const escaped = string => string.replace(escRGX, "\\$&")
 
-  const _prefix = _router[prefix_] || null
-  const RGX = _prefix ? new RegExp(escaped(_prefix || ""), "g") : null
+  const prfx = ruts[ROUTER_PRFX] || null
+  const RGX = prfx ? new RegExp(escaped(prfx || ""), "g") : null
 
-  if (_router) registerRouterDOM(_router)
+  if (ruts) registerRouterDOM(ruts)
 
   const state$ = fromAtom($store$)
 
   const shell = state$ => (
-    _trace ? console.log(_trace, state$) : null,
-    state$[ROUTE_LOADING_]
+    log$ ? console.log(log$, state$) : null,
+    state$[ROUTE_LOAD]
       ? null
-      : [_app, [state$[PAGE_TEMPLATE_], getIn(state$, state$[ROUTE_PATH_])]]
+      : [view, [state$[ROUTE_VIEW], getIn(state$, state$[ROUTE_PATH])]]
   )
 
-  if (_draft) $store$.swap(x => ({ ..._draft, ...x }))
+  if (drft) $store$.swap(x => ({ ...drft, ...x }))
 
-  $store$.resetIn(ROOT_, _root)
+  $store$.resetIn(ROUTE_ROOT, root)
 
   state$.subscribe(sidechainPartition(fromRAF())).transform(
     map(peek),
     map(shell),
     updateDOM({
-      root: _root,
+      root,
       span: false,
       ctx: {
-        [run_]: x => run$.next(x),
-        [state_]: $store$,
+        [CFG_RUN$]: x => run$.next(x),
+        [CFG_STOR]: $store$,
         // remove any staging path components (e.g., gh-pages)
-        [FURL]: () =>
+        [URL_PRSE]: () =>
           // console.log({ fURL }),
           fURL(window.location.href, RGX), // <- 🔍
         ...others

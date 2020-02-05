@@ -3,7 +3,7 @@
  * @format
  */
 
-import { URL_data_, sub$_, args_, handler_, HEAD_ } from "../keys.js"
+import { URL_DATA, CMD_SUB$, CMD_ARGS, CMD_WORK, DOM_HEAD } from "../keys.js"
 
 import { registerCMD } from "./register.js"
 
@@ -97,12 +97,11 @@ interface apiURL {
   }
 }
 export const INJECT_HEAD = registerCMD({
-  // source$: DOMnavigated$,
-  [sub$_]: "INJECT_HEAD",
-  [args_]: acc => ({ [URL_data_]: acc[URL_data_] }),
-  [handler_]: ({
-    [URL_data_]: {
-      [HEAD_]: { title, description, image, favicon, type }
+  [CMD_SUB$]: "INJECT_HEAD",
+  [CMD_ARGS]: acc => ({ [URL_DATA]: acc[URL_DATA] }),
+  [CMD_WORK]: ({
+    [URL_DATA]: {
+      [DOM_HEAD]: { title, description, image, favicon, type }
     }
   } : apiURL) => replaceMeta(conformToHead({ title, description, image, favicon, type }))
 })

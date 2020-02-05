@@ -6,7 +6,7 @@
 import { fromDOMEvent, merge, pubsub } from "@thi.ng/rstream"
 import { map } from "@thi.ng/transducers"
 
-import { URL_, DOM_, sub$_ } from "../keys.js"
+import { URL_FULL, DOM_NODE, CMD_SUB$ } from "../keys.js"
 
 /**
  * # Stream Architecture:
@@ -72,7 +72,7 @@ import { URL_, DOM_, sub$_ } from "../keys.js"
  *
  */
 export const run$ = pubsub({
-  topic: x => !!x[sub$_],
+  topic: x => !!x[CMD_SUB$],
   id: "run$_stream",
   equiv: (x, y) => x === y || y === "_TRACE_STREAM"
 })
@@ -85,7 +85,7 @@ export const run$ = pubsub({
  *
  */
 export const out$ = pubsub({
-  topic: x => x[sub$_],
+  topic: x => x[CMD_SUB$],
   id: "out$_stream",
   equiv: (x, y) => x === y || y === "_TRACE_STREAM"
 })
@@ -139,5 +139,5 @@ export const DOMContentLoaded$ = fromDOMEvent(window, "DOMContentLoaded")
 export const DOMnavigated$ = merge({
   src: [popstate$, DOMContentLoaded$]
 }).transform(
-  map((x: Event | any ) => ({ [URL_]: x.target.location.href, [DOM_]: x.currentTarget }))
+  map((x: Event | any ) => ({ [URL_FULL]: x.target.location.href, [DOM_NODE]: x.currentTarget }))
 )
