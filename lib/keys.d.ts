@@ -28,14 +28,6 @@ export declare const DOM: {
     BODY: string;
     HEAD: string;
 };
-export declare const ROUTER_PREP: string;
-export declare const ROUTER_POST: string;
-export declare const ROUTER_PRFX: string;
-export declare const ROUTER: {
-    PREP: string;
-    POST: string;
-    PRFX: string;
-};
 export declare const STATE_PATH: string;
 export declare const STATE_DATA: string;
 export declare const STATE: {
@@ -70,6 +62,15 @@ export declare const CFG: {
     VIEW: string;
     DRFT: string;
     LOG$: string;
+    RUTR: string;
+};
+export declare const ROUTER_PREP: string;
+export declare const ROUTER_POST: string;
+export declare const ROUTER_PRFX: string;
+export declare const ROUTER: {
+    PREP: string;
+    POST: string;
+    PRFX: string;
     RUTR: string;
 };
 export declare const ROUTE_PATH: string;

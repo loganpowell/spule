@@ -8,6 +8,7 @@ export const URL_HASH: string = "URL_hash"
 export const URL_PAGE: string = "URL_page"
 export const URL_PRSE: string = "fURL"
 export const URL_NPRS: string = "unfURL"
+// public
 export const URL = {
   FULL: URL_FULL,
   PATH: URL_PATH,
@@ -25,24 +26,17 @@ export const URL = {
 export const DOM_NODE: string = "DOM"
 export const DOM_BODY: string = "BODY"
 export const DOM_HEAD: string = "HEAD"
+// public
 export const DOM = {
   NODE: DOM_NODE,
   BODY: DOM_BODY,
   HEAD: DOM_HEAD
 }
 
-// ROUTER
-export const ROUTER_PREP: string = "prep"
-export const ROUTER_POST: string = "post"
-export const ROUTER_PRFX: string = "prefix"
-export const ROUTER = {
-  PREP: ROUTER_PREP,
-  POST: ROUTER_POST,
-  PRFX: ROUTER_PRFX,
-}
 // set$$tate constants
 export const STATE_PATH: string = "PATH"
 export const STATE_DATA: string = "STATE"
+// public
 export const STATE = {
   PATH: STATE_PATH,
   DATA: STATE_DATA
@@ -55,6 +49,7 @@ export const CMD_RESO: string = "reso"
 export const CMD_ERRO: string = "erro"
 export const CMD_WORK: string = "handler"
 export const CMD_SRC$: string = "source$"
+// public
 export const CMD = {
   SUB$: CMD_SUB$,
   ARGS: CMD_ARGS,
@@ -72,6 +67,7 @@ export const CFG_VIEW: string = "app"
 export const CFG_DRFT: string = "draft"
 export const CFG_LOG$: string = "trace"
 export const CFG_RUTR: string = "router"
+// public
 export const CFG = {
   RUN$: CFG_RUN$,
   STOR: CFG_STOR,
@@ -82,11 +78,24 @@ export const CFG = {
   RUTR: CFG_RUTR
 }
 
+// ROUTER
+export const ROUTER_PREP: string = "prep"
+export const ROUTER_POST: string = "post"
+export const ROUTER_PRFX: string = "prefix"
+// public
+export const ROUTER = {
+  PREP: ROUTER_PREP,
+  POST: ROUTER_POST,
+  PRFX: ROUTER_PRFX,
+  RUTR: CFG_RUTR
+}
+
 // Global state keys/constants
 export const ROUTE_PATH: string = "_ROUTE_PATH"
 export const ROUTE_LOAD: string = "_ROUTE_LOADING"
 export const ROUTE_VIEW: string = "_PAGE_TEMPLATE"
 export const ROUTE_ROOT: string = "_ROOT"
+// public
 export const ROUTE = {
   PATH: ROUTE_PATH,
   LOAD: ROUTE_LOAD,
