@@ -7,6 +7,7 @@ export const URL_subdomain_ : string = "URL_subdomain"
 export const URL_query_ : string = "URL_query"
 export const URL_hash_ : string = "URL_hash"
 export const URL_page_ : string = "URL_page"
+export const FURL : string = "fURL"
 
 // userland router metadata constants
 export const BODY_ : string = "BODY"

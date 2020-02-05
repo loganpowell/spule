@@ -27,7 +27,8 @@ import {
   app_,
   router_,
   draft_,
-  trace_
+  trace_,
+  FURL
 } from "../keys.js"
 
 import { $store$ } from "../store"
@@ -101,7 +102,7 @@ const pre = (ctx, body) => (
   trace,
   ...others
 }) */
-export const boot = async CFG => {
+export const boot = CFG => {
   // console.log({ URL_page })
 
   const _root = CFG[root_] || document.body
@@ -144,7 +145,7 @@ export const boot = async CFG => {
         [run_]: x => run$.next(x),
         [state_]: $store$,
         // remove any staging path components (e.g., gh-pages)
-        [fURL.name]: () =>
+        [FURL]: () =>
           // console.log({ fURL }),
           fURL(window.location.href, RGX), // <- 🔍
         ...others
