@@ -18,7 +18,7 @@ import {
   URL_FULL,
   URL_PRSE,
   ROUTER_PRFX,
-  ROUTER_RUTS,
+  CFG_RUTR,
   CMD_SUB$,
   CMD_ARGS,
   CMD_SRC$,
@@ -109,10 +109,10 @@ export const boot = CFG => {
   const root = CFG[CFG_ROOT] || document.body
   const view = CFG[CFG_VIEW] || pre
   const drft = CFG[CFG_DRFT]
-  const ruts = CFG[ROUTER_RUTS]
+  const ruts = CFG[CFG_RUTR]
   const log$ = CFG[CFG_LOG$]
 
-  const knowns = [CFG_ROOT, CFG_VIEW, CFG_DRFT, ROUTER_RUTS, CFG_LOG$]
+  const knowns = [CFG_ROOT, CFG_VIEW, CFG_DRFT, CFG_RUTR, CFG_LOG$]
   const [, others] = diff_keys(knowns, CFG)
 
   const escRGX = /[-/\\^$*+?.()|[\]{}]/g

@@ -26,7 +26,7 @@ import {
   ROUTER_PREP,
   ROUTER_POST,
   ROUTER_PRFX,
-  ROUTER_RUTS,
+  CFG_RUTR,
   CMD_ARGS,
   CMD_RESO,
   CMD_ERRO,
@@ -71,7 +71,7 @@ export const URL__ROUTE = CFG => {
   let router, preroute, postroute, prefix
 
   if (isObject(CFG)) {
-    const ruts = CFG[ROUTER_RUTS]
+    const ruts = CFG[CFG_RUTR]
     const prep = CFG[ROUTER_PREP]
     const post = CFG[ROUTER_POST]
     const prfx = CFG[ROUTER_PRFX] || null

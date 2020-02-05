@@ -35,12 +35,10 @@ export const DOM = {
 export const ROUTER_PREP: string = "prep"
 export const ROUTER_POST: string = "post"
 export const ROUTER_PRFX: string = "prefix"
-export const ROUTER_RUTS: string = "router"
 export const ROUTER = {
   PREP: ROUTER_PREP,
   POST: ROUTER_POST,
   PRFX: ROUTER_PRFX,
-  RUTS: ROUTER_RUTS,
 }
 // set$$tate constants
 export const STATE_PATH: string = "PATH"
@@ -73,13 +71,15 @@ export const CFG_ROOT: string = "root"
 export const CFG_VIEW: string = "app"
 export const CFG_DRFT: string = "draft"
 export const CFG_LOG$: string = "trace"
+export const CFG_RUTR: string = "router"
 export const CFG = {
   RUN$: CFG_RUN$,
   STOR: CFG_STOR,
   ROOT: CFG_ROOT,
   VIEW: CFG_VIEW,
   DRFT: CFG_DRFT,
-  LOG$: CFG_LOG$
+  LOG$: CFG_LOG$,
+  RUTR: CFG_RUTR
 }
 
 // Global state keys/constants
