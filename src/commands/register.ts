@@ -16,11 +16,11 @@ import {
   handler_
 } from "../keys.js"
 
-import { command$, out$ } from "../core"
+// explicit import = prevent circular deps
+import { command$, out$ } from "../core/stream$.js"
 
 import { x_key_ERR, stringify_w_functions, diff_keys } from "../utils"
 
-const err_str = "command Registration `registerCMD`"
 
 const feedCMD$fromSource$ = cmd => {
   const _sub$ = cmd[sub$_]
@@ -36,6 +36,9 @@ const feedCMD$fromSource$ = cmd => {
   return cmd[source$_].subscribe(feed(command$))
 }
 
+
+let registered = new EquivMap()
+const err_str = "command Registration `registerCMD`"
 /**
  *
  * ## `registerCMD`
@@ -127,8 +130,6 @@ const feedCMD$fromSource$ = cmd => {
  *  4. `source$` (optional, enables stream to feed Command)
  *
  */
-let registered = new EquivMap()
-
 export function registerCMD(command) {
   // 📌 TODO: register factory function
 

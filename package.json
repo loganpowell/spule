@@ -14,7 +14,7 @@
     "start": "npm run clean && parcel src/index.js --global md -p 8080 --open -d dist watch",
     "docs": "jsdoc --configure jsdoc.json --verbose",
     "types": "jsdoc -t node_modules/tsd-jsdoc/dist -r .",
-    "madge": "madge --circular src/",
+    "madge": "madge --circular lib/",
     "pages": "gh-pages -d spule"
   },
   "keywords": [

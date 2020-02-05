@@ -37,6 +37,8 @@ import {
 
 import { fURL } from "../utils"
 
+const SET_STATE = createSetStateCMD($store$)
+
 /**
  *
  * `_URL__ROUTE`
@@ -65,8 +67,6 @@ import { fURL } from "../utils"
  * - `URL`
  * - `DOM`
  */
-const SET_STATE = createSetStateCMD($store$)
-
 export const _URL__ROUTE = CFG => {
   let __router, __pre, __post, __prefix
 

@@ -2,6 +2,34 @@
  * @module Routing
  * @format
  */
+/**
+ *
+ * `_URL__ROUTE`
+ *
+ * Universal router (cross-platform) Subtask.
+ *
+ * This can be used in both a browser and Node context. The
+ * parts that handle browser side-effects are included in an
+ * Supertask `_URL__ROUTE`
+ *
+ * Pseudo
+ * ```
+ * ( router ) => ({ URL }) => [
+ * - set `router_loading` path in global atom to `true`
+ * - call provided `router` with the `URL` and await payload
+ * - `parse_URL(URL)` for `URL_*` components
+ * - set `route_path` in global store/atom to current `URL_path`
+ * - set page state (data, path & page component name) in store
+ * - once promise(s) resolved, set `router_loading` to `false`
+ * ]
+ * ```
+ * reserved Command keys:
+ * - `URL_page`
+ * - `URL_data`
+ * - `URL_path`
+ * - `URL`
+ * - `DOM`
+ */
 export declare const _URL__ROUTE: (CFG: any) => (acc: any) => any[];
 /**
  *

@@ -32,7 +32,7 @@ import {
 
 import { $store$ } from "../store"
 
-import { registerCMD } from "../commands"
+import { registerCMD } from "../commands/register.js"
 
 import { _URL_DOM__ROUTE, _URL__ROUTE } from "../tasks"
 

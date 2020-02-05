@@ -1,4 +1,6 @@
-import { run$, multiplex } from "../core"
+// explicit imports = prevent circular deps
+import { run$ } from "../core/stream$.js"
+import { multiplex } from "../core/multiplex.js"
 
 export const task$ = run$.subscribeTopic(
   false,
