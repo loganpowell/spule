@@ -1,8 +1,3 @@
-/**
- * @module FLIP
- * @format
- */
-
 import { Atom } from "@thi.ng/atom"
 import { getIn } from "@thi.ng/paths"
 
@@ -78,9 +73,8 @@ const zoom_paths = uid => ({
 /**
  *
  * order: normalizeTree -> render -> diff -> init -> release
- *                        | hdom |         | dom  | post-dom
+ *                        | hdom |         | dom | unmounted
  *
- * have to think backwards:
  * 1. el mounted (init): look for existing flip map for id
  *  - if exists, Play anim and store new flip map rect (for
  *    navs)
@@ -92,7 +86,6 @@ const zoom_paths = uid => ({
  *  - if first === last, no change (on nav e.g.)
  *  - if first !== last, nav change (store rect for id)
  * 
- *
  */
 const FLIPFirst = ({ state, id, target }) => {
   // 📌 TODO: GOOD PLACE FOR AN `onStart` hook animation/callback

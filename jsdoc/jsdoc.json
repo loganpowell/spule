@@ -1,0 +1,29 @@
+{
+  "tags": {
+    "allowUnknownTags": true,
+    "dictionaries": ["jsdoc"]
+  },
+  "source": {
+    "include": ["../lib", "../README.md", "../guides"],
+    "includePattern": ".js$",
+    "excludePattern": "(node_modules/|spule/)"
+  },
+  "plugins": [
+    "plugins/markdown"
+  ],
+  "templates": {
+    "referenceTitle": "spule docs",
+    "disableSort": true, 
+    "collapse": false,
+    "resources": {
+      "@thi.ng/umbrella": "http://thi.ng/umbrella"
+    }
+  },
+  "opts": {
+    "destination": ".",
+    "encoding": "utf8",
+    "private": false,
+    "recurse": true,
+    "template": "./jsdoc-template"
+  }
+}

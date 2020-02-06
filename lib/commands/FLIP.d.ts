@@ -1,7 +1,3 @@
-/**
- * @module FLIP
- * @format
- */
 export declare const FLIP_FIRST: {
     [x: string]: any;
 };

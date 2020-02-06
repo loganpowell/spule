@@ -181,14 +181,30 @@ parse_URL constants
       the output is really just data (and lambdas). This is
       going in the direction of "code as data"
 - lots'o'examples
-- ADVANCED
-  - ad-hoc stream injection
-    - nullary (thunk) in a Task
-  - `rendertron`
 
-TODO: Move into README
 
-### TL;DR:
+## Commands
+
+```js
+const genie = {
+  sub$: "GENIE",
+  args: "your wish"
+  work: x => console.log("🧞:", x, "is my command")
+}
+
+const GENIE = registerCMD(genie)
+
+run(GENIE)
+// 🧞: your wish is my command
+```
+
+A Command object can have four keys:
+ 1. `sub$` (required)
+ 2. `args` (optional, sets default) during registration
+ 3. `work` (required)
+ 4. `src$` (optional, enables stream to feed Command)
+
+## Core
 
 Handles Collections (array) of Commands ("Tasks") which
 require _ordered_ choreography and/or have a dependency
@@ -292,7 +308,10 @@ let task = [
 ]
 ```
 ### Ad-hoc stream injection
-
+- ADVANCED
+  - ad-hoc stream injection
+    - nullary (thunk) in a Task
+  - `rendertron`
 ADVANCED USE ONLY 👽
 
 HURL tries to hide the stream implentation from the user

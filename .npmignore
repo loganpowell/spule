@@ -1,8 +1,11 @@
-node_modules
-.cache
+node_modules/
 spule/
 jsdoc/
-jsdoc.md
 guides/
-src
-test
+examples/
+src/
+dist/
+tests/
+.cache
+**/**.config.js
+**/**.json
