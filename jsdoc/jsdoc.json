@@ -20,7 +20,7 @@
     }
   },
   "opts": {
-    "destination": ".",
+    "destination": "spule",
     "encoding": "utf8",
     "private": false,
     "recurse": true,
