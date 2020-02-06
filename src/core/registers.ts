@@ -67,7 +67,6 @@ export const registerRouter = router => {
   const taskFrom = URL__ROUTE(router)
   return registerCMD({
     [CMD_SUB$]: "_URL_NAVIGATED$",
-    // 📌 TODO: add source for API access/server source$
     [CMD_SRC$]: DOMnavigated$,
     [CMD_ARGS]: x => x,
     [CMD_WORK]: args =>

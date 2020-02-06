@@ -3,7 +3,7 @@
  * @format
  */
 /**
- * # Stream Architecture:
+ * User-land event dispatch stream
  *
  * `run$` is the primary event stream exposed to the user
  * via the `ctx` object injected into every `hdom` component
@@ -41,28 +41,15 @@
  * they subscribe to as topics based on a `sub$` key in a
  * Command object.
  *
- * ### Handlers (framework provided):
- * - "state": Global state mutations
- * - "route": Routing
- * - "FLIP" :
- *   [F.L.I.P.](https://aerotwist.com/blog/flip-your-animations/)
- *   animations
- *
- * TODO:
- * - add __Examples__
- * - add `beforeunload` event handler within #4 (orphan):
- *    SEE https://youtu.be/QQukWZcIptM
- * - enable ctx.run.cancel() via external or internal events
- *    (e.g., popstate / { sub$:  "cancel" })
- *
- * ## `run$`
- *
- * User-land event dispatch stream
- *
  * This stream is directly exposed to users via `ctx` Any
  * one-off Commands `next`ed into this stream are sent to
  * the `command$` stream. Arrays of Commands (Tasks) are
  * sent to the `task$` stream.
+ *
+ * TODO: add examples,`beforeunload` event handler within #4
+ *    (orphan): SEE https://youtu.be/QQukWZcIptM and enable
+ *    ctx.run.cancel() via external or internal events
+ *    (e.g., popstate / { sub$:  "cancel" })
  *
  */
 export declare const run$: import("@thi.ng/rstream").PubSub<unknown, unknown>;
