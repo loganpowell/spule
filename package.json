@@ -9,16 +9,18 @@
   "repository": "https://github.com/loganpowell/spule",
   "homepage": "https://github.com/loganpowell/spule",
   "scripts": {
-    "clean": "rm -rf .cache build dist",
-    "build": "npm run clean && cross-env NODE_ENV=production parcel build examples/integration/index.html -d spule --no-source-maps --no-cache --public-url ./",
-    "start": "parcel examples/integration/index.html --global md -p 8080 --open -d dist watch",
-    "test": "tsc --project tsconfig.build.json && jest",
-    "docs": "tsc && jsdoc --configure jsdoc/jsdoc.json --verbose",
     "madge": "madge --circular lib/",
-    "pages": "gh-pages -d spule",
+    "clean": "rm -rf .cache build dist",
+    "start": "parcel examples/integration/index.html --global md -p 8080 --open -d dist watch",
+    "build": "npm run clean && cross-env NODE_ENV=production parcel build examples/integration/index.html -d spule --no-source-maps --no-cache --public-url ./",
+    "types": "tsc --project tsconfig.build.json",
+    "tests": "npm run types && jest",
+    "pages": "npm run build && gh-pages -d spule",
     "patch": "npm version patch && npm publish && npm run docs && npm run pages",
+    "jsdoc": "jsdoc --configure jsdoc/jsdoc.json --verbose",
+    "docs": "npm run types && npm run jsdoc",
     "git": "git add . && git commit -m",
-    "postgit": "git push origin master"
+    "postgit": "git push origin master && npm run patch"
   },
   "keywords": [
     "thi.ng",
