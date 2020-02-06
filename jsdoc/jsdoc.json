@@ -20,9 +20,9 @@
     }
   },
   "opts": {
-    "destination": "./spule",
+    "destination": "./spule/",
     "encoding": "utf8",
     "recurse": true,
-    "template": "jsdoc/jsdoc-template"
+    "template": "./jsdoc-template"
   }
 }
