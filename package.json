@@ -18,7 +18,7 @@
     "pages": "gh-pages -d spule",
     "patch": "npm version patch && npm publish && npm run docs && npm run pages",
     "git": "git add . && git commit -m",
-    "postgit": "git push --all"
+    "postgit": "git push origin master"
   },
   "keywords": [
     "thi.ng",
