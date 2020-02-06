@@ -14,14 +14,13 @@
   "templates": {
     "referenceTitle": "spule docs",
     "disableSort": true, 
-    "collapse": false,
+    "collapse": true,
     "resources": {
       "@thi.ng/umbrella": "http://thi.ng/umbrella"
     }
   },
   "opts": {
-    "package": ".",
-    "destination": "spule",
+    "destination": "./spule",
     "encoding": "utf8",
     "recurse": true,
     "template": "./jsdoc/jsdoc-template"
