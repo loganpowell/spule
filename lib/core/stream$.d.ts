@@ -67,21 +67,17 @@
  */
 export declare const run$: import("@thi.ng/rstream").PubSub<unknown, unknown>;
 /**
- * ## `out$`
  *
  * Primary user-land _READ_ stream. For attaching handlers
  * for responding to emmitted Commands
- *
  */
 export declare const out$: import("@thi.ng/rstream").PubSub<unknown, unknown>;
 /**
- * ## `command$`
  *
  * Primary fork/bisect stream for indivual commands.
  * attached to a `pubsub` stemming from this stream. The
  * `topic` function used to alert downstream handlers is a
  * simple lookup of the `sub$` key of the command
- *
  */
 export declare const command$: import("@thi.ng/rstream").Subscription<unknown, unknown>;
 export declare const popstate$: any;

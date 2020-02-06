@@ -4,7 +4,6 @@
  */
 /**
  *
- * ## `multiplex`
  *
  * ### TL;DR:
  *
@@ -109,16 +108,6 @@
  *  { sub$: "FLIP" , args: "done" }
  * ]
  *
- * ```
- *
- * #### Use:
- * ```js
- * import { run$ } from "hurl"
- *
- * export const run = e => run$.next(e);
- *
- * //... 📌 TODO...
- * ```
  *
  * ### Ad-hoc stream injection
  *
@@ -139,14 +128,25 @@
  * subtask function
  *
  * ```js
- * import { stream, trace } from "@thi.ng/rstream"
+ * import { stream } from "@thi.ng/rstream"
+ * import { map, comp } from "@thi.ng/transducers"
  *
  * // ad-hoc stream
- * let login = stream().subscribe(trace("login ->"))
+ * let login = stream().subscribe(comp(
+ *  map(x => console.log("login ->", x)),
+ *  map(({ token }) => loginToMyAuth(token))
+ * ))
+ *
+ * // subtask
+ * let subtask_login = ({ token }) => [
+ *  { sub$: login // <- stream
+ *  , args: () => ({ token }) } // <- use acc
+ * ]
  *
  * // task
  * let task = [
- *  { args: { href: "https://my.io/auth" } }, // <- no sub$, just pass data
+ *  // no sub$, just pass data
+ *  { args: { href: "https://my.io/auth" } },
  *  { sub$: login , args: () => "logging in..." },
  *  { sub$: "AUTH"
  *  , args: ({ href }) => fetch(href).then(r => r.json())
@@ -154,12 +154,6 @@
  *  , reso: (acc, res) => ({ token: res }) },
  *  acc => subtask_login(acc),
  *  { sub$: login , args: () => "log in success" }
- * ]
- *
- * // subtask
- * let subtask_login = ({ token }) => [
- *  { sub$: login // <- stream
- *  , args: () => ({ token }) } // <- use acc
  * ]
  * ```
  *

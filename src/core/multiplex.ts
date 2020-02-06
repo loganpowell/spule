@@ -14,7 +14,7 @@ import {
   CMD_WORK
 } from "../keys.js"
 
-import { stringify_type, x_key_ERR, key_index_err, diff_keys } from "../utils"
+import { stringify_type, xKeyError, key_index_err, diff_keys } from "../utils"
 
 import { command$ } from "./stream$.js"
 
@@ -34,7 +34,6 @@ const nosub$_err = (c, i) =>
 
 /**
  *
- * ## `multiplex`
  *
  * ### TL;DR:
  *
@@ -139,16 +138,6 @@ const nosub$_err = (c, i) =>
  *  { sub$: "FLIP" , args: "done" }
  * ]
  *
- * ```
- *
- * #### Use:
- * ```js
- * import { run$ } from "hurl"
- *
- * export const run = e => run$.next(e);
- *
- * //... 📌 TODO...
- * ```
  *
  * ### Ad-hoc stream injection
  *
@@ -169,14 +158,25 @@ const nosub$_err = (c, i) =>
  * subtask function
  *
  * ```js
- * import { stream, trace } from "@thi.ng/rstream"
- *
+ * import { stream } from "@thi.ng/rstream"
+ * import { map, comp } from "@thi.ng/transducers"
+ * 
  * // ad-hoc stream
- * let login = stream().subscribe(trace("login ->"))
+ * let login = stream().subscribe(comp(
+ *  map(x => console.log("login ->", x)),
+ *  map(({ token }) => loginToMyAuth(token))
+ * ))
  *
+ * // subtask
+ * let subtask_login = ({ token }) => [
+ *  { sub$: login // <- stream
+ *  , args: () => ({ token }) } // <- use acc
+ * ]
+ * 
  * // task
  * let task = [
- *  { args: { href: "https://my.io/auth" } }, // <- no sub$, just pass data
+ *  // no sub$, just pass data
+ *  { args: { href: "https://my.io/auth" } }, 
  *  { sub$: login , args: () => "logging in..." },
  *  { sub$: "AUTH"
  *  , args: ({ href }) => fetch(href).then(r => r.json())
@@ -184,12 +184,6 @@ const nosub$_err = (c, i) =>
  *  , reso: (acc, res) => ({ token: res }) },
  *  acc => subtask_login(acc),
  *  { sub$: login , args: () => "log in success" }
- * ]
- *
- * // subtask
- * let subtask_login = ({ token }) => [
- *  { sub$: login // <- stream
- *  , args: () => ({ token }) } // <- use acc
  * ]
  * ```
  *
@@ -201,8 +195,7 @@ export const multiplex = task_array =>
     if (isFunction(c)) {
       try {
         const recur = c(acc)
-        // this ensures the accumulator is preserved between
-        // stacks
+        // ensures accumulator is preserved between stacks
         recur.unshift({ [CMD_ARGS]: acc })
         return multiplex(recur)
       } catch (e) {
@@ -220,17 +213,19 @@ export const multiplex = task_array =>
     const [unknowns] = diff_keys(knowns, c)
 
     if (unknowns.length > 0)
-      throw new Error(x_key_ERR(err_str, c, unknowns, sub$, i))
+      throw new Error(xKeyError(err_str, c, unknowns, sub$, i))
     const arg_type = stringify_type(args)
 
     let result = args
 
     /* RESOLVING ARGS */
     if (arg_type !== "PROMISE" && reso) {
-      // if some signature needs to deal with both promises
-      // and non-promises, non-promises are wrapped in a
-      // Promise to "lift" them into the proper context for
-      // handling
+      /**
+       * If some signature needs to deal with both Promises
+       * and non-Promises, non-Promises are wrapped in a
+       * Promise to "lift" them into the proper context for
+       * handling
+       */
       result = Promise.resolve(args)
     }
     if (args !== Object(args) && !sub$) {
@@ -246,20 +241,16 @@ export const multiplex = task_array =>
       // as-is ⚠ this command will not be waited on
       result = args()
       console.log(`dispatching to ad-hoc stream: ${sub$.id}`)
-      sub$.next(result) // 💃
+      sub$.next(result)
       return acc
     }
+    // if function, call it with acc and resolve any Promises
     if (arg_type === "FUNCTION") {
-      // if function, call it with acc and resolve any
-      // promises
       let temp = args(acc)
-      // result = isPromise(temp) ? await discardable(temp).catch(e => e) : temp
       result = isPromise(temp) ? await temp.catch(e => e) : temp
     }
-
+    // if object, send the Command as-is and spread into acc
     if (arg_type === "OBJECT") {
-      // if object, send the Command as-is and spread into
-      // acc
       if (!sub$) return { ...acc, ...args }
       command$.next(c)
       return { ...acc, ...args }
@@ -277,9 +268,9 @@ export const multiplex = task_array =>
       // resovled promise handler
       if (!(result instanceof Error)) {
         let resolved = reso(acc, result)
-        if (resolved.sub$) command$.next(resolved)
         // resolved promise with no sub$ key -> spread
         // resolved value into acc
+        if (resolved.sub$) command$.next(resolved)
         else if (!sub$) return { ...acc, ...resolved }
         result = resolved
       }

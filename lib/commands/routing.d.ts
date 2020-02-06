@@ -1,16 +1,15 @@
 /**
- * we need to transform the payload to align with the
- * object structure of the native DOM events ('popstate'
- * and 'DOMContentLoaded') payloads, so they're
- * transformed correctly by the `navigated$` stream
- * transforms
+ * Click handler that mimics DOM navigation by transforming
+ * a click event payload to align with the object structure
+ * of the native DOM navigation events ('popstate' and
+ * 'DOMContentLoaded') payloads, so they can be consumed by
+ * the `navigated$` stream
  */
 export declare const HURLer: (ev: any) => any;
 export declare const HURL: {
     [x: string]: any;
 };
 /**
- * ## `_SET_LINK_ATTRS_DOM`
  *
  * Routing Command: DOM-specific
  *
@@ -32,7 +31,6 @@ export declare const SET_LINK_ATTRS_DOM: {
     [x: string]: any;
 };
 /**
- * ## `_HREF_PUSHSTATE_DOM`
  *
  * Routing Command: DOM-specific
  *
@@ -58,17 +56,13 @@ export declare const HREF_PUSHSTATE_DOM: {
     [x: string]: any;
 };
 /**
- * ## `_NOTIFY_PRERENDER_DOM`
  *
- * ### Payload: static
- * default payload `args` signature
- * ```
- * args: true,
- * ```
- * ### Handler: side-effecting
+ * ### args: static
+ *
+ * ### work: side-effecting
+ *
  * Routing Command: DOM-specific (used for manually
- * triggering `rendertron` prerenderer for bots/web-crawlers
- *
+ * triggering a prerendering server for bots/web-crawlers
  *
  * TODO: `jsdom` prerender testing
  *
@@ -78,9 +72,9 @@ export declare const HREF_PUSHSTATE_DOM: {
  * import { JSDOM } from "jsdom"
  *
  * const document = (new JSDOM(...)).window.document
- * document.addEventListener("rendered", () => {...scrape
- * stuff here...
- * })
+ * document.addEventListener("rendered",
+ *  () => {...scrape stuff here... }
+ * )
  *
  *
  */

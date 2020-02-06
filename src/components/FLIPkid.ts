@@ -6,29 +6,7 @@
 import { FLIP_FIRST, FLIP_LAST_INVERSE_PLAY, HURL } from "../commands"
 
 import { CFG_RUN$, CMD_ARGS } from "../keys.js"
-/**
- * There're only 3 lifecycle hooks. render is called for
- * every update and is just providing the actual hiccup for
- * that component. if that component is used the first time,
- * the order is normalizeTree -> render -> diff -> init.
- * The actual DOM element is only known when init is called,
- * NEVER during render (though you could cache it as local
- * component state). If during diffing it turns out the
- * component is not used anymore, then release will be
- * called
- *
- * if the object identity of your life cycle component
- * changes with every update then that count as full
- * replacement and would trigger init each time:
- *
- * https://github.com/thi-ng/umbrella/wiki/Higher-order-components
- *
- * init is called in so called "post-order", i.e. when it
- * executes all children are already present in the DOM (and
- * might have had their init hooks called) first time = 1st
- * frame the component appears in the DOM
- *
- */
+
 const err_str = prop => `
   No '${prop}' property found on FLIPkid firstChild. 
   Ensure you are providing FLIPkid a component with an 
@@ -46,6 +24,14 @@ const sim_event = href => ({
   }
 })
 
+/**
+ * FLIP (First Last Invert Play) Animating component. Wraps
+ * a component that has an `href` attribute and uses it to
+ * trigger a routing event and FLIP animation between
+ * instances on separate routes (provides a "magic
+ * move"-like UX)
+ *
+ */
 export const FLIPkid = Object.freeze({
   render: (ctx, ...rest) =>
     // console.log("FLIPkid"),

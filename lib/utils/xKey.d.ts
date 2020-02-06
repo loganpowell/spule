@@ -14,4 +14,4 @@ export declare const key_index_err: (c: any, i: any) => string;
  * Just a  little error for people defining commands
  * that makes sure their keys don't contain typos
  */
-export declare const x_key_ERR: (str: any, c: any, unknown: any, sub$: any, index: any) => string;
+export declare const xKeyError: (str: any, c: any, unknown: any, sub$: any, index: any) => string;

@@ -37,7 +37,7 @@ import { registerCMD } from "../commands/register.js"
 
 import { URL_DOM__ROUTE, URL__ROUTE } from "../tasks"
 
-import { fURL, diff_keys } from "../utils"
+import { unfURL, diff_keys } from "../utils"
 
 import { run$, DOMnavigated$ } from "./stream$.js"
 
@@ -94,22 +94,13 @@ const pre = (ctx, body) => (
  *  which is triggered by any updates to the global
  *  `$store$`
  */
-
-/* ({
-  root = document.body,
-  app = pre,
-  draft,
-  router,
-  trace,
-  ...others
-}) */
 export const boot = CFG => {
   // console.log({ URL_page })
 
   const root = CFG[CFG_ROOT] || document.body
   const view = CFG[CFG_VIEW] || pre
-  const drft = CFG[CFG_DRFT]
-  const ruts = CFG[CFG_RUTR]
+  const draft = CFG[CFG_DRFT]
+  const router = CFG[CFG_RUTR]
   const log$ = CFG[CFG_LOG$]
 
   const knowns = [CFG_ROOT, CFG_VIEW, CFG_DRFT, CFG_RUTR, CFG_LOG$]
@@ -118,10 +109,10 @@ export const boot = CFG => {
   const escRGX = /[-/\\^$*+?.()|[\]{}]/g
   const escaped = string => string.replace(escRGX, "\\$&")
 
-  const prfx = ruts[ROUTER_PRFX] || null
+  const prfx = router[ROUTER_PRFX] || null
   const RGX = prfx ? new RegExp(escaped(prfx || ""), "g") : null
 
-  if (ruts) registerRouterDOM(ruts)
+  if (router) registerRouterDOM(router)
 
   const state$ = fromAtom($store$)
 
@@ -132,7 +123,7 @@ export const boot = CFG => {
       : [view, [state$[ROUTE_VIEW], getIn(state$, state$[ROUTE_PATH])]]
   )
 
-  if (drft) $store$.swap(x => ({ ...drft, ...x }))
+  if (draft) $store$.swap(x => ({ ...draft, ...x }))
 
   $store$.resetIn(ROUTE_ROOT, root)
 
@@ -148,7 +139,7 @@ export const boot = CFG => {
         // remove any staging path components (e.g., gh-pages)
         [URL_PRSE]: () =>
           // console.log({ fURL }),
-          fURL(window.location.href, RGX), // <- 🔍
+          unfURL(window.location.href, RGX), // <- 🔍
         ...others
       }
     })

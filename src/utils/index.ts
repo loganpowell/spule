@@ -17,5 +17,5 @@ export {
 export {
   key_index_err,
   stringify_w_functions,
-  x_key_ERR
+  xKeyError
 } from "./xKey.js"

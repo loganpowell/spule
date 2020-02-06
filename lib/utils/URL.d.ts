@@ -1,6 +1,5 @@
 /** @format */
 /**
- * # HREF/URL Parser
  *
  * Takes an href (full or relative) and pulls out the various
  * components to be used for instrumentation of various
@@ -10,7 +9,7 @@
  *
  * Ex1:
  * ```js
- * parse_href("http://localhost:1234/about?get=some#today")
+ * unfURL("http://localhost:1234/about?get=some#today")
  * ```
  * ```js
  * {
@@ -25,7 +24,7 @@
  *
  * Ex2:
  * ```js
- * parse_href("https://github.com/thi-ng/umbrella/#blog-posts")
+ * unfURL("https://github.com/thi-ng/umbrella/#blog-posts")
  * ```
  * ```js
  * {
@@ -40,7 +39,7 @@
  *
  * Ex3:
  * ```js
- * parse_href("https://very-long-sub.dom.cloud.eu/site/my/happy/")
+ * unfURL("https://very-long-sub.dom.cloud.eu/site/my/happy/")
  * ```
  * ```js
  * {
@@ -55,7 +54,7 @@
  *
  * Ex4:
  * ```js
- * parse_href("https://api.census.gov/data?get=NAME&in=state:01&in=county:*")
+ * unfURL("https://api.census.gov/data?get=NAME&in=state:01&in=county:*")
  * ```
  * ```js
  * {
@@ -70,7 +69,7 @@
  *
  * Ex5:
  * ```js
- * parse_href("/data?get=NAME&in=state#indeed")
+ * unfURL("/data?get=NAME&in=state#indeed")
  * ```
  * ```js
  * {
@@ -83,21 +82,15 @@
  * }
  * ```
  *
- * @param {string} URL - full or partial URL/href
- *
- * */
-export declare const fURL: (URL_full: any, prefixRGX?: any) => {
+ */
+export declare const unfURL: (URL_full: string, prefixRGX?: string | RegExp) => {
     [x: string]: any;
 };
 /**
  *
- * `unparse_URL`
- *
- * The reverse of `parse_URL` that enables talking to the
+ * The reverse of `unFURL` that enables talking to the
  * router with a friendlier API than having to always
  * construct URLs manually.
  *
- * TODO: testing for `unparse_URL`
- *
  */
-export declare const unfURL: (parsed: any, isAbsolute?: boolean) => string;
+export declare const fURL: (parsed: any, isAbsolute?: boolean) => string;

@@ -8,6 +8,12 @@ import { set$$tate } from "../store"
 
 import { registerCMD } from "./register.js"
 
+/**
+ *
+ * Higher-order function that takes a `@thi.ng/Atom` state
+ * container and returns a Command object for setting that
+ * Atom's state by the provided path
+ */
 export const createSetStateCMD = store => registerCMD({
   [CMD_SUB$]: "_SET_STATE",
   [CMD_ARGS]: x => x,

@@ -6,8 +6,8 @@ export const URL_SUBD: string = "URL_subdomain"
 export const URL_QERY: string = "URL_query"
 export const URL_HASH: string = "URL_hash"
 export const URL_PAGE: string = "URL_page"
-export const URL_PRSE: string = "fURL"
-export const URL_NPRS: string = "unfURL"
+export const URL_PRSE: string = "unFURL"
+export const URL_NPRS: string = "fURL"
 // public
 export const URL = {
   FULL: URL_FULL,
@@ -23,7 +23,7 @@ export const URL = {
 }
 
 // userland router metadata constants
-export const DOM_NODE: string = "DOM"
+export const DOM_NODE: string = "NODE"
 export const DOM_BODY: string = "BODY"
 export const DOM_HEAD: string = "HEAD"
 // public
@@ -35,7 +35,7 @@ export const DOM = {
 
 // set$$tate constants
 export const STATE_PATH: string = "PATH"
-export const STATE_DATA: string = "STATE"
+export const STATE_DATA: string = "DATA"
 // public
 export const STATE = {
   PATH: STATE_PATH,
@@ -47,8 +47,8 @@ export const CMD_SUB$: string = "sub$"
 export const CMD_ARGS: string = "args"
 export const CMD_RESO: string = "reso"
 export const CMD_ERRO: string = "erro"
-export const CMD_WORK: string = "handler"
-export const CMD_SRC$: string = "source$"
+export const CMD_WORK: string = "work"
+export const CMD_SRC$: string = "src$"
 // public
 export const CMD = {
   SUB$: CMD_SUB$,

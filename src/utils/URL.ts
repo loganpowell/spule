@@ -12,7 +12,6 @@ import {
 } from "../keys.js"
 
 /**
- * # HREF/URL Parser
  *
  * Takes an href (full or relative) and pulls out the various
  * components to be used for instrumentation of various
@@ -22,7 +21,7 @@ import {
  *
  * Ex1:
  * ```js
- * parse_href("http://localhost:1234/about?get=some#today")
+ * unfURL("http://localhost:1234/about?get=some#today")
  * ```
  * ```js
  * {
@@ -37,7 +36,7 @@ import {
  *
  * Ex2:
  * ```js
- * parse_href("https://github.com/thi-ng/umbrella/#blog-posts")
+ * unfURL("https://github.com/thi-ng/umbrella/#blog-posts")
  * ```
  * ```js
  * {
@@ -52,7 +51,7 @@ import {
  *
  * Ex3:
  * ```js
- * parse_href("https://very-long-sub.dom.cloud.eu/site/my/happy/")
+ * unfURL("https://very-long-sub.dom.cloud.eu/site/my/happy/")
  * ```
  * ```js
  * {
@@ -67,7 +66,7 @@ import {
  *
  * Ex4:
  * ```js
- * parse_href("https://api.census.gov/data?get=NAME&in=state:01&in=county:*")
+ * unfURL("https://api.census.gov/data?get=NAME&in=state:01&in=county:*")
  * ```
  * ```js
  * {
@@ -82,7 +81,7 @@ import {
  *
  * Ex5:
  * ```js
- * parse_href("/data?get=NAME&in=state#indeed")
+ * unfURL("/data?get=NAME&in=state#indeed")
  * ```
  * ```js
  * {
@@ -95,10 +94,8 @@ import {
  * }
  * ```
  *
- * @param {string} URL - full or partial URL/href
- *
- * */
-export const fURL = (URL_full, prefixRGX?) => {
+ */
+export const unfURL = (URL_full: string, prefixRGX?: RegExp | string) => {
   // console.log("parsing...")
   let URL_subdomain = []
   let URL_domain = []
@@ -149,25 +146,26 @@ export const fURL = (URL_full, prefixRGX?) => {
 
 /**
  *
- * `unparse_URL`
- *
- * The reverse of `parse_URL` that enables talking to the
+ * The reverse of `unFURL` that enables talking to the
  * router with a friendlier API than having to always
  * construct URLs manually.
  *
- * TODO: testing for `unparse_URL`
- *
  */
-export const unfURL = (parsed, isAbsolute = false) => {
+export const fURL = (parsed, isAbsolute = false) => {
   // console.log("unparsing...")
 
   const {
+    // @ts-ignore
     [URL_SUBD]: URL_subdomain,
+    // @ts-ignore
     [URL_DOMN]: URL_domain,
+    // @ts-ignore
     [URL_PATH]: URL_path,
+    // @ts-ignore
     [URL_QERY]: URL_query,
+    // @ts-ignore
     [URL_HASH]: URL_hash
-  } = fURL(parsed[URL_FULL] || window.location.href)
+  } = unfURL(parsed[URL_FULL] || window.location.href)
 
   const {
     _URL_subdomain = URL_subdomain,
@@ -204,32 +202,33 @@ export const unfURL = (parsed, isAbsolute = false) => {
     : `${protocol}//${domain.join(".")}${rootRelative}`
 }
 
-/*
-let test1 = {
-  // URL: "https://api.census.gov",
-  // URL_subdomain: ["sub"],
-  // URL_domain: ["swing", "bloop", "com"],
-  URL_path: ["lens", "path"],
-  // URL_query: {
-  //   GQL: `
-  //       query($name: String!) {
-  //         movie(name: $name) {
-  //           releaseDate
-  //         }
-  //       }
-  //     `.replace(/ |\n/g, ""),
-  //   name: "Back to the Future"
-  // },
-  URL_hash: "scroll-to"
-}
-unparse_URL(test1, true) //?
 
-parse_URL(
-  "https://poop.bloop.gov/data/wipe#something?get=NAME,B101001_10E,group(B61010)&in=state:01&in=county:*&for=tract:*"
-)
+// let test1 = {
+//   // URL: "https://api.census.gov",
+//   // URL_subdomain: ["sub"],
+//   // URL_domain: ["swing", "bloop", "com"],
+//   URL_path: ["lens", "path"],
+//   // URL_query: {
+//   //   GQL: `
+//   //       query($name: String!) {
+//   //         movie(name: $name) {
+//   //           releaseDate
+//   //         }
+//   //       }
+//   //     `.replace(/ |\n/g, ""),
+//   //   name: "Back to the Future"
+//   // },
+//   URL_hash: "scroll-to"
+// }
 
-parse_URL(
-  "http://sub.swing.bloop.com/lens/path#scroll-to?GQL=query(%24name%3AString!)%7Bmovie(name%3A%24name)%7BreleaseDate%7D%7D&name=Back%20to%20the%20Future"
-) //?
+// unfURL(test1, true) //?
 
-*/
+// fURL(
+//   "https://poop.bloop.gov/data/wipe#something?get=NAME,B101001_10E,group(B61010)&in=state:01&in=county:*&for=tract:*"
+// ) //?
+
+// fURL(
+//   "http://sub.swing.bloop.com/lens/path#scroll-to?GQL=query(%24name%3AString!)%7Bmovie(name%3A%24name)%7BreleaseDate%7D%7D&name=Back%20to%20the%20Future"
+// ) //?
+
+

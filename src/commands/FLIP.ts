@@ -9,17 +9,6 @@ import { getIn } from "@thi.ng/paths"
 import { CMD_SUB$, CMD_ARGS, CMD_WORK } from "../keys.js"
 import { registerCMD } from "./register.js"
 
-//
-//    d8                  888
-//  _d88__  e88~-_   e88~\888  e88~-_
-//   888   d888   i d888  888 d888   i
-//   888   8888   | 8888  888 8888   |
-//   888   Y888   ' Y888  888 Y888   '
-//   "88_/  "88_-~   "88_/888  "88_-~
-//
-//
-// add before/after transition hooks for support animations
-
 function getRect(element: HTMLElement, frame?) {
   const {
     top,
@@ -88,20 +77,21 @@ const zoom_paths = uid => ({
 
 /**
  *
- * order:
- * normalizeTree -> render -> diff -> init -> release
- *                 | hdom |         | dom  | post-dom
+ * order: normalizeTree -> render -> diff -> init -> release
+ *                        | hdom |         | dom  | post-dom
  *
  * have to think backwards:
  * 1. el mounted (init): look for existing flip map for id
- *  - if exists, Play anim and store new flip map rect (for navs)
+ *  - if exists, Play anim and store new flip map rect (for
+ *    navs)
  *  - if doesn't, nada
- * 2. el clicked (render.attrs.onclick): measure and store flip map for id
- * 3. el released: if clicked, calc flip rect and lookup for id:
+ * 2. el clicked (render.attrs.onclick): measure and store
+ *    flip map for id
+ * 3. el released: if clicked, calc flip rect and lookup for
+ *    id:
  *  - if first === last, no change (on nav e.g.)
  *  - if first !== last, nav change (store rect for id)
- * @example
- * FLIPFirst({ state: "bloop"})
+ * 
  *
  */
 const FLIPFirst = ({ state, id, target }) => {
@@ -130,6 +120,17 @@ const zIndex = (el, idx) => (el.style.zIndex = idx)
  *
  * 2. if a back/nav (no frame) event was what triggered
  *    the init do the calcs with no frame
+ * 
+ * What's happening:
+ * - on first click (render)
+ * - rect registered
+ * - frame registered
+ * - navs
+ * - on init of new DOM
+ * - checks for rect & frame
+ * - uses rect & frame to calc diff
+ * - PLAY
+ * 
  */
 const FLIPLastInvertPlay = ({
   element,
@@ -211,18 +212,6 @@ const FLIPLastInvertPlay = ({
   // remove click frame
   state.resetIn(clicks, null)
 }
-
-/**
- * What's happening:
- * - on first click (render)
- * - rect registered
- * - frame registered
- * - navs
- * - on init of new DOM
- * - checks for rect & frame
- * - uses rect & frame to calc diff
- * - PLAY
- */
 
 const state = new Atom({})
 

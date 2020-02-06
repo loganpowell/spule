@@ -41,8 +41,6 @@ const SET_STATE = createSetStateCMD($store$)
 
 /**
  *
- * `_URL__ROUTE`
- *
  * Universal router (cross-platform) Subtask.
  *
  * This can be used in both a browser and Node context. The
@@ -52,20 +50,20 @@ const SET_STATE = createSetStateCMD($store$)
  * Pseudo
  * ```
  * ( router ) => ({ URL }) => [
- * - set `router_loading` path in global atom to `true`
- * - call provided `router` with the `URL` and await payload
- * - `parse_URL(URL)` for `URL_*` components
- * - set `route_path` in global store/atom to current `URL_path`
- * - set page state (data, path & page component name) in store
- * - once promise(s) resolved, set `router_loading` to `false`
+ *  - set `router_loading` path in global atom to `true`
+ *  - call provided `router` with the `URL` and await payload
+ *  - `parse_URL(URL)` for `URL_*` components
+ *  - set `route_path` in global store/atom to current `URL_path`
+ *  - set page state (data, path & page component name) in store
+ *  - once promise(s) resolved, set `router_loading` to `false`
  * ]
  * ```
  * reserved Command keys:
- * - `URL_page`
- * - `URL_data`
- * - `URL_path`
- * - `URL`
- * - `DOM`
+ *  - `URL_page`
+ *  - `URL_data`
+ *  - `URL_path`
+ *  - `URL`
+ *  - `DOM`
  */
 export const URL__ROUTE = CFG => {
   let router, preroute, postroute, prefix
@@ -155,11 +153,7 @@ export const URL__ROUTE = CFG => {
 
 /**
  *
- * `_URL__ROUTE_DOM`
- *
  * DOM Router that contains a cross-platform routing Subtask
- * `_URL__ROUTE`
- *
  *
  * Subtask HOF for router registration. Takes a
  * `@thi.ng/associative` `EquivMap` route matching function,
@@ -169,23 +163,21 @@ export const URL__ROUTE = CFG => {
  * Pseudo
  * ```
  * ( router ) => ({ URL, DOM event }) => [
- * - if href, push to `history.pushState`
- * - SUBTASK: _URL__ROUTE (universal router)
- * - remove `active` attribute from visited links except current
- * - notify rendertron (TBD) of new page
+ *  - if href, push to `history.pushState`
+ *  - SUBTASK: _URL__ROUTE (universal router)
+ *  - remove `active` attribute from visited links except current
+ *  - notify rendertron (TBD) of new page
  * ]
  * ```
  *
  * reserved Command keys:
- * - `URL`
- * - `DOM`
- * - `URL_page`
- * - `URL_path`
- * - `URL_data`
+ *  - `URL`
+ *  - `DOM`
+ *  - `URL_page`
+ *  - `URL_path`
+ *  - `URL_data`
  */
 export const URL_DOM__ROUTE = CFG => {
-  // autoscroll view into position
-  // scrolly.start()
 
   // instantiate router
   const match = URL__ROUTE(CFG)
@@ -203,18 +195,16 @@ export const URL_DOM__ROUTE = CFG => {
       [CMD_ARGS]: { [URL_FULL]: acc[URL_FULL], [DOM_NODE]: acc[DOM_NODE] }
     },
     // example Subtask injection
-    _acc => match({ [URL_FULL]: _acc[URL_FULL] }),
+    ACC => match({ [URL_FULL]: ACC[URL_FULL] }),
     // { args: msTaskDelay(2000) },
     /**
      * takes the result from two sources: the user-provided
-     * `router` ([@thi.ng/associative:
-     * EquivMap](http://thi.ng/associative)) and the `URL_path`
-     * from `parse_URL(URL)`
+     * [`router`](http://thi.ng/associative) and a `fURL`d URL
      *
-     * ### Handler: side-effecting
+     * ### work: side-effecting
+     * 
      * Hydrates the page state as well as the name of the active
      * page in the global store
-     *
      */
     {
       ...SET_STATE,
@@ -230,14 +220,12 @@ export const URL_DOM__ROUTE = CFG => {
         [STATE_DATA]: _acc[URL_DATA][DOM_BODY] || _acc[URL_DATA]
       })
     },
-    // wait on pending promise(s) w/a non-nullary fn (+)=>
-
-    // { ...__SET_ROUTER_LOADING_STATE, args: _ => false },
     // example ad-hoc stream injection
     // { sub$: log$, args: () => ({ DOM }) },
     SET_LINK_ATTRS_DOM,
     {
       ...SET_STATE,
+      // wait on pending promise(s) w/a non-nullary fn (+)=>
       [CMD_ARGS]: _ => ({
         [STATE_PATH]: [ROUTE_LOAD],
         [STATE_DATA]: false
