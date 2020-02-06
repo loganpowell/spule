@@ -290,7 +290,7 @@ let task = [
  acc => subtask1(acc), // subtask reference
  { sub$: "FLIP" , args: "done" }
 ]
-
+```
 ### Ad-hoc stream injection
 
 ADVANCED USE ONLY 👽
