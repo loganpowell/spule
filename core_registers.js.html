@@ -1,0 +1,212 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>
+      core/registers.js - Documentation
+  </title>
+
+  <link href="https://www.braintreepayments.com/images/favicon-ccda0b14.png" rel="icon" type="image/png">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
+  <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+  <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+  
+
+  
+
+  <!-- start Mixpanel -->
+  <script type="text/javascript">(function(e,a){if(!a.__SV){var b=window;try{var c,l,i,j=b.location,g=j.hash;c=function(a,b){return(l=a.match(RegExp(b+"=([^&]*)")))?l[1]:null};g&&c(g,"state")&&(i=JSON.parse(decodeURIComponent(c(g,"state"))),"mpeditor"===i.action&&(b.sessionStorage.setItem("_mpcehash",g),history.replaceState(i.desiredHash||"",e.title,j.pathname+j.search)))}catch(m){}var k,h;window.mixpanel=a;a._i=[];a.init=function(b,c,f){function e(b,a){var c=a.split(".");2==c.length&&(b=b[c[0]],a=c[1]);b[a]=function(){b.push([a].concat(Array.prototype.slice.call(arguments,
+  0)))}}var d=a;"undefined"!==typeof f?d=a[f]=[]:f="mixpanel";d.people=d.people||[];d.toString=function(b){var a="mixpanel";"mixpanel"!==f&&(a+="."+f);b||(a+=" (stub)");return a};d.people.toString=function(){return d.toString(1)+".people (stub)"};k="disable time_event track track_pageview track_links track_forms register register_once alias unregister identify name_tag set_config reset people.set people.set_once people.increment people.append people.union people.track_charge people.clear_charges people.delete_user".split(" ");
+  for(h=0;h<k.length;h++)e(d,k[h]);a._i.push([b,c,f])};a.__SV=1.2;b=e.createElement("script");b.type="text/javascript";b.async=!0;b.src="undefined"!==typeof MIXPANEL_CUSTOM_LIB_URL?MIXPANEL_CUSTOM_LIB_URL:"file:"===e.location.protocol&&"//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js".match(/^\/\//)?"https://cdn.mxpnl.com/libs/mixpanel-2-latest.min.js":"//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js";c=e.getElementsByTagName("script")[0];c.parentNode.insertBefore(b,c)}})(document,window.mixpanel||[]);
+  mixpanel.init("1919205b2da72e4da3b9b6639b444d59");</script>
+  <!-- end Mixpanel -->
+</head>
+
+<body>
+  <svg style="display: none;">
+    <defs>
+      <symbol id="linkIcon" fill="#706d77" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0 0h24v24H0z" fill="none"/>
+          <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/>
+      </symbol>
+    </defs>
+  </svg>
+
+  <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+  <label for="nav-trigger" class="navicon-button x">
+    <div class="navicon"></div>
+  </label>
+
+  <label for="nav-trigger" class="overlay"></label>
+
+  <div class="top-nav-wrapper">
+    <ul>
+      <li >
+        <a href="index.html">
+          
+            <svg fill="#6D6D6D" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+              <path d="M0 0h24v24H0z" fill="none"/>
+            </svg>
+          
+          
+        </a>
+      </li>
+
+      
+
+    </ul>
+  </div>
+
+  <nav>
+    <h3 class="reference-title">
+      spule docs
+    </h3>
+
+    
+      <h3>
+        Resources
+      </h3>
+      
+        <a href="http://thi.ng/umbrella">@thi.ng/umbrella</a>
+      
+    
+
+    <h3>Modules</h3><ul><li id="INJECT_HEAD-nav"><a href="module-INJECT_HEAD.html">INJECT_HEAD</a></li><li id="Registration-nav"><a href="module-Registration.html">Registration</a><ul class='methods'><li data-type="method" id="Registration-registerCMD-nav"><a href="module-Registration.html#~registerCMD">registerCMD</a></li><li data-type="method" id="Registration-registerRouterDOM-nav"><a href="module-Registration.html#.registerRouterDOM">registerRouterDOM</a></li><li data-type="method" id="Registration-boot-nav"><a href="module-Registration.html#.boot">boot</a></li></ul></li><li id="Routing-nav"><a href="module-Routing.html">Routing</a><ul class='methods'><li data-type="method" id="Routing-HURLer-nav"><a href="module-Routing.html#.HURLer">HURLer</a></li><li data-type="method" id="Routing-URL__ROUTE-nav"><a href="module-Routing.html#.URL__ROUTE">URL__ROUTE</a></li><li data-type="method" id="Routing-URL_DOM__ROUTE-nav"><a href="module-Routing.html#.URL_DOM__ROUTE">URL_DOM__ROUTE</a></li></ul></li><li id="SET_STATE-nav"><a href="module-SET_STATE.html">SET_STATE</a><ul class='methods'><li data-type="method" id="SET_STATE-createSetStateCMD-nav"><a href="module-SET_STATE.html#.createSetStateCMD">createSetStateCMD</a></li></ul></li><li id="FLIP-nav"><a href="module-FLIP.html">FLIP</a></li><li id="multiplex-nav"><a href="module-multiplex.html">multiplex</a><ul class='methods'><li data-type="method" id="multiplex-multiplex-nav"><a href="module-multiplex.html#.multiplex">multiplex</a></li></ul></li><li id="streams-nav"><a href="module-streams.html">streams</a></li><li id="set$$tate-nav"><a href="module-set$tate.html">set$$tate</a><ul class='methods'><li data-type="method" id="set$$tate-set$$tate-nav"><a href="module-set$tate.html#.set$$tate">set$$tate</a></li></ul></li></ul><h3 id="global-nav">Global</h3><ul><li><a href="global.html#FLIPFirst">FLIPFirst</a></li><li><a href="global.html#zIndex">zIndex</a></li><li><a href="global.html#FLIPLastInvertPlay">FLIPLastInvertPlay</a></li><li><a href="global.html#commands_1">commands_1</a></li><li><a href="global.html#task$">task$</a></li><li><a href="global.html#diff_keys">diff_keys</a></li><li><a href="global.html#stringify_type">stringify_type</a></li><li><a href="global.html#msTaskPromiseDelay">msTaskPromiseDelay</a></li><li><a href="global.html#trace$">trace$</a></li><li><a href="global.html#__importDefault">__importDefault</a></li><li><a href="global.html#unfURL">unfURL</a></li><li><a href="global.html#fURL">fURL</a></li><li><a href="global.html#xKeyError">xKeyError</a></li></ul>
+  </nav>
+
+  <div id="main">
+    
+      <h1 class="page-title">
+        core/registers.js
+      </h1>
+    
+
+    
+      
+
+<section>
+  <article>
+    <pre class="prettyprint source linenums"><code>"use strict";
+/**
+ * @module Registration
+ * @format
+ */
+Object.defineProperty(exports, "__esModule", { value: true });
+const rstream_1 = require("@thi.ng/rstream");
+const arrays_1 = require("@thi.ng/arrays");
+const transducers_1 = require("@thi.ng/transducers");
+const transducers_hdom_1 = require("@thi.ng/transducers-hdom");
+const paths_1 = require("@thi.ng/paths");
+const keys_js_1 = require("../keys.js");
+const store_1 = require("../store");
+const register_js_1 = require("../commands/register.js");
+const tasks_1 = require("../tasks");
+const utils_1 = require("../utils");
+const stream__js_1 = require("./stream$.js");
+/**
+ *
+ * expects payload of
+ * ```
+ * { target: { location: { href } }, currentTarget }
+ * ```
+ */
+exports.registerRouterDOM = router => {
+    console.log("DOM Router Registered");
+    const taskFrom = tasks_1.URL_DOM__ROUTE(router);
+    return register_js_1.registerCMD({
+        [keys_js_1.CMD_SRC$]: stream__js_1.DOMnavigated$,
+        [keys_js_1.CMD_SUB$]: "_URL_NAVIGATED$_DOM",
+        [keys_js_1.CMD_ARGS]: x => x,
+        [keys_js_1.CMD_WORK]: args => stream__js_1.run$.next(taskFrom({ [keys_js_1.URL_FULL]: args[keys_js_1.URL_FULL], [keys_js_1.DOM_NODE]: args[keys_js_1.DOM_NODE] }))
+    });
+};
+exports.registerRouter = router => {
+    console.log("Router Registered");
+    const taskFrom = tasks_1.URL__ROUTE(router);
+    return register_js_1.registerCMD({
+        [keys_js_1.CMD_SUB$]: "_URL_NAVIGATED$",
+        [keys_js_1.CMD_SRC$]: stream__js_1.DOMnavigated$,
+        [keys_js_1.CMD_ARGS]: x => x,
+        [keys_js_1.CMD_WORK]: args => stream__js_1.run$.next(taskFrom({ [keys_js_1.URL_FULL]: args[keys_js_1.URL_FULL], [keys_js_1.DOM_NODE]: args[keys_js_1.DOM_NODE] }))
+    });
+};
+const pre = (ctx, body) => (console.log(`no \`app\` component provided to \`${exports.boot.name}({${keys_js_1.CFG_VIEW}})\`. Rendering state by route path`),
+    ["pre", JSON.stringify(body[1], null, 2)]);
+/**
+ *
+ *  Part I: Needs to be a functional component to accept the
+ *  `ctx` object to pass it to children
+ *
+ *  Part II: Takes the root RAF stream and updates the shell
+ *  on every global state mutation
+ *
+ *  Part III: Connects the app shell to the state stream,
+ *  which is triggered by any updates to the global
+ *  `$store$`
+ */
+exports.boot = CFG => {
+    // console.log({ URL_page })
+    const root = CFG[keys_js_1.CFG_ROOT] || document.body;
+    const view = CFG[keys_js_1.CFG_VIEW] || pre;
+    const draft = CFG[keys_js_1.CFG_DRFT];
+    const router = CFG[keys_js_1.CFG_RUTR];
+    const log$ = CFG[keys_js_1.CFG_LOG$];
+    const knowns = [keys_js_1.CFG_ROOT, keys_js_1.CFG_VIEW, keys_js_1.CFG_DRFT, keys_js_1.CFG_RUTR, keys_js_1.CFG_LOG$];
+    const [, others] = utils_1.diff_keys(knowns, CFG);
+    const escRGX = /[-/\\^$*+?.()|[\]{}]/g;
+    const escaped = string => string.replace(escRGX, "\\$&amp;");
+    const prfx = router[keys_js_1.ROUTER_PRFX] || null;
+    const RGX = prfx ? new RegExp(escaped(prfx || ""), "g") : null;
+    if (router)
+        exports.registerRouterDOM(router);
+    const state$ = rstream_1.fromAtom(store_1.$store$);
+    const shell = state$ => (log$ ? console.log(log$, state$) : null,
+        state$[keys_js_1.ROUTE_LOAD]
+            ? null
+            : [view, [state$[keys_js_1.ROUTE_VIEW], paths_1.getIn(state$, state$[keys_js_1.ROUTE_PATH])]]);
+    if (draft)
+        store_1.$store$.swap(x => (Object.assign(Object.assign({}, draft), x)));
+    store_1.$store$.resetIn(keys_js_1.ROUTE_ROOT, root);
+    state$.subscribe(rstream_1.sidechainPartition(rstream_1.fromRAF())).transform(transducers_1.map(arrays_1.peek), transducers_1.map(shell), transducers_hdom_1.updateDOM({
+        root,
+        span: false,
+        ctx: Object.assign({ [keys_js_1.CFG_RUN$]: x => stream__js_1.run$.next(x), [keys_js_1.CFG_STOR]: store_1.$store$, 
+            // remove any staging path components (e.g., gh-pages)
+            [keys_js_1.URL_PRSE]: () => 
+            // console.log({ fURL }),
+            utils_1.unfURL(window.location.href, RGX) }, others)
+    }));
+};
+</code></pre>
+  </article>
+</section>
+
+    
+
+
+  </div>
+
+  <br class="clear">
+
+  <footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a>
+  </footer>
+
+  <script src="scripts/linenumber.js"></script>
+  <script src="scripts/pagelocation.js"></script>
+
+  
+
+</body>
+</html>
