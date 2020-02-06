@@ -20,10 +20,10 @@
     }
   },
   "opts": {
+    "package": ".",
     "destination": "spule",
     "encoding": "utf8",
-    "private": false,
     "recurse": true,
-    "template": "./jsdoc-template"
+    "template": "./jsdoc/jsdoc-template"
   }
 }
