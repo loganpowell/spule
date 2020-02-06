@@ -17,7 +17,7 @@
     "tests": "npm run types && jest",
     "pages": "npm run build && gh-pages -d spule",
     "patch": "npm version patch && npm publish && npm run docs && npm run pages",
-    "jsdoc": "jsdoc --configure ./jsdoc/jsdoc.json --verbose",
+    "jsdoc": "jsdoc -c jsdoc/jsdoc.json --verbose --debug",
     "docs": "npm run types && npm run jsdoc",
     "git": "git add . && git commit -m",
     "postgit": "git push origin master && npm run patch"
