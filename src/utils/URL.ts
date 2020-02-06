@@ -95,7 +95,7 @@ import {
  * ```
  *
  */
-export const unfURL = (URL_full: string, prefixRGX?: RegExp | string) => {
+export const unfURL = (URL_full: string, prefixRGX?) => {
   // console.log("parsing...")
   let URL_subdomain = []
   let URL_domain = []
@@ -155,15 +155,10 @@ export const fURL = (parsed, isAbsolute = false) => {
   // console.log("unparsing...")
 
   const {
-    // @ts-ignore
     [URL_SUBD]: URL_subdomain,
-    // @ts-ignore
     [URL_DOMN]: URL_domain,
-    // @ts-ignore
     [URL_PATH]: URL_path,
-    // @ts-ignore
     [URL_QERY]: URL_query,
-    // @ts-ignore
     [URL_HASH]: URL_hash
   } = unfURL(parsed[URL_FULL] || window.location.href)
 

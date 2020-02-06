@@ -83,7 +83,7 @@
  * ```
  *
  */
-export declare const unfURL: (URL_full: string, prefixRGX?: string | RegExp) => {
+export declare const unfURL: (URL_full: string, prefixRGX?: any) => {
     [x: string]: any;
 };
 /**
