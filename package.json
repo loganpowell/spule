@@ -2,7 +2,7 @@
   "name": "spule",
   "author": "Logan Powell",
   "license": "MIT",
-  "version": "0.2.31",
+  "version": "0.2.30",
   "description": "a state management library for single page applications",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
@@ -18,7 +18,7 @@
     "pages": "npm run build && gh-pages -d spule",
     "jsdoc": "jsdoc -c jsdoc/jsdoc.json --verbose --debug",
     "docs": "npm run types && npm run jsdoc",
-    "patch": "npm version patch && npm publish && npm run docs && npm run pages",
+    "patch": "npm version patch && npm run docs && npm run pages",
     "git": "git add . && git commit -m",
     "postgit": "git push origin master",
     "publish": "npm run patch && npm run git"
