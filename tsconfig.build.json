@@ -1,13 +1,13 @@
 {
   "compilerOptions": {
-    "target": "ES2018",
+    "target": "es5",
     "module": "commonjs",
-    "lib": ["ES2018", "es2017", "es7", "es6", "dom"],
+    "lib": ["es2017", "es7", "es6", "dom"],
     "declaration": true,
     "rootDir": "./src",
     "outDir": "./lib",
     "esModuleInterop": true,
-    // "downlevelIteration": true,
+    "downlevelIteration": true,
     "watch": false,
     "skipLibCheck": true
   }

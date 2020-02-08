@@ -145,4 +145,11 @@ export const boot = CFG => {
       }
     })
   )
+  // FIXME: Just a little kick in the pants for those stubborn sandboxes
+  // if ($store$.deref()[ROUTE_LOAD]) {
+  //   DOMnavigated$.next({
+  //     target: { location: { href: "./" } },
+  //     currentTarget: document
+  //   })
+  // }
 }

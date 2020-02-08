@@ -349,11 +349,13 @@ const w_config = {
 
 boot(w_config)
 
-// registerCMD({
-//   sub$: "HURL_CMD",
-//   args: x => x
-// })
-
+// FIXME: Just a little kick in the pants for those stubborn sandboxes
+// if ($store$.deref()[ROUTE_LOAD]) {
+//   DOMnavigated$.next({
+//     target: { location: { href: "./" } },
+//     currentTarget: document
+//   })
+// }
 console.log("registered Commands:", registerCMD.all.entries())
 
 console.log("starting...")
