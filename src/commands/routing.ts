@@ -2,7 +2,7 @@
  * @module Routing
  * @format
  */
-import { unfURL } from "../utils"
+import { unFURL } from "../utils"
 import { DOMnavigated$ } from "../core/stream$.js"
 import {
   DOM_NODE,
@@ -28,7 +28,7 @@ export const HURLer = ev => {
   const href = ev.target.href
   
   const w_href = window.location.href
-  const parsed = unfURL(w_href)
+  const parsed = unFURL(w_href)
   const w_path = `/${parsed[URL_PATH].join("/")}`
   // handle both absolute and root relative paths
   if (href === w_href || href === w_path) return
@@ -108,7 +108,7 @@ export const HREF_PUSHSTATE_DOM = registerCMD({
   [CMD_ARGS]: acc => ({ [URL_FULL]: acc[URL_FULL], [DOM_NODE]: acc[DOM_NODE] }),
   [CMD_WORK]: args =>
     !args[DOM_NODE].document
-      ? history.pushState(unfURL(args[URL_FULL]), null, args[URL_FULL])
+      ? history.pushState(unFURL(args[URL_FULL]), null, args[URL_FULL])
       : null
 })
 

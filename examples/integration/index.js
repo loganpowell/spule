@@ -15,7 +15,7 @@ import {
   registerCMD,
   INJECT_HEAD,
   HURL,
-  unfURL,
+  unFURL,
   boot,
   FLIPkid,
   keys as K
@@ -105,22 +105,10 @@ const getSomeJSON = async (path, uid) => {
 //
 //
 /**
- * You know, this API warrants a little bit of a story. I
- * began the process of abstracting this part of the API
- * away from the user, thinking that there were too many
- * "implementation details" exposed. This scared me a little
- * because I really want the most simple API for me and the
- * potential future users of the framework.
  *
- * However, after creating some prototypes for this API, I
- * began to realize something. That this API, though it
- * exposes the underlying dependency of `EquivMap` from
- * `@thi.ng/associative`, is as beautiful as it gets. It's
- * what the JavaScript Map should have been and I wanted the
- * users to not only see that beauty, but also get a sense
- * of the potential of __pattern matching__ in JS, so they
- * could take it with them to put up against related
- * problems.
+ * Even if you don't end up using `spule` - you may find the
+ * [`@thi.ng/associative`](https://github.com/thi-ng/umbrella/tree/develop/packages/associative)
+ * library __very handy__ indeed!
  *
  * Value semantics have so many benefits. As a router,
  * here's one.
@@ -128,7 +116,7 @@ const getSomeJSON = async (path, uid) => {
  * TODO: Graphql Example
  */
 const routerCfg = async url => {
-  let match = unfURL(url)
+  let match = unFURL(url)
   // let {
   // URL,
   // URL_subdomain, // array

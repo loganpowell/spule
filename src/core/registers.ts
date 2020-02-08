@@ -37,7 +37,7 @@ import { registerCMD } from "../commands/register.js"
 
 import { URL_DOM__ROUTE, URL__ROUTE } from "../tasks"
 
-import { unfURL, diff_keys } from "../utils"
+import { unFURL, diff_keys } from "../utils"
 
 import { run$, DOMnavigated$ } from "./stream$.js"
 
@@ -61,18 +61,20 @@ export const registerRouterDOM = router => {
   })
 }
 
-export const registerRouter = router => {
-  console.log("Router Registered")
+// TODO: server router must be fed from `http` or something (req/res), not `DOMnavigated$`
 
-  const taskFrom = URL__ROUTE(router)
-  return registerCMD({
-    [CMD_SUB$]: "_URL_NAVIGATED$",
-    [CMD_SRC$]: DOMnavigated$,
-    [CMD_ARGS]: x => x,
-    [CMD_WORK]: args =>
-      run$.next(taskFrom({ [URL_FULL]: args[URL_FULL], [DOM_NODE]: args[DOM_NODE] }))
-  })
-}
+// export const registerRouter = router => {
+//   console.log("Router Registered")
+
+//   const taskFrom = URL__ROUTE(router)
+//   return registerCMD({
+//     [CMD_SUB$]: "_URL_NAVIGATED$",
+//     [CMD_SRC$]: DOMnavigated$,
+//     [CMD_ARGS]: x => x,
+//     [CMD_WORK]: args =>
+//       run$.next(taskFrom({ [URL_FULL]: args[URL_FULL], [DOM_NODE]: args[DOM_NODE] }))
+//   })
+// }
 
 const pre = (ctx, body) => (
   console.log(
@@ -137,8 +139,8 @@ export const boot = CFG => {
         [CFG_STOR]: $store$,
         // remove any staging path components (e.g., gh-pages)
         [URL_PRSE]: () =>
-          // console.log({ fURL }),
-          unfURL(window.location.href, RGX), // <- 🔍
+          // console.log({ FURL }),
+          unFURL(window.location.href, RGX), // <- 🔍
         ...others
       }
     })

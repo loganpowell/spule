@@ -21,7 +21,7 @@ import {
  *
  * Ex1:
  * ```js
- * unfURL("http://localhost:1234/about?get=some#today")
+ * unFURL("http://localhost:1234/about?get=some#today")
  * ```
  * ```js
  * {
@@ -36,7 +36,7 @@ import {
  *
  * Ex2:
  * ```js
- * unfURL("https://github.com/thi-ng/umbrella/#blog-posts")
+ * unFURL("https://github.com/thi-ng/umbrella/#blog-posts")
  * ```
  * ```js
  * {
@@ -51,7 +51,7 @@ import {
  *
  * Ex3:
  * ```js
- * unfURL("https://very-long-sub.dom.cloud.eu/site/my/happy/")
+ * unFURL("https://very-long-sub.dom.cloud.eu/site/my/happy/")
  * ```
  * ```js
  * {
@@ -66,7 +66,7 @@ import {
  *
  * Ex4:
  * ```js
- * unfURL("https://api.census.gov/data?get=NAME&in=state:01&in=county:*")
+ * unFURL("https://api.census.gov/data?get=NAME&in=state:01&in=county:*")
  * ```
  * ```js
  * {
@@ -81,7 +81,7 @@ import {
  *
  * Ex5:
  * ```js
- * unfURL("/data?get=NAME&in=state#indeed")
+ * unFURL("/data?get=NAME&in=state#indeed")
  * ```
  * ```js
  * {
@@ -95,7 +95,7 @@ import {
  * ```
  *
  */
-export const unfURL = (URL_full: string, prefixRGX?) => {
+export const unFURL = (URL_full: string, prefixRGX?) => {
   // console.log("parsing...")
   let URL_subdomain = []
   let URL_domain = []
@@ -151,7 +151,7 @@ export const unfURL = (URL_full: string, prefixRGX?) => {
  * construct URLs manually.
  *
  */
-export const fURL = (parsed, isAbsolute = false) => {
+export const FURL = (parsed, isAbsolute = false) => {
   // console.log("unparsing...")
 
   const {
@@ -160,7 +160,7 @@ export const fURL = (parsed, isAbsolute = false) => {
     [URL_PATH]: URL_path,
     [URL_QERY]: URL_query,
     [URL_HASH]: URL_hash
-  } = unfURL(parsed[URL_FULL] || window.location.href)
+  } = unFURL(parsed[URL_FULL] || window.location.href)
 
   const {
     _URL_subdomain = URL_subdomain,
@@ -216,13 +216,13 @@ export const fURL = (parsed, isAbsolute = false) => {
 //   URL_hash: "scroll-to"
 // }
 
-// unfURL(test1, true) //?
+// FURN(test1, true) //?
 
-// fURL(
+// unFURL(
 //   "https://poop.bloop.gov/data/wipe#something?get=NAME,B101001_10E,group(B61010)&in=state:01&in=county:*&for=tract:*"
 // ) //?
 
-// fURL(
+// unFURL(
 //   "http://sub.swing.bloop.com/lens/path#scroll-to?GQL=query(%24name%3AString!)%7Bmovie(name%3A%24name)%7BreleaseDate%7D%7D&name=Back%20to%20the%20Future"
 // ) //?
 

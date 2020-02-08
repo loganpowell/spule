@@ -14,7 +14,7 @@
   "templates": {
     "referenceTitle": "spule docs",
     "disableSort": true, 
-    "collapse": true,
+    "collapse": false,
     "resources": {
       "@thi.ng/umbrella": "http://thi.ng/umbrella"
     }

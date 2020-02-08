@@ -9,7 +9,7 @@
  *
  * Ex1:
  * ```js
- * unfURL("http://localhost:1234/about?get=some#today")
+ * unFURL("http://localhost:1234/about?get=some#today")
  * ```
  * ```js
  * {
@@ -24,7 +24,7 @@
  *
  * Ex2:
  * ```js
- * unfURL("https://github.com/thi-ng/umbrella/#blog-posts")
+ * unFURL("https://github.com/thi-ng/umbrella/#blog-posts")
  * ```
  * ```js
  * {
@@ -39,7 +39,7 @@
  *
  * Ex3:
  * ```js
- * unfURL("https://very-long-sub.dom.cloud.eu/site/my/happy/")
+ * unFURL("https://very-long-sub.dom.cloud.eu/site/my/happy/")
  * ```
  * ```js
  * {
@@ -54,7 +54,7 @@
  *
  * Ex4:
  * ```js
- * unfURL("https://api.census.gov/data?get=NAME&in=state:01&in=county:*")
+ * unFURL("https://api.census.gov/data?get=NAME&in=state:01&in=county:*")
  * ```
  * ```js
  * {
@@ -69,7 +69,7 @@
  *
  * Ex5:
  * ```js
- * unfURL("/data?get=NAME&in=state#indeed")
+ * unFURL("/data?get=NAME&in=state#indeed")
  * ```
  * ```js
  * {
@@ -83,7 +83,7 @@
  * ```
  *
  */
-export declare const unfURL: (URL_full: string, prefixRGX?: any) => {
+export declare const unFURL: (URL_full: string, prefixRGX?: any) => {
     [x: string]: any;
 };
 /**
@@ -93,4 +93,4 @@ export declare const unfURL: (URL_full: string, prefixRGX?: any) => {
  * construct URLs manually.
  *
  */
-export declare const fURL: (parsed: any, isAbsolute?: boolean) => string;
+export declare const FURL: (parsed: any, isAbsolute?: boolean) => string;

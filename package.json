@@ -9,18 +9,19 @@
   "repository": "https://github.com/loganpowell/spule",
   "homepage": "https://github.com/loganpowell/spule",
   "scripts": {
-    "madge": "madge --circular lib/",
-    "clean": "rm -rf .cache build dist",
     "start": "parcel examples/integration/index.html --global md -p 8080 --open -d dist watch",
+    "clean": "rm -rf .cache build dist",
     "build": "npm run clean && cross-env NODE_ENV=production parcel build examples/integration/index.html -d spule --no-source-maps --no-cache --public-url ./",
+    "madge": "madge --circular lib/",
     "types": "tsc --project tsconfig.build.json",
-    "tests": "npm run types && jest",
+    "tests": "npm run types && npm run madge && jest",
     "pages": "npm run build && gh-pages -d spule",
-    "patch": "npm version patch && npm publish && npm run docs && npm run pages",
     "jsdoc": "jsdoc -c jsdoc/jsdoc.json --verbose --debug",
     "docs": "npm run types && npm run jsdoc",
+    "patch": "npm version patch && npm publish && npm run docs && npm run pages",
     "git": "git add . && git commit -m",
-    "postgit": "git push origin master && npm run patch"
+    "postgit": "git push origin master",
+    "publish": "npm run patch && npm run git"
   },
   "keywords": [
     "thi.ng",
@@ -30,11 +31,10 @@
   "dependencies": {
     "@thi.ng/rstream": "^3.0.2",
     "@thi.ng/transducers-hdom": "^2.0.34",
-    "querystring": "^0.2.0",
-    "spule": "^0.2.18",
-    "styled-system-hdom": "^0.1.4"
+    "querystring": "^0.2.0"
   },
   "devDependencies": {
+    "styled-system-hdom": "^0.1.4",
     "@babel/core": "^7.8.4",
     "@babel/plugin-transform-runtime": "^7.8.3",
     "@babel/preset-env": "^7.8.4",

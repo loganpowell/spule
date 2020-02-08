@@ -12,9 +12,6 @@
 export declare const registerRouterDOM: (router: any) => {
     [x: string]: any;
 };
-export declare const registerRouter: (router: any) => {
-    [x: string]: any;
-};
 /**
  *
  *  Part I: Needs to be a functional component to accept the

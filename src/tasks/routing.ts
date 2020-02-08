@@ -35,7 +35,7 @@ import {
   STATE_PATH
 } from "../keys.js"
 
-import { unfURL } from "../utils"
+import { unFURL } from "../utils"
 
 const SET_STATE = createSetStateCMD($store$)
 
@@ -119,9 +119,9 @@ export const URL__ROUTE = CFG => {
         [URL_DATA]: _res[URL_DATA]
       }),
       [CMD_ERRO]: (_acc, _err) =>
-        console.warn("Error in __URL__ROUTE:", _err, "constructed:", _acc)
+        console.warn("Error in URL__ROUTE:", _err, "constructed:", _acc)
     },
-    { [CMD_ARGS]: prefix ? unfURL(acc[URL_FULL], prefix) : unfURL(acc[URL_FULL]) },
+    { [CMD_ARGS]: prefix ? unFURL(acc[URL_FULL], prefix) : unFURL(acc[URL_FULL]) },
     /**
      * ## `_SET_ROUTER_PATH`
      *
@@ -199,7 +199,7 @@ export const URL_DOM__ROUTE = CFG => {
     // { args: msTaskDelay(2000) },
     /**
      * takes the result from two sources: the user-provided
-     * [`router`](http://thi.ng/associative) and a `unfURL`d URL
+     * [`router`](http://thi.ng/associative) and a `unFURL`d URL
      *
      * ### work: side-effecting
      * 

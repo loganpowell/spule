@@ -1,6 +1,6 @@
 export {
   boot
-, registerRouter
+// , registerRouter
 , registerRouterDOM
 } from "./registers.js"
 

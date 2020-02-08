@@ -11,7 +11,7 @@ export {
 
 export {
   boot,
-  registerRouter,
+  // registerRouter,
   registerRouterDOM,
   DOMnavigated$,
   run$,
@@ -27,4 +27,4 @@ export { URL_DOM__ROUTE, URL__ROUTE, task$ } from "./tasks"
 import * as keys from "./keys.js"
 export { keys }
 
-export { trace$, fURL, unfURL } from "./utils"
+export { trace$, FURL, unFURL } from "./utils"
