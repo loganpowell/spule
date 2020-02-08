@@ -20,8 +20,7 @@
     "docs": "npm run types && npm run jsdoc",
     "patch": "npm version patch && npm run docs && npm run pages",
     "git": "git add . && git commit -m",
-    "postgit": "git push origin master",
-    "publish": "npm run patch && npm run git"
+    "postgit": "git push origin master"
   },
   "keywords": [
     "thi.ng",
