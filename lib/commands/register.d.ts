@@ -1,6 +1,5 @@
 /**
- * @module Registration
- * @format
+ * @module commands/register
  */
 import { EquivMap } from "@thi.ng/associative";
 /**

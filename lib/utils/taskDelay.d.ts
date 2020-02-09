@@ -1,4 +1,7 @@
 /**
+ * @module utils/taskDelay
+ */
+/**
  *
  * Helper Promise wrapper to inject a delay into a Task
  */

@@ -1,6 +1,5 @@
 /**
- * @module multiplex
- * @format
+ * @module core/multiplex
  */
 /**
  *

@@ -1,6 +1,5 @@
 /**
- * @module FLIP
- * @format
+ * @module components/FLIPkid
  */
 /**
  * FLIP (First Last Invert Play) Animating component. Wraps

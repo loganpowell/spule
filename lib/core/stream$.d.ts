@@ -1,6 +1,5 @@
 /**
- * @module streams
- * @format
+ * @module core/stream$
  */
 /**
  * User-land event dispatch stream

@@ -1,8 +1,4 @@
 /**
- * @module SET_STATE
- * @format
- */
-/**
  *
  * Higher-order function that takes a `@thi.ng/Atom` state
  * container and returns a Command object for setting that

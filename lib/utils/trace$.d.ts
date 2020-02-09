@@ -1,4 +1,7 @@
 /**
+ * @module utils/trace$
+ */
+/**
  * ## `trace_stream`
  *
  * allows for logging emissions to a provided stream

@@ -1,3 +1,6 @@
+/**
+ * @module keys
+ */
 export declare const URL_FULL: string;
 export declare const URL_PATH: string;
 export declare const URL_DATA: string;

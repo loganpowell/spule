@@ -1,4 +1,7 @@
 /**
+ * @module utils/URL
+ */
+/**
  *
  * Takes an href (full or relative) and pulls out the various
  * components to be used for instrumentation of various

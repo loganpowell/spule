@@ -1,4 +1,7 @@
 /**
+ * @module utils/stringify_type
+ */
+/**
  * ### `stringify_type`
  *
  * just a little convenience function takes some value and
