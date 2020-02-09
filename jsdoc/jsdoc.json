@@ -3,14 +3,15 @@
     "allowUnknownTags": true,
     "dictionaries": ["jsdoc"]
   },
+  "plugins": ["plugins/markdown", "jsdoc-plugin-typescript"],
   "source": {
-    "include": ["README.md"],
+    "include": ["src", "README.md"],
+    "includePattern": "\\.(jsx|js|ts|tsx)$",
     "excludePattern": "(node_modules/|spule/)"
   },
   "typescript": {
     "moduleRoot": "src"
   },
-  "plugins": ["plugins/markdown", "jsdoc-plugin-typescript"],
   "templates": {
     "referenceTitle": "spule docs",
     "disableSort": true,
