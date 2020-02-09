@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>JSDoc: commands/routing</title>
+
+    <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="./build/entry.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link href="https://fonts.googleapis.com/css?family=Muli:100,400,700|Oswald:300|Inconsolata,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+</head>
+
+<body>
+    <div id="stickyNavbarOverlay"></div>
+    <div class="top-navbar">
+        <div class="container">
+            <nav class="navbar" role="navigation" aria-label="main navigation">
+                <div class="navbar-brand">
+                    
+                    
+                        <h1 class="navbar-item">Documentation</h1>
+                    
+                    <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                    </a>
+                </div>
+                
+            </nav>
+        </div>
+    </div>
+    <div class="container">
+        <div class="columns">
+            <div class="column is-3" id="sidebarNav">
+                <div class="sidebar">
+                    <nav>
+                        <h2><a href="index.html">Home</a></h2><div class="category"><h3>Modules</h3><ul><li><a href="module-commands_FLIP.html">commands/FLIP</a></li><li><a href="module-commands_head.html">commands/head</a></li><li><a href="module-commands_register.html">commands/register</a></li><li><a href="module-commands_routing.html">commands/routing</a></li><li><a href="module-commands_state.html">commands/state</a></li><li><a href="module-components_FLIPkid.html">components/FLIPkid</a></li><li><a href="module-core_multiplex.html">core/multiplex</a></li><li><a href="module-core_registers.html">core/registers</a></li><li><a href="module-core_stream$.html">core/stream$</a></li><li><a href="module-keys.html">keys</a></li><li><a href="module-store_state.html">store/state</a></li><li><a href="module-tasks_routing.html">tasks/routing</a></li><li><a href="module-tasks_task$.html">tasks/task$</a></li><li><a href="module-utils_diff_keys.html">utils/diff_keys</a></li><li><a href="module-utils_stringify_type.html">utils/stringify_type</a></li><li><a href="module-utils_taskDelay.html">utils/taskDelay</a></li><li><a href="module-utils_trace$.html">utils/trace$</a></li><li><a href="module-utils_URL.html">utils/URL</a></li><li><a href="module-utils_xKey.html">utils/xKey</a></li></ul></div>
+                    </nav>
+                </div>
+            </div>
+            <div class="column is-9-desktop">
+                <div class="content" id="main-content-wrapper">
+                    <header class="page-title">
+                        <p>Module</p>
+                        <h1>commands/routing</h1>
+                    </header>
+                    
+                    
+
+
+
+
+<section>
+
+<header>
+    
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+
+        
+    
+    </div>
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <div class='vertical-section'>
+            <h3 class="title"><span>Members</span></h3>
+            <div class="members">
+            
+                <div class="member">
+
+<h4 class="name" id=".HREF_PUSHSTATE_DOM">
+    <a class="href-link" href="#.HREF_PUSHSTATE_DOM">#</a>
+    
+        
+            <span class='tag'>static</span>
+        
+            <span class='tag'>constant</span>
+        
+    
+    <span class="code-name">
+        HREF_PUSHSTATE_DOM
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    <p>Routing Command: DOM-specific</p>
+<h3>Payload: function</h3>
+<p>default payload <code>args</code> signature:</p>
+<pre class="prettyprint source"><code>args: ({ URL, DOM }) => ({ URL, DOM }),
+</code></pre>
+<p>Takes a URL and a DOM reference</p>
+<h3>Handler: side-effecting</h3>
+<p>If the DOM reference is an <code>&lt;a&gt;</code> element, uses
+<code>history.pushState</code> to add the clicked URL (plus the
+parsed URL from <code>parse_URL(URL)</code>) to the <code>history</code> object</p>
+<p>export const DOMnavigated$ = merge({
+src: [popstate$, DOMContentLoaded$]
+}).transform(map(x =&gt; ({ URL: x.target.location.href, DOM: x.currentTarget })))</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="commands_routing.ts.html" class="button">View Source</a>
+            <span>
+                <a href="commands_routing.ts.html">commands/routing.ts</a>, <a href="commands_routing.ts.html#line96">line 96</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id=".HURLer">
+    <a class="href-link" href="#.HURLer">#</a>
+    
+        
+            <span class='tag'>static</span>
+        
+            <span class='tag'>constant</span>
+        
+    
+    <span class="code-name">
+        HURLer
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    <p>Click handler that mimics DOM navigation by transforming
+a click event payload to align with the object structure
+of the native DOM navigation events ('popstate' and
+'DOMContentLoaded') payloads, so they can be consumed by
+the <code>navigated$</code> stream</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="commands_routing.ts.html" class="button">View Source</a>
+            <span>
+                <a href="commands_routing.ts.html">commands/routing.ts</a>, <a href="commands_routing.ts.html#line16">line 16</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id=".NOTIFY_PRERENDER_DOM">
+    <a class="href-link" href="#.NOTIFY_PRERENDER_DOM">#</a>
+    
+        
+            <span class='tag'>static</span>
+        
+            <span class='tag'>constant</span>
+        
+    
+    <span class="code-name">
+        NOTIFY_PRERENDER_DOM
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    <h3>args: static</h3>
+<h3>work: side-effecting</h3>
+<p>Routing Command: DOM-specific (used for manually
+triggering a prerendering server for bots/web-crawlers</p>
+<p>TODO: <code>jsdom</code> prerender testing</p>
+<p>basic <code>http</code> server that returns static content for
+certain user-agents</p>
+<p>import { JSDOM } from &quot;jsdom&quot;</p>
+<p>const document = (new JSDOM(...)).window.document
+document.addEventListener(&quot;rendered&quot;,
+() =&gt; {...scrape stuff here... }
+)</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="commands_routing.ts.html" class="button">View Source</a>
+            <span>
+                <a href="commands_routing.ts.html">commands/routing.ts</a>, <a href="commands_routing.ts.html#line126">line 126</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id=".SET_LINK_ATTRS_DOM">
+    <a class="href-link" href="#.SET_LINK_ATTRS_DOM">#</a>
+    
+        
+            <span class='tag'>static</span>
+        
+            <span class='tag'>constant</span>
+        
+    
+    <span class="code-name">
+        SET_LINK_ATTRS_DOM
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    <p>Routing Command: DOM-specific</p>
+<h3>Payload: function</h3>
+<p>default payload <code>args</code> signature:</p>
+<pre class="prettyprint source"><code>args: ({ DOM }) => ({ DOM }),
+</code></pre>
+<p>Input = DOM node reference</p>
+<h3>Handler: side-effecting</h3>
+<p>Takes a DOM reference and queries all visited links. Sets
+current/clicked link as active and sets visted links that
+don't match current URL to inactive see <code>setLinkAttrs</code>
+function</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="commands_routing.ts.html" class="button">View Source</a>
+            <span>
+                <a href="commands_routing.ts.html">commands/routing.ts</a>, <a href="commands_routing.ts.html#line69">line 69</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+            </div>
+        </div>
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+<footer class="footer">
+    <div class="content has-text-centered">
+        <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Sun Feb 09 2020 01:58:16 GMT-0500 (Eastern Standard Time)</p>
+        <p class="sidebar-created-by">
+            <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by 
+            <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
+        </p>
+    </div>
+</footer>
+
+
+<script src="scripts/app.min.js"></script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
