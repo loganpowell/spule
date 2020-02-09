@@ -2,7 +2,7 @@
   "name": "spule",
   "author": "Logan Powell",
   "license": "MIT",
-  "version": "0.2.43",
+  "version": "0.2.44",
   "description": "a state management library for single page applications",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
