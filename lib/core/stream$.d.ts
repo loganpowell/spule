@@ -5,46 +5,10 @@
 /**
  * User-land event dispatch stream
  *
- * `run$` is the primary event stream exposed to the user
- * via the `ctx` object injected into every `hdom` component
- * the command stream is the only way the user changes
- * anything in `hurl`
- *
- * ## Marble Diagram
- *
- * ```
- * 0>- |------c-----------c--[~a~b~a~]-a----c-> : calls
- * 1>- |ps|---1-----------1----------0-1----1-> : run$
- * 2>- |t0|---------a~~b~~~~~~~~~~~a~*--------> : task$
- * 3>- |t1|---c-----------c------------a----c-> : command$
- * 4>- ---|ps|c-----a--b--c--------a---a----c-> : out$
- * Handlers
- * a>- ---|ta|------*--------------*---*------> : registerCMD
- * b>- ---|tb|---------*----------------------> : registerCMD
- * c>- ---|tc|*-----------*-----------------*-> : registerCMD
- * ```
- *
- * ## Streams
- *
- * - `0>-`: `ctx.run$.next(x)` userland dispatches
- * - `1>-`: `pubsub({ topic: x => x.length === 0 })` `run$`
- *   stream
- * - `2>-`: pubsub = `false` ? -> `task$` stream
- * - `3>-`: pubsub = `true` ? ->`command$` stream
- * - `4>-`: `pubsub({ topic: x => x.sub$ })`: `out$` stream
- *   -> `register_command`
- *
- * ## Handlers
- *
- * `4>-` this is the stream to which the user (and
- * framework) attaches handlers. Handlers receive events
- * they subscribe to as topics based on a `sub$` key in a
- * Command object.
- *
- * This stream is directly exposed to users via `ctx` Any
- * one-off Commands `next`ed into this stream are sent to
- * the `command$` stream. Arrays of Commands (Tasks) are
- * sent to the `task$` stream.
+ * This stream is directly exposed to users. Any one-off
+ * Commands `next`ed into this stream are sent to the
+ * `command$` stream. Arrays of Commands (Tasks) are sent to
+ * the `task$` stream.
  *
  * TODO: add examples,`beforeunload` event handler within #4
  *    (orphan): SEE https://youtu.be/QQukWZcIptM and enable
