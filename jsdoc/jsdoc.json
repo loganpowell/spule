@@ -8,7 +8,10 @@
     "includePattern": ".ts|.js$",
     "excludePattern": "(node_modules/|spule/)"
   },
-  "plugins": ["plugins/markdown"],
+  "typescript": {
+    "moduleRoot": "src"
+  },
+  "plugins": ["plugins/markdown", "jsdoc-plugin-typescript"],
   "templates": {
     "referenceTitle": "spule docs",
     "disableSort": true,
