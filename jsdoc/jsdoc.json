@@ -4,8 +4,7 @@
     "dictionaries": ["jsdoc"]
   },
   "source": {
-    "include": ["src", "README.md"],
-    "includePattern": ".ts|.js$",
+    "include": ["README.md"],
     "excludePattern": "(node_modules/|spule/)"
   },
   "typescript": {
