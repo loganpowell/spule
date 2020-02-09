@@ -89,6 +89,7 @@ call...
 export const GET__FORTUNE = [
   // 1st Command args' Object initializes an accumulator
   { args: { api: "http://yerkee.com/api/fortune" } },
+
   // lambda args have access to the accumulation
   {
     args: ({ api }) => fetch(api).then(r => r.json()),
@@ -113,10 +114,10 @@ As you can see - within a Task - the only required key on a
 Command `Object` is the `args` key, which provide the
 signal-passing functionality between intra-Task Commands.
 The only Command that actually does any `work` here is
-`GENIE`.
+`GENIE` (the one with a registered `sub$`).
 
 > 🔍 UTH (Under the Hood): This intra-Task handoff works via
-> [an async `reduce`](#TODO: link to code) function. Any
+> an [async `reduce`](#TODO-link-to-code) function. Any
 > `Object` returned by a Command is spread into an
 > "accumulator" that can be accessed by any following
 > Commands within a Task (via a unary Lambda in the `args`
@@ -308,11 +309,13 @@ export const match = async path => {
 
   const data =
     new EquivMap([
+      // prevent unneeded requests w/thunks (0)=>
       [[], () => home],
       [[known(api), id], () => query(api, id)], // guarded match
       [[known(api)], () => query(api, 1)] // guarded match
     ]).get(args) || (() => four04)
 
+  // call the thunk to trigger the actual request
   const res = await data()
   const r = res[0]
 
@@ -339,12 +342,12 @@ problems you may have encountered, you can check out the
 [more detailed section](#more-pattern-matching) later. We
 can create pattern-matching
 [guards](<https://en.wikipedia.org/wiki/Guard_(computer_science)#Pattern_guard>)
-for `Arrays` by using an expression that either returns a
+by using an _in situ_ expression that either returns a
 "falsy" value or the value itself.
 
-Even if you don't end up using `spule` - you may find the
+Even if you don't end up using `spule`, you may find the
 [`@thi.ng/associative`](https://github.com/thi-ng/umbrella/tree/develop/packages/associative)
-library **very handy** indeed!
+library very handy!
 
 Now, let's integrate our router. Everything pretty much
 stays the same, but we'll need to make a few changes to
@@ -353,35 +356,40 @@ mount our router to the DOM.
 ```diff
 // src/routes.js
 
-+ import { parse } from "spule"
+import { parse } from "spule"
 
 ...
 
 export const match = async path => {
-
 - const args = path ? path.split("/") : [];
 + const args = parse(path).URL_path
 
-  let [api, id] = args;
+  let [api, id] = args
 
-  const data = new EquivMap([
-    [ [],               () => home ],
-    [ [known(api), id], () => query(api, id) ], // guarded match
-    [ [known(api)],     () => query(api, 1) ] // guarded match
-  ]).get(args) ||      (() => four04);
+  const data =
+    new EquivMap([
+      [[], () => home],
+      [[known(api), id], () => query(api, id)],
+      [[known(api)], () => query(api, 1)]
+    ]).get(args) || (() => four04)
 
-  const res = await data();
+  const res = await data()
   const r = res[0]
 
 - return r.message || `${r.chinese}: ${r.english}`
 + return {
 +   URL_data: r.message || `${r.chinese}: ${r.english}`,
-+ };
++ }
+}
 
-};
-
--
+- ...
 ```
+
+<iframe
+  src="https://stackblitz.com/edit/spule-router?embed=1&file=routes.js&hideExplorer=1"
+  style="width:100%; height:80%; border:0; border-radius: 4px; overflow:hidden;"
+  allow="accelerometer; gyroscope"
+></iframe>
 
 TODO
 
@@ -398,7 +406,17 @@ fact, we argue that the UI should be informed by the data,
 not the other way around.
 
 I.e., start with building out the application state for your
-various routes and then "adorn" it with a UI.
+various routes and then frame it with a UI. Think of the
+application state as your information architecture and the
+UI as your information interior design. While it's possible
+to start with the design and end with an information
+architecture, the customer journey can suffer from an
+over-reliance on "signage" for helping them navigate through
+the information.
+
+It's not uncommon to start an application/site design with a
+"site map". Think of this approach like a site map on
+steroids
 
 ## Advanced
 
@@ -425,12 +443,13 @@ let login = stream().subscribe(
     map(({ token }) => loginToMyAuth(token))
   )
 )
-// subtask
+// subtask ({A})=>
 let ANALYTICS = ({ token }) => [
   {
     sub$: login, // <- stream
+    // thunk custom stream dispatch (0)=>
     args: () => ({ token })
-  } // <- use acc
+  }
 ]
 // task
 let task = [
@@ -457,13 +476,15 @@ command stream is the only way the user changes anything in
 
 ### Marble Diagram
 
-```
+```diff
 0>- |------c-----------c--[~a~b~a~]-a----c-> : calls
 1>- |ps|---1-----------1----------0-1----1-> : run$
 2>- |t0|---------a~~b~~~~~~~~~~~a~|--------> : task$
 3>- |t1|---c-----------c------------a----c-> : command$
 4>- ---|ps|c-----a--b--c--------a---a----c-> : out$
-Handlers
+
+Userland Handlers:
+
 a>- ---|ta|------*--------------*---*------> : registerCMD
 b>- ---|tb|---------*----------------------> : registerCMD
 c>- ---|tc|*-----------*-----------------*-> : registerCMD
@@ -471,37 +492,41 @@ c>- ---|tc|*-----------*-----------------*-> : registerCMD
 
 ### Streams
 
-- `0>-`: `ctx.run$.next(x)` userland dispatches
-- `1>-`: `pubsub({ topic: x => x.length === 0 })` `run$`
-  stream
-- `2>-`: pubsub = `false` ? -> `task$` stream
-- `3>-`: pubsub = `true` ? ->`command$` stream
-- `4>-`: `pubsub({ topic: x => x.sub$ })`: `out$` stream ->
-  `register_command`
+- `0>-`: userland stream emmissions (`run`)
+- `1>-`: pubsub forking stream (if emmission has a `sub$`)
+- `2>-`: pubsub = `false`? -> `task$` stream
+- `3>-`: pubsub = `true`? -> `command$` stream
+- `4>-`: pubsub emits to `registerCMD` based on `sub$` value
 
-### Handlers
+### `work` Handlers
 
-- `4>-` this is the stream to which the user (and
-  framework) attaches handlers. Handlers receive events
-  they subscribe to as topics based on a `sub$` key in a
-  Command object.
+- `4>-` this is the stream to which the user (and framework)
+  attaches `work` handlers. Handlers receive events they
+  subscribe to as topics based on a `sub$` key in a Command
+  object.
 
-#### Handlers (framework provided):
+#### Built-in Commands/Tasks:
 
-- "state": Global state mutations
-- "route": Routing
+- `SET_STATE`: Global state update Command
+- `URL__ROUTE`: Routing Task
 - "FLIP" :
   [F.L.I.P.](https://aerotwist.com/blog/flip-your-animations/)
-  animations
+  animations Commands for route/page transitiions
 
 ### `run$`
 
 User-land event dispatch stream
 
-This stream is directly exposed to users via `ctx` Any
-one-off Commands `next`ed into this stream are sent to the
+This stream is directly exposed to users. Any one-off
+Commands `next`ed into this stream are sent to the
 `command$` stream. Arrays of Commands (Tasks) are sent to
 the `task$` stream.
+
+<iframe
+  src="https://stackblitz.com/edit/spule-spa?embed=1&file=index.js&hideExplorer=1"
+  style="width:100%; height:80%; border:0; border-radius: 4px; overflow:hidden;"
+  allow="accelerometer; gyroscope"
+></iframe>
 
 ## Constants Glossary
 
