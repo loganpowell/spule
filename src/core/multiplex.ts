@@ -79,7 +79,7 @@ const nosub$_err = (c, i) =>
  * ```js
  * import { stream } from "@thi.ng/rstream"
  * import { map, comp } from "@thi.ng/transducers"
- * 
+ *
  * // ad-hoc stream
  * let login = stream().subscribe(comp(
  *  map(x => console.log("login ->", x)),
@@ -91,11 +91,11 @@ const nosub$_err = (c, i) =>
  *  { sub$: login // <- stream
  *  , args: () => ({ token }) } // <- use acc
  * ]
- * 
+ *
  * // task
  * let task = [
  *  // no sub$, just pass data
- *  { args: { href: "https://my.io/auth" } }, 
+ *  { args: { href: "https://my.io/auth" } },
  *  { sub$: login , args: () => "logging in..." },
  *  { sub$: "AUTH"
  *  , args: ({ href }) => fetch(href).then(r => r.json())
@@ -178,7 +178,7 @@ export const multiplex = task_array =>
     /* RESULT HANDLERS */
     if (reso) {
       // promise rejection handler
-      if (erro && (result instanceof Error)) {
+      if (erro && result instanceof Error) {
         let error = erro(acc, result)
         if (error.sub$) return command$.next(error)
         console.warn(err_str, "[ Promise rejected ]:", result)

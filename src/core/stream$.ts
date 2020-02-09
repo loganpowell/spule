@@ -10,7 +10,7 @@ import { URL_FULL, DOM_NODE, CMD_SUB$ } from "../keys.js"
 
 /**
  * User-land event dispatch stream
- * 
+ *
  * `run$` is the primary event stream exposed to the user
  * via the `ctx` object injected into every `hdom` component
  * the command stream is the only way the user changes
@@ -51,7 +51,7 @@ import { URL_FULL, DOM_NODE, CMD_SUB$ } from "../keys.js"
  * one-off Commands `next`ed into this stream are sent to
  * the `command$` stream. Arrays of Commands (Tasks) are
  * sent to the `task$` stream.
- * 
+ *
  * TODO: add examples,`beforeunload` event handler within #4
  *    (orphan): SEE https://youtu.be/QQukWZcIptM and enable
  *    ctx.run.cancel() via external or internal events
@@ -122,5 +122,8 @@ export const DOMContentLoaded$ = fromDOMEvent(window, "DOMContentLoaded")
 export const DOMnavigated$ = merge({
   src: [popstate$, DOMContentLoaded$]
 }).transform(
-  map((x: Event | any ) => ({ [URL_FULL]: x.target.location.href, [DOM_NODE]: x.currentTarget }))
+  map((x: Event | any) => ({
+    [URL_FULL]: x.target.location.href,
+    [DOM_NODE]: x.currentTarget
+  }))
 )

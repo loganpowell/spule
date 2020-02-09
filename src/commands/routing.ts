@@ -1,7 +1,3 @@
-/**
- * @module Routing
- * @format
- */
 import { parse } from "../utils"
 import { DOMnavigated$ } from "../core/stream$.js"
 import {
@@ -22,11 +18,12 @@ import { registerCMD } from "./register.js"
  * 'DOMContentLoaded') payloads, so they can be consumed by
  * the `navigated$` stream
  */
+
 export const HURLer = ev => {
   // ev.preventDefault()
   // console.log({ e })
   const href = ev.target.href
-  
+
   const w_href = window.location.href
   const parsed = parse(w_href)
   const w_path = `/${parsed[URL_PATH].join("/")}`
@@ -47,10 +44,12 @@ export const HURL = registerCMD({
 })
 
 const setLinkAttrs = target => {
-  document.body.querySelectorAll("a[visited]").forEach((el: HTMLLinkElement) => {
-    if (el.href === window.location.href) el.setAttribute("active", "")
-    else el.removeAttribute("active")
-  })
+  document.body
+    .querySelectorAll("a[visited]")
+    .forEach((el: HTMLLinkElement) => {
+      if (el.href === window.location.href) el.setAttribute("active", "")
+      else el.removeAttribute("active")
+    })
   if (target.setAttribute) {
     target.setAttribute("visited", "")
     target.setAttribute("active", "")
@@ -115,9 +114,9 @@ export const HREF_PUSHSTATE_DOM = registerCMD({
 /**
  *
  * ### args: static
- * 
+ *
  * ### work: side-effecting
- * 
+ *
  * Routing Command: DOM-specific (used for manually
  * triggering a prerendering server for bots/web-crawlers
  *
@@ -129,7 +128,7 @@ export const HREF_PUSHSTATE_DOM = registerCMD({
  * import { JSDOM } from "jsdom"
  *
  * const document = (new JSDOM(...)).window.document
- * document.addEventListener("rendered", 
+ * document.addEventListener("rendered",
  *  () => {...scrape stuff here... }
  * )
  *

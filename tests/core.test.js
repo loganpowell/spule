@@ -6,7 +6,6 @@ import {
   command$,
   popstate$,
   multiplex,
-  registerRouter,
   registerRouterDOM,
   out$,
   run$,

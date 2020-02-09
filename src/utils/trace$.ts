@@ -1,5 +1,3 @@
-/** @format */
-
 import { trace } from "@thi.ng/rstream"
 
 /**

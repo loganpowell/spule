@@ -27,6 +27,7 @@ function getRect(element: HTMLElement, frame?) {
 }
 
 const S_path = "FLIP_shuffle"
+
 const shuffle_paths = uid => ({
   rects: [S_path, "rects", uid],
   elems: [S_path, "elems", uid]
@@ -85,7 +86,7 @@ const zoom_paths = uid => ({
  *    id:
  *  - if first === last, no change (on nav e.g.)
  *  - if first !== last, nav change (store rect for id)
- * 
+ *
  */
 const FLIPFirst = ({ state, id, target }) => {
   // 📌 TODO: GOOD PLACE FOR AN `onStart` hook animation/callback
@@ -113,7 +114,7 @@ const zIndex = (el, idx) => (el.style.zIndex = idx)
  *
  * 2. if a back/nav (no frame) event was what triggered
  *    the init do the calcs with no frame
- * 
+ *
  * What's happening:
  * - on first click (render)
  * - rect registered
@@ -123,7 +124,7 @@ const zIndex = (el, idx) => (el.style.zIndex = idx)
  * - checks for rect & frame
  * - uses rect & frame to calc diff
  * - PLAY
- * 
+ *
  */
 const FLIPLastInvertPlay = ({
   element,

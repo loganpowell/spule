@@ -8,6 +8,7 @@ export const URL_HASH: string = "URL_hash"
 export const URL_PAGE: string = "URL_page"
 export const URL_PRSE: string = "parse"
 export const URL_NPRS: string = "unparse"
+
 // public
 export const URL = {
   FULL: URL_FULL,
@@ -19,13 +20,14 @@ export const URL = {
   HASH: URL_HASH,
   PAGE: URL_PAGE,
   PRSE: URL_PRSE,
-  NPRS: URL_NPRS 
+  NPRS: URL_NPRS
 }
 
 // userland router metadata constants
 export const DOM_NODE: string = "NODE"
 export const DOM_BODY: string = "BODY"
 export const DOM_HEAD: string = "HEAD"
+
 // public
 export const DOM = {
   NODE: DOM_NODE,
@@ -36,6 +38,7 @@ export const DOM = {
 // set$$tate constants
 export const STATE_PATH: string = "PATH"
 export const STATE_DATA: string = "DATA"
+
 // public
 export const STATE = {
   PATH: STATE_PATH,
@@ -49,6 +52,7 @@ export const CMD_RESO: string = "reso"
 export const CMD_ERRO: string = "erro"
 export const CMD_WORK: string = "work"
 export const CMD_SRC$: string = "src$"
+
 // public
 export const CMD = {
   SUB$: CMD_SUB$,
@@ -67,6 +71,8 @@ export const CFG_VIEW: string = "app"
 export const CFG_DRFT: string = "draft"
 export const CFG_LOG$: string = "trace"
 export const CFG_RUTR: string = "router"
+export const CFG_KICK: string = "kick"
+
 // public
 export const CFG = {
   RUN$: CFG_RUN$,
@@ -75,13 +81,15 @@ export const CFG = {
   VIEW: CFG_VIEW,
   DRFT: CFG_DRFT,
   LOG$: CFG_LOG$,
-  RUTR: CFG_RUTR
+  RUTR: CFG_RUTR,
+  KICK: CFG_KICK
 }
 
 // ROUTER
 export const ROUTER_PREP: string = "prep"
 export const ROUTER_POST: string = "post"
 export const ROUTER_PRFX: string = "prefix"
+
 // public
 export const ROUTER = {
   PREP: ROUTER_PREP,
@@ -91,22 +99,22 @@ export const ROUTER = {
 }
 
 // Global state keys/constants
-export const ROUTE_PATH: string = "_ROUTE_PATH"
-export const ROUTE_LOAD: string = "_ROUTE_LOADING"
-export const ROUTE_VIEW: string = "_PAGE_TEMPLATE"
-export const ROUTE_ROOT: string = "_ROOT"
+export const $$_PATH: string = "_ROUTE_PATH"
+export const $$_LOAD: string = "_ROUTE_LOADING"
+export const $$_VIEW: string = "_PAGE_TEMPLATE"
+export const $$_ROOT: string = "_ROOT"
+
 // public
-export const ROUTE = {
-  PATH: ROUTE_PATH,
-  LOAD: ROUTE_LOAD,
-  VIEW: ROUTE_VIEW,
-  ROOT: ROUTE_ROOT
+export const $$ = {
+  PATH: $$_PATH,
+  LOAD: $$_LOAD,
+  VIEW: $$_VIEW,
+  ROOT: $$_ROOT
 }
 
-
-export const DEFAULT_CFG: Object = {
-  [ROUTE_PATH]: null, // home page / defaults to empty path
-  [ROUTE_LOAD]: true,
-  [ROUTE_VIEW]: null,
-  [ROUTE_ROOT]: null
+export const $$_DEFAULT: Object = {
+  [$$_PATH]: null, // home page / defaults to empty path
+  [$$_LOAD]: true,
+  [$$_VIEW]: null,
+  [$$_ROOT]: null
 }

@@ -15,9 +15,9 @@ import {
 } from "../commands"
 
 import {
-  ROUTE_VIEW,
-  ROUTE_LOAD,
-  ROUTE_PATH,
+  $$_VIEW,
+  $$_LOAD,
+  $$_PATH,
   DOM_NODE,
   URL_FULL,
   URL_DATA,
@@ -83,14 +83,11 @@ export const URL__ROUTE = CFG => {
     preroute = isObject(prep) ? [prep] : prep || []
     postroute = isObject(post) ? [post] : post || []
     prefix = prfx ? new RegExp(escaped(prfx), "g") : null
-
   } else {
-
     router = CFG
     preroute = []
     postroute = []
     prefix = null
-    
   }
   return acc => [
     ...preroute, // 📌 enable progress observation
@@ -121,7 +118,9 @@ export const URL__ROUTE = CFG => {
       [CMD_ERRO]: (_acc, _err) =>
         console.warn("Error in URL__ROUTE:", _err, "constructed:", _acc)
     },
-    { [CMD_ARGS]: prefix ? parse(acc[URL_FULL], prefix) : parse(acc[URL_FULL]) },
+    {
+      [CMD_ARGS]: prefix ? parse(acc[URL_FULL], prefix) : parse(acc[URL_FULL])
+    },
     /**
      * ## `_SET_ROUTER_PATH`
      *
@@ -144,7 +143,7 @@ export const URL__ROUTE = CFG => {
       ...SET_STATE,
       [CMD_ARGS]: _acc => ({
         [STATE_DATA]: _acc[URL_PATH],
-        [STATE_PATH]: [ROUTE_PATH]
+        [STATE_PATH]: [$$_PATH]
       })
     },
     ...postroute
@@ -178,7 +177,6 @@ export const URL__ROUTE = CFG => {
  *  - `URL_data`
  */
 export const URL_DOM__ROUTE = CFG => {
-
   // instantiate router
   const match = URL__ROUTE(CFG)
 
@@ -186,7 +184,7 @@ export const URL_DOM__ROUTE = CFG => {
     {
       ...SET_STATE,
       [CMD_ARGS]: {
-        [STATE_PATH]: [ROUTE_LOAD],
+        [STATE_PATH]: [$$_LOAD],
         [STATE_DATA]: true
       }
     },
@@ -202,14 +200,14 @@ export const URL_DOM__ROUTE = CFG => {
      * [`router`](http://thi.ng/associative) and a `unFURL`d URL
      *
      * ### work: side-effecting
-     * 
+     *
      * Hydrates the page state as well as the name of the active
      * page in the global store
      */
     {
       ...SET_STATE,
       [CMD_ARGS]: _acc => ({
-        [STATE_PATH]: [ROUTE_VIEW],
+        [STATE_PATH]: [$$_VIEW],
         [STATE_DATA]: _acc[URL_PAGE]
       })
     },
@@ -227,7 +225,7 @@ export const URL_DOM__ROUTE = CFG => {
       ...SET_STATE,
       // wait on pending promise(s) w/a non-nullary fn (+)=>
       [CMD_ARGS]: _ => ({
-        [STATE_PATH]: [ROUTE_LOAD],
+        [STATE_PATH]: [$$_LOAD],
         [STATE_DATA]: false
       })
     },

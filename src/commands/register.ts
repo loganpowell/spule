@@ -20,7 +20,6 @@ import { command$, out$ } from "../core/stream$.js"
 
 import { xKeyError, stringify_w_functions, diff_keys } from "../utils"
 
-
 const feedCMD$fromSource$ = cmd => {
   const sub$ = cmd[CMD_SUB$]
   const args = cmd[CMD_ARGS]
@@ -34,14 +33,13 @@ const feedCMD$fromSource$ = cmd => {
   return cmd[CMD_SRC$].subscribe(feed(command$))
 }
 
-
 let registered = new EquivMap()
 const err_str = "command Registration `registerCMD`"
 /**
  *
  *
  * Takes a Command object with some additional information
- * and returns a Command `run`able in a Task or as-is. 
+ * and returns a Command `run`able in a Task or as-is.
  *
  * ### Example
  *
@@ -66,7 +64,6 @@ const err_str = "command Registration `registerCMD`"
  *
  */
 export function registerCMD(command) {
-
   const sub$ = command[CMD_SUB$]
   const args = command[CMD_ARGS]
   const erro = command[CMD_ERRO]
@@ -74,22 +71,12 @@ export function registerCMD(command) {
   const src$ = command[CMD_SRC$]
   const work = command[CMD_WORK]
 
-  const knowns = [
-    CMD_SUB$, 
-    CMD_ARGS, 
-    CMD_RESO, 
-    CMD_ERRO, 
-    CMD_SRC$, 
-    CMD_WORK
-  ]
+  const knowns = [CMD_SUB$, CMD_ARGS, CMD_RESO, CMD_ERRO, CMD_SRC$, CMD_WORK]
   const [unknowns] = diff_keys(knowns, command)
   // console.log({ knowns, unknowns })
 
-
   if (unknowns.length > 0) {
-    throw new Error(
-      xKeyError(err_str, command, unknowns, sub$, undefined)
-    )
+    throw new Error(xKeyError(err_str, command, unknowns, sub$, undefined))
   }
 
   if (src$) feedCMD$fromSource$(command)
@@ -102,11 +89,11 @@ export function registerCMD(command) {
   )
 
   const CMD = reso
-    ? { 
-        [CMD_SUB$]: sub$, 
-        [CMD_ARGS]: args, 
-        [CMD_RESO]: reso, 
-        [CMD_ERRO]: erro 
+    ? {
+        [CMD_SUB$]: sub$,
+        [CMD_ARGS]: args,
+        [CMD_RESO]: reso,
+        [CMD_ERRO]: erro
       }
     : { [CMD_SUB$]: sub$, [CMD_ARGS]: args }
   // Set.add not supported by IE
@@ -115,14 +102,14 @@ export function registerCMD(command) {
       throw new Error(
         `
 
-🔥 duplicate \`sub$\` value detected in Command:
-${stringify_w_functions(CMD)}
-existing registered Commands:
-${JSON.stringify([...registered.keys()], null, 2)}
-🔥 Please use a different/unique Command \`sub$\` string
+  🔥 duplicate \`sub$\` value detected in Command:
+  ${stringify_w_functions(CMD)}
+  existing registered Commands:
+  ${JSON.stringify([...registered.keys()], null, 2)}
+  🔥 Please use a different/unique Command \`sub$\` string
 
-🔎 Inspect existing Commands using js Map API \`registerCMD.all\`
-🔎 (\`registerCMD.all.entries()\`, \`registerCMD.all.has("X")\`, etc.)
+  🔎 Inspect existing Commands using js Map API \`registerCMD.all\`
+  🔎 (\`registerCMD.all.entries()\`, \`registerCMD.all.has("X")\`, etc.)
 
         `
       )

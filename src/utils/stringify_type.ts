@@ -1,5 +1,3 @@
-/** @format */
-
 import { isObject, isFunction, isPromise } from "@thi.ng/checks"
 
 // prettier-ignore

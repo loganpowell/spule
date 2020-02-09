@@ -1,18 +1,16 @@
 export {
-  boot
-// , registerRouter
-, registerRouterDOM
+  boot,
+  // , registerRouter
+  registerRouterDOM
 } from "./registers.js"
 
-export {
-  multiplex
-} from "./multiplex.js"
+export { multiplex } from "./multiplex.js"
 
 export {
-  DOMnavigated$
-, DOMContentLoaded$
-, command$
-, out$
-, popstate$
-, run$
+  DOMnavigated$,
+  DOMContentLoaded$,
+  command$,
+  out$,
+  popstate$,
+  run$
 } from "./stream$.js"

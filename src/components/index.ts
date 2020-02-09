@@ -1,3 +1,1 @@
-export {
-  FLIPkid
-} from "./FLIPkid.js"
+export { FLIPkid } from "./FLIPkid.js"

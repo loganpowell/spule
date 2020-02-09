@@ -1,8 +1,3 @@
-/**
- * @module Registration
- * @format
- */
-
 import { fromAtom, sidechainPartition, fromRAF } from "@thi.ng/rstream"
 import { peek } from "@thi.ng/arrays"
 import { map } from "@thi.ng/transducers"
@@ -11,10 +6,10 @@ import { getIn } from "@thi.ng/paths"
 
 import {
   DOM_NODE,
-  ROUTE_LOAD,
-  ROUTE_PATH,
-  ROUTE_ROOT,
-  ROUTE_VIEW,
+  $$_LOAD,
+  $$_PATH,
+  $$_ROOT,
+  $$_VIEW,
   URL_FULL,
   URL_PRSE,
   ROUTER_PRFX,
@@ -29,6 +24,7 @@ import {
   CFG_VIEW,
   CFG_DRFT,
   CFG_LOG$,
+  CFG_KICK
 } from "../keys.js"
 
 import { $store$ } from "../store"
@@ -57,7 +53,9 @@ export const registerRouterDOM = router => {
     [CMD_SUB$]: "_URL_NAVIGATED$_DOM",
     [CMD_ARGS]: x => x,
     [CMD_WORK]: args =>
-      run$.next(taskFrom({ [URL_FULL]: args[URL_FULL], [DOM_NODE]: args[DOM_NODE] }))
+      run$.next(
+        taskFrom({ [URL_FULL]: args[URL_FULL], [DOM_NODE]: args[DOM_NODE] })
+      )
   })
 }
 
@@ -78,40 +76,42 @@ export const registerRouterDOM = router => {
 
 const pre = (ctx, body) => (
   console.log(
-    `no \`app\` component provided to \`${boot.name}({${CFG_VIEW}})\`. Rendering state by route path`
+    `
+    no ${CFG_VIEW} component provided to boot({ CFG }). 
+    Rendering state by route path
+    `
   ),
   ["pre", JSON.stringify(body[1], null, 2)]
 )
 
+// prettier-ignore
 /**
  *
- *  Part I: Needs to be a functional component to accept the
- *  `ctx` object to pass it to children
+ * Options Object keys
+ * - root   : DOM mount node
+ * - app    : root application node
+ * - draft  : state scaffolding Object
+ * - router : url matching function or config Object
+ * - trace  : string triggers logs prepended with it
+ * - kick   : boolean triggers kickstart (for some sandboxes)
+ * - prefix : ignore a part of the URL (e.g., gitub.io/<prefix>)
  *
- *  Part II: Takes the root RAF stream and updates the shell
- *  on every global state mutation
- *
- *  Part III: Connects the app shell to the state stream,
- *  which is triggered by any updates to the global
- *  `$store$`
  */
-export const boot = CFG => {
-  // console.log({ URL_page })
+export const boot = (CFG: Object) => {
 
-  const root = CFG[CFG_ROOT] || document.body
-  const view = CFG[CFG_VIEW] || pre
-  const draft = CFG[CFG_DRFT]
-  const router = CFG[CFG_RUTR]
-  const log$ = CFG[CFG_LOG$]
+  const root       = CFG[CFG_ROOT] || document.body
+  const view       = CFG[CFG_VIEW] || pre
+  const draft      = CFG[CFG_DRFT]
+  const router     = CFG[CFG_RUTR]
+  const log$       = CFG[CFG_LOG$]
+  const kick       = CFG[CFG_KICK]
+  const knowns     = [CFG_ROOT, CFG_VIEW, CFG_DRFT, CFG_RUTR, CFG_LOG$]
+  const prfx       = router[ROUTER_PRFX] || null
 
-  const knowns = [CFG_ROOT, CFG_VIEW, CFG_DRFT, CFG_RUTR, CFG_LOG$]
   const [, others] = diff_keys(knowns, CFG)
-
-  const escRGX = /[-/\\^$*+?.()|[\]{}]/g
-  const escaped = string => string.replace(escRGX, "\\$&")
-
-  const prfx = router[ROUTER_PRFX] || null
-  const RGX = prfx ? new RegExp(escaped(prfx || ""), "g") : null
+  const escRGX     = /[-/\\^$*+?.()|[\]{}]/g
+  const escaped    = str => str.replace(escRGX, "\\$&")
+  const RGX        = prfx ? new RegExp(escaped(prfx || ""), "g") : null
 
   if (router) registerRouterDOM(router)
 
@@ -119,14 +119,14 @@ export const boot = CFG => {
 
   const shell = state$ => (
     log$ ? console.log(log$, state$) : null,
-    state$[ROUTE_LOAD]
+    state$[$$_LOAD]
       ? null
-      : [view, [state$[ROUTE_VIEW], getIn(state$, state$[ROUTE_PATH])]]
+      : [view, [state$[$$_VIEW], getIn(state$, state$[$$_PATH])]]
   )
 
   if (draft) $store$.swap(x => ({ ...draft, ...x }))
 
-  $store$.resetIn(ROUTE_ROOT, root)
+  $store$.resetIn($$_ROOT, root)
 
   state$.subscribe(sidechainPartition(fromRAF())).transform(
     map(peek),
@@ -145,11 +145,11 @@ export const boot = CFG => {
       }
     })
   )
-  // FIXME: Just a little kick in the pants for those stubborn sandboxes
-  // if ($store$.deref()[ROUTE_LOAD]) {
-  //   DOMnavigated$.next({
-  //     target: { location: { href: "./" } },
-  //     currentTarget: document
-  //   })
-  // }
+  // Just a little kick in the pants for those stubborn sandboxes
+  if (kick) {
+    DOMnavigated$.next({
+      target: document,
+      currentTarget: document
+    })
+  }
 }

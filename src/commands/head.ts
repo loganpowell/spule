@@ -1,15 +1,4 @@
-/**
- * @module INJECT_HEAD
- * @format
- */
-
-import { 
-  URL_DATA, 
-  CMD_SUB$, 
-  CMD_ARGS, 
-  CMD_WORK, 
-  DOM_HEAD 
-} from "../keys.js"
+import { URL_DATA, CMD_SUB$, CMD_ARGS, CMD_WORK, DOM_HEAD } from "../keys.js"
 
 import { registerCMD } from "./register.js"
 
@@ -92,12 +81,12 @@ const conformToHead = ({
 })
 
 interface apiURL {
-  [URL_data_: string] : {
+  [URL_data_: string]: {
     [HEAD_: string]: {
-      title: any,
-      description: any,
-      image: any,
-      favicon: any,
+      title: any
+      description: any
+      image: any
+      favicon: any
       type: any
     }
   }
@@ -109,5 +98,6 @@ export const INJECT_HEAD = registerCMD({
     [URL_DATA]: {
       [DOM_HEAD]: { title, description, image, favicon, type }
     }
-  } : apiURL) => replaceMeta(conformToHead({ title, description, image, favicon, type }))
+  }: apiURL) =>
+    replaceMeta(conformToHead({ title, description, image, favicon, type }))
 })

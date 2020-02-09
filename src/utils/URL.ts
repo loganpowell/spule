@@ -1,5 +1,3 @@
-/** @format */
-
 import qs from "querystring"
 // import gql from "nanographql"
 import {
@@ -197,7 +195,6 @@ export const unparse = (parsed, isAbsolute = false) => {
     : `${protocol}//${domain.join(".")}${rootRelative}`
 }
 
-
 // let test1 = {
 //   // URL: "https://api.census.gov",
 //   // URL_subdomain: ["sub"],
@@ -225,5 +222,3 @@ export const unparse = (parsed, isAbsolute = false) => {
 // unFURL(
 //   "http://sub.swing.bloop.com/lens/path#scroll-to?GQL=query(%24name%3AString!)%7Bmovie(name%3A%24name)%7BreleaseDate%7D%7D&name=Back%20to%20the%20Future"
 // ) //?
-
-
