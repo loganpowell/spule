@@ -37,7 +37,7 @@ import { registerCMD } from "../commands/register.js"
 
 import { URL_DOM__ROUTE, URL__ROUTE } from "../tasks"
 
-import { unFURL, diff_keys } from "../utils"
+import { parse, diff_keys } from "../utils"
 
 import { run$, DOMnavigated$ } from "./stream$.js"
 
@@ -140,7 +140,7 @@ export const boot = CFG => {
         // remove any staging path components (e.g., gh-pages)
         [URL_PRSE]: () =>
           // console.log({ FURL }),
-          unFURL(window.location.href, RGX), // <- 🔍
+          parse(window.location.href, RGX), // <- 🔍
         ...others
       }
     })

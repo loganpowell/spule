@@ -6,8 +6,8 @@ export const URL_SUBD: string = "URL_subdomain"
 export const URL_QERY: string = "URL_query"
 export const URL_HASH: string = "URL_hash"
 export const URL_PAGE: string = "URL_page"
-export const URL_PRSE: string = "unFURL"
-export const URL_NPRS: string = "FURL"
+export const URL_PRSE: string = "parse"
+export const URL_NPRS: string = "unparse"
 // public
 export const URL = {
   FULL: URL_FULL,

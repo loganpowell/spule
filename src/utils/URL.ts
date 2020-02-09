@@ -95,7 +95,7 @@ import {
  * ```
  *
  */
-export const unFURL = (URL_full: string, prefixRGX?) => {
+export const parse = (URL_full: string, prefixRGX?) => {
   // console.log("parsing...")
   let URL_subdomain = []
   let URL_domain = []
@@ -151,7 +151,7 @@ export const unFURL = (URL_full: string, prefixRGX?) => {
  * construct URLs manually.
  *
  */
-export const FURL = (parsed, isAbsolute = false) => {
+export const unparse = (parsed, isAbsolute = false) => {
   // console.log("unparsing...")
 
   const {
@@ -160,7 +160,7 @@ export const FURL = (parsed, isAbsolute = false) => {
     [URL_PATH]: URL_path,
     [URL_QERY]: URL_query,
     [URL_HASH]: URL_hash
-  } = unFURL(parsed[URL_FULL] || window.location.href)
+  } = parse(parsed[URL_FULL] || window.location.href)
 
   const {
     _URL_subdomain = URL_subdomain,

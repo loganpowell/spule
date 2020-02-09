@@ -35,7 +35,7 @@ import {
   STATE_PATH
 } from "../keys.js"
 
-import { unFURL } from "../utils"
+import { parse } from "../utils"
 
 const SET_STATE = createSetStateCMD($store$)
 
@@ -121,7 +121,7 @@ export const URL__ROUTE = CFG => {
       [CMD_ERRO]: (_acc, _err) =>
         console.warn("Error in URL__ROUTE:", _err, "constructed:", _acc)
     },
-    { [CMD_ARGS]: prefix ? unFURL(acc[URL_FULL], prefix) : unFURL(acc[URL_FULL]) },
+    { [CMD_ARGS]: prefix ? parse(acc[URL_FULL], prefix) : parse(acc[URL_FULL]) },
     /**
      * ## `_SET_ROUTER_PATH`
      *

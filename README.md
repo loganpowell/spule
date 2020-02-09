@@ -60,9 +60,9 @@ Tasks, like Commands, are _just data_ (including  Lambdas). Commands are `Object
 export const GET__FORTUNE = [
   // 1st Command args' Object initializes an accumulator
   { args: { api: "http://yerkee.com/api/fortune" } }, 
-  { // lambda args have access to the accumulation 
+  // lambda args have access to the accumulation 
+  {
     args: ({ api }) => fetch(api).then(r => r.json()), 
-                                       //=> { fortune: ... }
     reso: (acc, { fortune }) => ({ fortune }),
     erro: (acc, err) => ({ error: err })
   },
@@ -205,226 +205,99 @@ Value semantics have so many benefits. As a router, just one. So, how might we a
 
 ```js
 // src/routes.js
-
 import { EquivMap } from "@thi.ng/associative";
-import fetch from "node-fetch";
 
-const url = "https://fortunecookieapi.herokuapp.com/v1/";
-const query = (api, id) =>
-  fetch(`${url}${api}?limit=1&skip=${id}`).then(r => r.json());
-const known = x => ["fortunes", "lessons"].find(y => y === x);
-const X = [{ chinese: 404, english: 404 }];
-const home = [{ chinese: "家", english: "home" }];
-
+const known  = x => ["fortunes", "lessons"].find(y => y === x);
+const four04 = [{ chinese: 404, english: 404 }];
+const home   = [{ chinese: "家", english: "home" }];
+const url    = "https://fortunecookieapi.herokuapp.com/v1/";
+const query  = (a, b) => 
+  fetch(`${url}${a}?limit=1&skip=${b}`).then(r => r.json());
+  
 export const match = async path => {
+
   const args = path ? path.split("/") : [];
 
   let [api, id] = args;
 
-  const data =
-    new EquivMap([
-      [[], () => home],
-      // example of a guard
-      [[known(api), id], () => query(api, id)]
-    ]).get(args) || (() => X);
+  const data = new EquivMap([
+    [ [],               () => home ],
+    [ [known(api), id], () => query(api, id) ], // guarded match
+    [ [known(api)],     () => query(api, 1) ] // guarded match
+  ]).get(args) ||      (() => four04);
 
   const res = await data();
+  const r = res[0]
+  
+  return r.message || `${r.chinese}: ${r.english}`
 
-  return res[0].message || `${res[0].chinese}: ${res[0].english}`;
 };
 
 const log = console.log;
 
 match("fortunes/88").then(log);
-//=> "A handsome shoe often pinches the foot."
+// //=> "A handsome shoe often pinches the foot."
 
-match().then(log);
-//=> "家: home"
+match("").then(log);
+// //=> "家: home"
 
 match("lessons/4").then(log);
-//=> "请给我一杯/两杯啤酒。: A beer/two beers, please."
+// //=> "请给我一杯/两杯啤酒。: A beer/two beers, please."
 
 match("bloop/21").then(log);
-//=> "404: 404"
+// //=> "404: 404"
 ```
 
 If you can see the potential of pattern matching for other problems you may have encountered, you can check out the [more detailed section](#more-pattern-matching) later. We can create pattern-matching [guards](https://en.wikipedia.org/wiki/Guard_(computer_science)#Pattern_guard) for `Arrays` by using an expression that either returns a "falsy" value or the value itself.
 
 Even if you don't end up using `spule` - you may find the [`@thi.ng/associative`](https://github.com/thi-ng/umbrella/tree/develop/packages/associative) library __very handy__ indeed!
 
-Now, let's integrate our router...
+Now, let's integrate our router. Everything pretty much stays the same, but we'll need to make a few changes to mount our router to the DOM.
 
-```js
-import { match } from "./routes" 
+```diff
+// src/routes.js
+
++ import { unFURL } from "spule"
+
+...
+
+export const match = async path => {
+
+- const args = path ? path.split("/") : [];
++ const args = unFURL(path).URL_path
+
+  let [api, id] = args;
+
+  const data = new EquivMap([
+    [ [],               () => home ],
+    [ [known(api), id], () => query(api, id) ], // guarded match
+    [ [known(api)],     () => query(api, 1) ] // guarded match
+  ]).get(args) ||      (() => four04);
+
+  const res = await data();
+  const r = res[0]
+  
+- return r.message || `${r.chinese}: ${r.english}`
++ return { 
++   URL_data: r.message || `${r.chinese}: ${r.english}`,
++ };
+
+};
+
+-
 ```
 TODO
 
 It's beyond the scope of this introduction to `spule` to dive into the implementation of our next example. It will work, but you try it out for yourself on your own (toy) problem in order to get a feel for it.
 
+### UI-first or UI-last?
 
+As you may deduce - if you've gotten this far - is there's a heavy data-oriented/biased approach taken by `spule`. In fact, we argue that the UI should be informed by the data, not the other way around.
 
-### Opinion: State Should be "Designed" Before the UI
-
-  - Cross-platform router
-  - ❤ Data "adornment" (Google Doc -> revise it) TABLE
-    1. First order UI => URL
-    2. Second order UI => Data
-    3. Third order UI => Streams of events & data
-    4. Fourth order UI => Componentization ([@thi.ng/hdom](https://github.com/thi-ng/umbrella/blob/a02d7b1dbea4e4a294d238af108d23ec831c1981/packages/transducers/src/func/deep-transform.ts) `spec`)
-    5. Fith order UI => component styling (styled-system-hdom)
-- streams (FRP Architecture)
-  - marble diagram
-  - built-ins (exposed):
-    - `run$`
-    - `out$`
-  - built-ins (under the hood):
-    - `task$`
-    - `command$`
-  - ad-hoc stream attachments
-    - SEE ADVANCED SECTION BELOW...
-- Commands (synchronous payloads)
-  - primary keys: (TABLE)
-    - `sub$`: a Topic key for for registering the event 
-    - `args`: arguments for the handler of the event  
-    - `path`: path/lens for targeted state evolution
-  - built-ins 
-    - State Evolution: `sub$: "STATE"`
-      - this is where the `path` key comes into play
-    - Routing: `sub$: "ROUTE"` (see "Routing" section below)
-    - [FLIP]() Animations: `sub$: "FLIP"`
-  - Command Registration
-    - during registration of a Command, you will only need the primary keys
-      - `sub$`: Topic key for for registering the event
-      - `args`: payload (static only) of the event
-- Tasks (ordered Command dispatch 💃 asynchronous payloads!)
-  - A Task is just an array of Commands, but with some special features:
-    - pass data between Commands within a task
-    - use Promises (async) in a Command
-    - (de)compose a Task into/from Subtasks
-  - w/in a Task, dispatcher recognizes two additional keys for dealing with Promises:
-    - `reso`: used for handling resolved Promise args
-    - `erro`: used for handling rejected Promise args
-  - dispatcher
-    - composition of Commands
-    - "Command `args` threading"
-    - `args` signature dynamic dispatch:
-      - Functions
-      - `Object`s
-      - Strings|Booleans
-  - forms:
-    - formulaic tasks (no outside input)
-    - subtasks (outside input)
-      - compose into higher-order tasks or 
-- subtasks
-- Routing
-  - combine browser API instigated ("popstate", "DOMContentLoaded") with user-invoked stream emissions
-  - registered the `sub$: "ROUTE"` Command 
-  - `route_cfg` `Object` (TABLE)
-    - a [@thi.ng/associative](http://thi.ng/associative) `EquivMap` pattern matcher
-    - see [LINK TO DOCS IN CODE CONTEXT 📌 TODO]
-- Naming Conventions:
-  - constants: `CAPITAL_SNAKE_CASE`
-    - generally accepted convention for constants in JS
-    - used for defining Commands (as though they might cause
-      side effects, their subscription names are constant -
-      i.e., a signal for emphasising this aspect of a
-      Command)
-  - pure functions: `snake_case`
-    - some novelty here due to pure functions acting like
-      constants in that with the same input they always
-      return the same output
-  - impure functions: `camelCase`
-    - regular side-effecty JS
-  - Tasks: `DOUBLE__UNDERSCORE__SNAKE__CASE`
-    - implies the inputs and outputs on either end of a Task
-    - Tasks also should be treated as pure functions where
-      the output is really just data (and lambdas). This is
-      going in the direction of "code as data"
-- lots'o'examples
-
-
-
-## Core
-
-Handles Collections (array) of Commands ("Tasks") which
-require _ordered_ choreography and/or have a dependency
-on some (a)sync data produced by a user interaction.
-
-### Synopsis:
-- Async `reduce` function, that passes an accumulator
-  (`acc`) as a local state container between Command
-  invocations.
-- Commands are composed in-situ in userland (Ad hoc)
-- spools a collection of Commands as a Task
-- resolves any promises contained within a Command
-- passes an accumulator (acc) to subsequent Commands in a
-  Task
-
-### Type checks on function signatures
-
-There are two valid forms for Task entries:
-1. a Unary function returning an array of Commands:
-   referred to as "Subtasks"
-2. A Command object: dispatch to registered handlers
-
-## Recognized Keys
-
-There are 4 recognized keys for a Command object:
-
-### Primary keys
-
-##### `sub$` key
-
-- Topic identifier: used for registering handlers hooked
-   onto the Command stream.
-
-##### `args` key
-
-- __primary control structure__ with three recognized
-  forms that do different things in the context of a
-  Task:
-- non-function `args` (primitives, objects) send the args
-  as-is to the Command handler
-- nullary fns (`(0)=>` ) send the args_ as a Command to
-  a `sub$` _stream_ of your choosing (ADVANCED: see
-  Ad-hoc Stream Injection below)
-- unary fns (`(1)=>`) are passed the inter-Task
-  accumulated value, called and the resulting value is
-  passed to registered Command handler
-- Promises (and those returned from `(1)=>`) are resolved
-  and their values sent to the handler
-- new vals (`Object`s) are merged with accumulated object
-  from preceding Task results(dupe keys overwritten)
-
-### Promise-specific keys -> binary (as in two parameter,
-  not boolean) functions:
-
-##### `reso` key
-
-- (resolving) function `(2)=>` = handle resolved promises:
-  MUST be a binary fn `(acc, resolved Promise)
-  =>`
-
-##### `erro` key
-
-- `(2)=>` = handle rejected promises: MUST be
-  a binary fn `(acc, Promise rejection) =>`
-
-### Subtasks:
-
-Subtasks are the way you compose tasks. Insert a Task and
-the spool will unpack it in place (super -> sub
-order preserved) A Subtask must be defined as a unary
-function that accepts an accumulator object and returns a
-Task, e.g.:
+I.e., start with building out the application state for your various routes and then "adorn" it with a UI.
 
 ## Advanced
 
-### Ad-hoc stream injection
-- ADVANCED
-  - ad-hoc stream injection
-    - nullary (thunk) in a Task
-  - `rendertron`
 ADVANCED USE ONLY 👽
 
 HURL tries to hide the stream implentation from the user
@@ -517,52 +390,50 @@ Command object.
 User-land event dispatch stream
 
 This stream is directly exposed to users via `ctx` Any
-one-off Commands `next`ed into this stream are sent to
-the `command$` stream. Arrays of Commands (Tasks) are
-sent to the `task$` stream.
+one-off Commands `next`ed into this stream are sent to the
+`command$` stream. Arrays of Commands (Tasks) are sent to
+the `task$` stream.
 
 ## Constants Glossary
 
-parse_URL constants
-
 | URL component key | description |
 | --- | --- |        
-| DOM           | DOM node target                                           |
-| URL           | full URL/route                                            |
-| URL_path      | route path as array                                       |
-| URL_domain    | top-level domain as array                                 |
-| URL_subdomain | subdomain as array                                        |
-| URL_query     | node querystring parsed URL parameters                    |
-| URL_hash      | hash string to/from URL if any                            |
-| URL_data      | data returned by router                                   |
-| URL_page      | page component to render URL_data with                    |
+| DOM           | DOM node target                                   |
+| URL           | full URL/route                                    |
+| URL_path      | route path as array                               |
+| URL_domain    | top-level domain as array                         |
+| URL_subdomain | subdomain as array                                |
+| URL_query     | node querystring parsed URL parameters            |
+| URL_hash      | hash string to/from URL if any                    |
+| URL_data      | data returned by router                           |
+| URL_page      | page component to render URL_data with            |
 
 | router config key | description |
 | --- | --- |        
-| HEAD          | metadata wrapper for router (targets DOM <head>)          |
-| BODY          | data wrapper for router                                   |
-| prep          | pre-router behavior Task/Command injection                |
-| post          | post=router behavior Task/Command injection               |
-| prefix        | URL path string for the router to ignore                  |
-| router        | @thi.ng/EquivMap pattern matching function                |
+| HEAD          | metadata wrapper for router (targets DOM <head>)  |
+| BODY          | data wrapper for router                           |
+| prep          | pre-router behavior Task/Command injection        |
+| post          | post=router behavior Task/Command injection       |
+| prefix        | URL path string for the router to ignore          |
+| router        | @thi.ng/EquivMap pattern matching function        |
 
-| Command key | description |
+| Command key (🔎)| description |
 | --- | --- |        
-| sub$          | Command primary/unique key (topic subscription)           |
-| args          | multiple signature intra-Task Command state see [Spule]() |
-| reso          | intra-Command resolver of Promise args                    |
-| erro          | intra-Command handler for Promise args rejetions          |
-| handler       | where Commands' actual "work" is done (side-fx/mutations) |
-| source$       | upstream (source stream) Command connector                |
+| sub$          | Command primary/unique key (topic subscription)   |
+| args          | signal passing intra-Task Command state value     |
+| reso          | Promise resolution handler                        |
+| erro          | Promise rejection handler                         |
+| work          | where Commands' actual "work" is done             |
+| src$          | upstream (source stream) Command connector        |
 
-| boot config key | description |
+| `boot` config key | description |
 | --- | --- |        
-| run           | primary userland dispatch function                        |
-| state         | global immutable state container                          |
-| root          | DOM mount node for application                            |
-| app           | root application view                                     |
-| trace         | enable logging of every global state update               |
-| draft         | state shape scaffolding                                   |
+| run           | primary userland dispatch function                |
+| state         | global immutable state container                  |
+| root          | DOM mount node for application                    |
+| app           | root application view                             |
+| trace         | enable logging of every global state update       |
+| draft         | state shape scaffolding                           |
 
 
 ### More Pattern Matching
@@ -620,6 +491,25 @@ guarded_matcher({ a: "b", c: 4 });
 //=> greater than 3
 ```
 
+- Naming Conventions:
+  - constants: `CAPITAL_SNAKE_CASE`
+    - generally accepted convention for constants in JS
+    - used for defining Commands (as though they might cause
+      side effects, their subscription names are constant -
+      i.e., a signal for emphasising this aspect of a
+      Command)
+  - pure functions: `snake_case`
+    - some novelty here due to pure functions acting like
+      constants in that with the same input they always
+      return the same output
+  - impure functions: `camelCase`
+    - regular side-effecty JS
+  - Tasks: `DOUBLE__UNDERSCORE__SNAKE__CASE`
+    - implies the inputs and outputs on either end of a Task
+    - Tasks also should be treated as pure functions where
+      the output is really just data (and lambdas). This is
+      going in the direction of "code as data"
+- lots'o'examples
 
 ## Credits
 

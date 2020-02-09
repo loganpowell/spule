@@ -15,7 +15,7 @@ import {
   registerCMD,
   INJECT_HEAD,
   HURL,
-  unFURL,
+  parse,
   boot,
   FLIPkid,
   keys as K
@@ -116,7 +116,7 @@ const getSomeJSON = async (path, uid) => {
  * TODO: Graphql Example
  */
 const routerCfg = async url => {
-  let match = unFURL(url)
+  let match = parse(url)
   // let {
   // URL,
   // URL_subdomain, // array

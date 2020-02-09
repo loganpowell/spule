@@ -11,8 +11,8 @@ export {
   trace$
 } from "./trace$.js"
 export {
-  FURL,
-  unFURL
+  unparse,
+  parse
 } from "./URL.js"
 export {
   key_index_err,

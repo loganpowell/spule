@@ -83,7 +83,7 @@
  * ```
  *
  */
-export declare const unFURL: (URL_full: string, prefixRGX?: any) => {
+export declare const parse: (URL_full: string, prefixRGX?: any) => {
     [x: string]: any;
 };
 /**
@@ -93,4 +93,4 @@ export declare const unFURL: (URL_full: string, prefixRGX?: any) => {
  * construct URLs manually.
  *
  */
-export declare const FURL: (parsed: any, isAbsolute?: boolean) => string;
+export declare const unparse: (parsed: any, isAbsolute?: boolean) => string;

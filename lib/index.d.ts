@@ -6,4 +6,4 @@ export { FLIPkid } from "./components";
 export { URL_DOM__ROUTE, URL__ROUTE, task$ } from "./tasks";
 import * as keys from "./keys.js";
 export { keys };
-export { trace$, FURL, unFURL } from "./utils";
+export { trace$, unparse, parse } from "./utils";

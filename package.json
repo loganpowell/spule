@@ -9,18 +9,18 @@
   "repository": "https://github.com/loganpowell/spule",
   "homepage": "https://github.com/loganpowell/spule",
   "scripts": {
-    "start": "parcel examples/integration/index.html --global md -p 8080 --open -d dist watch",
     "clean": "rm -rf .cache build dist",
-    "build": "npm run clean && cross-env NODE_ENV=production parcel build examples/integration/index.html -d spule --no-source-maps --no-cache --public-url ./",
     "madge": "madge --circular lib/",
     "types": "tsc --project tsconfig.build.json",
-    "tests": "npm run types && npm run madge && jest",
-    "pages": "npm run build && gh-pages -d spule",
     "jsdoc": "jsdoc -c jsdoc/jsdoc.json --verbose --debug",
+    "build": "npm run clean && cross-env NODE_ENV=production parcel build examples/integration/index.html -d spule --no-source-maps --no-cache --public-url ./",
+    "pages": "npm run build && gh-pages -d spule",
     "docs": "npm run types && npm run jsdoc",
     "patch": "npm version patch && npm run docs && npm run pages",
+    "tests": "npm run types && npm run madge && jest",
+    "postgit": "git push origin master && npm run patch",
     "git": "git add . && git commit -m",
-    "postgit": "git push origin master && npm run patch"
+    "start": "npm run types && parcel examples/integration/index.html --global md -p 8080 --open -d dist watch"
   },
   "keywords": [
     "thi.ng",
