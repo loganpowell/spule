@@ -1,6 +1,5 @@
 /**
- * @module set$$tate
- * @format
+ * @module store/state
  */
 
 import { Atom } from "@thi.ng/atom"

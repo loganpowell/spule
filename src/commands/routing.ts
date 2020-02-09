@@ -1,3 +1,6 @@
+/**
+ * @module commands/routing
+ */
 import { parse } from "../utils"
 import { DOMnavigated$ } from "../core/stream$.js"
 import {

@@ -1,3 +1,7 @@
+/**
+ * @module utils/trace$
+ */
+
 import { trace } from "@thi.ng/rstream"
 
 /**

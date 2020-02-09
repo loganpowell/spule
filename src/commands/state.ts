@@ -1,8 +1,6 @@
 /**
- * @module SET_STATE
- * @format
+ * @module commands/state
  */
-
 import {
   CMD_SUB$,
   CMD_ARGS,

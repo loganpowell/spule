@@ -1,3 +1,7 @@
+/**
+ * @module keys
+ */
+
 export const URL_FULL: string = "URL"
 export const URL_PATH: string = "URL_path"
 export const URL_DATA: string = "URL_data"

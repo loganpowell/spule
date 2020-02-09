@@ -1,3 +1,7 @@
+/**
+ * @module utils/URL
+ */
+
 import qs from "querystring"
 // import gql from "nanographql"
 import {

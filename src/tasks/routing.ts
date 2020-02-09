@@ -1,6 +1,5 @@
 /**
- * @module Routing
- * @format
+ * @module tasks/routing
  */
 
 import { isObject } from "@thi.ng/checks"

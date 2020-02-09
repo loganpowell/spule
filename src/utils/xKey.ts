@@ -1,4 +1,8 @@
 /**
+ * @module utils/xKey
+ */
+
+/**
  * Uses a JSON.stringify "replacer" function to preserve a
  * small (truncated) version of the function signature for
  * Object values that contain them

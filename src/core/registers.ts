@@ -1,3 +1,6 @@
+/**
+ * @module core/registers
+ */
 import { fromAtom, sidechainPartition, fromRAF } from "@thi.ng/rstream"
 import { peek } from "@thi.ng/arrays"
 import { map } from "@thi.ng/transducers"

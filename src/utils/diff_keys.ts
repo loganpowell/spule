@@ -1,10 +1,13 @@
 /**
+ * @module utils/diff_keys
+ */
+
+/**
  *
  * @example
  * diff_keys(["a", "b"], { a: 1, b: 2, c: 3, d: 4 })
  * //=> [ [ 'c', 'd' ], { c: 3, d: 4 } ]
  */
-
 export function diff_keys(nKeys = [], nObj = {}) {
   const all = Object.keys(nObj)
   const xKeys: any = all.filter(key => !nKeys.includes(key))

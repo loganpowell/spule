@@ -1,6 +1,5 @@
 /**
- * @module FLIP
- * @format
+ * @module components/FLIPkid
  */
 
 import { FLIP_FIRST, FLIP_LAST_INVERSE_PLAY, HURL } from "../commands"

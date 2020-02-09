@@ -1,6 +1,5 @@
 /**
- * @module multiplex
- * @format
+ * @module core/multiplex
  */
 
 import { isFunction, isPromise } from "@thi.ng/checks"

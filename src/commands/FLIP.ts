@@ -1,3 +1,7 @@
+/**
+ * @module commands/FLIP
+ */
+
 import { Atom } from "@thi.ng/atom"
 import { getIn } from "@thi.ng/paths"
 
@@ -73,8 +77,12 @@ const zoom_paths = uid => ({
 
 /**
  *
+ * `FLIPFirst`
+ *
+ * ```
  * order: normalizeTree -> render -> diff -> init -> release
  *                        | hdom |         | dom | unmounted
+ * ```
  *
  * 1. el mounted (init): look for existing flip map for id
  *  - if exists, Play anim and store new flip map rect (for
