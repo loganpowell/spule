@@ -387,7 +387,7 @@ export const match = async path => {
 
 <iframe
   src="https://stackblitz.com/edit/spule-router?embed=1&file=routes.js&hideExplorer=1"
-  style="width:100%; height:80%; border:0; border-radius: 4px; overflow:hidden;"
+  style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;"
   allow="accelerometer; gyroscope"
 ></iframe>
 
@@ -524,7 +524,7 @@ the `task$` stream.
 
 <iframe
   src="https://stackblitz.com/edit/spule-spa?embed=1&file=index.js&hideExplorer=1"
-  style="width:100%; height:80%; border:0; border-radius: 4px; overflow:hidden;"
+  style="width:100%; height:900px; border:0; border-radius: 4px; overflow:hidden;"
   allow="accelerometer; gyroscope"
 ></iframe>
 
