@@ -1,8 +1,4 @@
 /**
- * @module Registration
- * @format
- */
-/**
  *
  * expects payload of
  * ```
@@ -14,14 +10,14 @@ export declare const registerRouterDOM: (router: any) => {
 };
 /**
  *
- *  Part I: Needs to be a functional component to accept the
- *  `ctx` object to pass it to children
+ * Options Object keys
+ * - root   : DOM mount node
+ * - app    : root application node
+ * - draft  : state scaffolding Object
+ * - router : url matching function or config Object
+ * - trace  : string triggers logs prepended with it
+ * - kick   : boolean triggers kickstart (for some sandboxes)
+ * - prefix : ignore a part of the URL (e.g., gitub.io/<prefix>)
  *
- *  Part II: Takes the root RAF stream and updates the shell
- *  on every global state mutation
- *
- *  Part III: Connects the app shell to the state stream,
- *  which is triggered by any updates to the global
- *  `$store$`
  */
-export declare const boot: (CFG: any) => void;
+export declare const boot: (CFG: Object) => void;

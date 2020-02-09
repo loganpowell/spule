@@ -1,4 +1,3 @@
-/** @format */
 /**
  * ### `stringify_type`
  *

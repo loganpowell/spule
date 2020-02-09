@@ -22,7 +22,7 @@ import {
 } from "../../lib"
 // ⚠ <=> API SURFACE AREA TOO LARGE <=> ⚠ .
 // import { button_x } from "./components"
-import { THEME } from "./theme"
+// import { THEME } from "./theme"
 
 const log = console.log
 
@@ -341,21 +341,15 @@ const w_config = {
   [K.CFG.RUTR]: router,
   [K.CFG.ROOT]: document.getElementById("app"), // <- 🔍
   [K.CFG.DRFT]: { users: [] },
-  [K.CFG.LOG$]: "app stream ->",
+  [K.CFG.LOG$]: "state ->",
+  [K.CFG.KICK]: true
 
   // arbitrary context k/v pairs...
-  theme: THEME
+  // theme: THEME
 }
 
 boot(w_config)
 
-// FIXME: Just a little kick in the pants for those stubborn sandboxes
-// if ($store$.deref()[ROUTE_LOAD]) {
-//   DOMnavigated$.next({
-//     target: { location: { href: "./" } },
-//     currentTarget: document
-//   })
-// }
 console.log("registered Commands:", registerCMD.all.entries())
 
 console.log("starting...")

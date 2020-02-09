@@ -55,6 +55,7 @@ export declare const CFG_VIEW: string;
 export declare const CFG_DRFT: string;
 export declare const CFG_LOG$: string;
 export declare const CFG_RUTR: string;
+export declare const CFG_KICK: string;
 export declare const CFG: {
     RUN$: string;
     STOR: string;
@@ -63,6 +64,7 @@ export declare const CFG: {
     DRFT: string;
     LOG$: string;
     RUTR: string;
+    KICK: string;
 };
 export declare const ROUTER_PREP: string;
 export declare const ROUTER_POST: string;
@@ -73,14 +75,14 @@ export declare const ROUTER: {
     PRFX: string;
     RUTR: string;
 };
-export declare const ROUTE_PATH: string;
-export declare const ROUTE_LOAD: string;
-export declare const ROUTE_VIEW: string;
-export declare const ROUTE_ROOT: string;
-export declare const ROUTE: {
+export declare const $$_PATH: string;
+export declare const $$_LOAD: string;
+export declare const $$_VIEW: string;
+export declare const $$_ROOT: string;
+export declare const $$: {
     PATH: string;
     LOAD: string;
     VIEW: string;
     ROOT: string;
 };
-export declare const DEFAULT_CFG: Object;
+export declare const $$_DEFAULT: Object;

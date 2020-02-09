@@ -1,4 +1,3 @@
-/** @format */
 /**
  *
  * Takes an href (full or relative) and pulls out the various
