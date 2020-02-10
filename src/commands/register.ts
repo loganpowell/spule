@@ -13,9 +13,9 @@ import {
   CMD_ERRO,
   CMD_SRC$,
   CMD_WORK
-} from "../keys.js"
+} from "../keys"
 
-import { command$, out$ } from "../core/stream$.js"
+import { command$, out$ } from "../core/stream$"
 
 import { xKeyError, stringify_w_functions, diff_keys } from "../utils"
 
@@ -32,7 +32,7 @@ const feedCMD$fromSource$ = cmd => {
   return cmd[CMD_SRC$].subscribe(feed(command$))
 }
 
-let registered = new EquivMap()
+let registered = new Map()
 const err_str = "command Registration `registerCMD`"
 /**
  *

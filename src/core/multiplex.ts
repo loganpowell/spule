@@ -11,11 +11,11 @@ import {
   CMD_ERRO,
   CMD_SRC$,
   CMD_WORK
-} from "../keys.js"
+} from "../keys"
 
 import { stringify_type, xKeyError, key_index_err, diff_keys } from "../utils"
 
-import { command$ } from "./stream$.js"
+import { command$ } from "./stream$"
 
 const err_str = "Spooling Interupted" // <- add doc link to error strings
 
@@ -175,6 +175,7 @@ export const multiplex = task_array =>
     }
 
     /* RESULT HANDLERS */
+    // TODO: 🤔 think harder about the reso/erro handling
     if (reso) {
       // promise rejection handler
       if (erro && result instanceof Error) {

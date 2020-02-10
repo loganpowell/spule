@@ -1,16 +1,10 @@
 /**
  * @module commands/state
  */
-import {
-  CMD_SUB$,
-  CMD_ARGS,
-  CMD_WORK,
-  STATE_DATA,
-  STATE_PATH
-} from "../keys.js"
+import { CMD_SUB$, CMD_ARGS, CMD_WORK, STATE_DATA, STATE_PATH } from "../keys"
 import { set$$tate } from "../store"
 
-import { registerCMD } from "./register.js"
+import { registerCMD } from "./register"
 
 /**
  *

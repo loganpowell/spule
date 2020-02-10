@@ -25,7 +25,7 @@ export { FLIPkid } from "./components"
 
 export { URL_DOM__ROUTE, URL__ROUTE, task$ } from "./tasks"
 
-import * as keys from "./keys.js"
+import * as keys from "./keys"
 
 export { keys }
 

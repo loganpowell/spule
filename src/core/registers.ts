@@ -28,17 +28,17 @@ import {
   CFG_DRFT,
   CFG_LOG$,
   CFG_KICK
-} from "../keys.js"
+} from "../keys"
 
 import { $store$ } from "../store"
 
-import { registerCMD } from "../commands/register.js"
+import { registerCMD } from "../commands/register"
 
 import { URL_DOM__ROUTE, URL__ROUTE } from "../tasks"
 
 import { parse, diff_keys } from "../utils"
 
-import { run$, DOMnavigated$ } from "./stream$.js"
+import { run$, DOMnavigated$ } from "./stream$"
 
 /**
  *

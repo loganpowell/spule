@@ -4,6 +4,6 @@ export { boot, registerRouterDOM, DOMnavigated$, run$, command$, out$ } from "./
 export { $store$, set$$tate } from "./store";
 export { FLIPkid } from "./components";
 export { URL_DOM__ROUTE, URL__ROUTE, task$ } from "./tasks";
-import * as keys from "./keys.js";
+import * as keys from "./keys";
 export { keys };
 export { trace$, unparse, parse } from "./utils";

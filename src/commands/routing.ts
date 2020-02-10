@@ -2,7 +2,7 @@
  * @module commands/routing
  */
 import { parse } from "../utils"
-import { DOMnavigated$ } from "../core/stream$.js"
+import { DOMnavigated$ } from "../core/stream$"
 import {
   DOM_NODE,
   URL_FULL,
@@ -10,9 +10,9 @@ import {
   CMD_SUB$,
   CMD_ARGS,
   CMD_WORK
-} from "../keys.js"
+} from "../keys"
 
-import { registerCMD } from "./register.js"
+import { registerCMD } from "./register"
 
 /**
  * Click handler that mimics DOM navigation by transforming

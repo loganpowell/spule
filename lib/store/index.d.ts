@@ -1,1 +1,1 @@
-export { $store$, set$$tate } from "./state.js";
+export { $store$, set$$tate } from "./state";

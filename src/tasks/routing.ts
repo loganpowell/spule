@@ -32,7 +32,7 @@ import {
   DOM_BODY,
   STATE_DATA,
   STATE_PATH
-} from "../keys.js"
+} from "../keys"
 
 import { parse } from "../utils"
 

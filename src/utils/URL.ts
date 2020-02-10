@@ -11,7 +11,7 @@ import {
   URL_QERY,
   URL_HASH,
   URL_PATH
-} from "../keys.js"
+} from "../keys"
 
 /**
  *

@@ -19,7 +19,7 @@ import {
   boot,
   FLIPkid,
   keys as K
-} from "../../lib"
+} from "../../src"
 // ⚠ <=> API SURFACE AREA TOO LARGE <=> ⚠ .
 // import { button_x } from "./components"
 // import { THEME } from "./theme"
@@ -27,7 +27,7 @@ import {
 const log = console.log
 
 // trace$("run$ ->", run$)
-trace$("command$ ->", command$)
+// trace$("command$ ->", command$)
 // trace$("out$ ->", out$)
 
 /**
@@ -341,7 +341,7 @@ const w_config = {
   [K.CFG.RUTR]: router,
   [K.CFG.ROOT]: document.getElementById("app"), // <- 🔍
   [K.CFG.DRFT]: { users: [] },
-  [K.CFG.LOG$]: "state ->",
+  // [K.CFG.LOG$]: "state ->",
   [K.CFG.KICK]: true
 
   // arbitrary context k/v pairs...

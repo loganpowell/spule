@@ -1,9 +1,9 @@
 /**
  * @module commands/head
  */
-import { URL_DATA, CMD_SUB$, CMD_ARGS, CMD_WORK, DOM_HEAD } from "../keys.js"
+import { URL_DATA, CMD_SUB$, CMD_ARGS, CMD_WORK, DOM_HEAD } from "../keys"
 
-import { registerCMD } from "./register.js"
+import { registerCMD } from "./register"
 
 const setFavicon = href => {
   let link: HTMLLinkElement =

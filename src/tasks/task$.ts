@@ -2,8 +2,8 @@
  * @module tasks/task$
  */
 // explicit imports = prevent circular deps
-import { run$ } from "../core/stream$.js"
-import { multiplex } from "../core/multiplex.js"
+import { run$ } from "../core/stream$"
+import { multiplex } from "../core/multiplex"
 
 /**
  *

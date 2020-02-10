@@ -4,7 +4,7 @@
 
 import { FLIP_FIRST, FLIP_LAST_INVERSE_PLAY, HURL } from "../commands"
 
-import { CFG_RUN$, CMD_ARGS } from "../keys.js"
+import { CFG_RUN$, CMD_ARGS } from "../keys"
 
 const err_str = prop => `
   No '${prop}' property found on FLIPkid firstChild. 
@@ -39,6 +39,7 @@ export const FLIPkid = Object.freeze({
       {
         onclick: ev => {
           ev.preventDefault()
+          console.log({ ev })
           const target = ev.target
           const href = target.getAttribute("href")
           // console.log({ target, href })

@@ -5,7 +5,7 @@
 import { fromDOMEvent, merge, pubsub } from "@thi.ng/rstream"
 import { map } from "@thi.ng/transducers"
 
-import { URL_FULL, DOM_NODE, CMD_SUB$ } from "../keys.js"
+import { URL_FULL, DOM_NODE, CMD_SUB$ } from "../keys"
 
 /**
  * User-land event dispatch stream

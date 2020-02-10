@@ -5,7 +5,7 @@
 import { Atom } from "@thi.ng/atom"
 import { isPlainObject, isArray } from "@thi.ng/checks"
 
-import { $$_DEFAULT } from "../keys.js"
+import { $$_DEFAULT } from "../keys"
 
 // Global $store$ Container from [@thi.ng/atom](http://thi.ng/atom)
 export const $store$ = new Atom($$_DEFAULT)

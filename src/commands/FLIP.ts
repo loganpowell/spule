@@ -5,8 +5,16 @@
 import { Atom } from "@thi.ng/atom"
 import { getIn } from "@thi.ng/paths"
 
-import { CMD_SUB$, CMD_ARGS, CMD_WORK } from "../keys.js"
-import { registerCMD } from "./register.js"
+import { CMD_SUB$, CMD_ARGS, CMD_WORK } from "../keys"
+import { registerCMD } from "./register"
+
+function getStyles(element: HTMLElement) {
+  const computedStyle = getComputedStyle(element)
+
+  return {
+    radius: computedStyle.borderRadius || 0
+  }
+}
 
 function getRect(element: HTMLElement, frame?) {
   const {
@@ -26,9 +34,21 @@ function getRect(element: HTMLElement, frame?) {
     left: left - (parent ? parent.left : 0),
     right,
     width,
-    height
+    height,
+    get transform() {
+      return getComputedStyle(element).transform || undefined
+    }
   }
 }
+
+// const w = window
+// const d = document
+// const e = d.documentElement
+// const b = d.getElementsByTagName('body')[0]
+
+// const proxy = {
+//   top: window.
+// }
 
 const S_path = "FLIP_shuffle"
 
@@ -71,8 +91,7 @@ const Z_path = "FLIP_zoom"
 const zoom_paths = uid => ({
   rects: [Z_path, "rects", uid],
   elems: [Z_path, "elems", uid],
-  clicks: [Z_path, "clicks", uid],
-  scrolls: [Z_path, "scroll", uid]
+  clicks: [Z_path, "clicks", uid]
 })
 
 /**
@@ -99,7 +118,7 @@ const zoom_paths = uid => ({
 const FLIPFirst = ({ state, id, target }) => {
   // 📌 TODO: GOOD PLACE FOR AN `onStart` hook animation/callback
 
-  const { rects, clicks, scrolls } = zoom_paths(id)
+  const { rects, clicks } = zoom_paths(id)
 
   // sets the rect in state for next el init to sniff
   const flip_map = getRect(target)
@@ -107,7 +126,6 @@ const FLIPFirst = ({ state, id, target }) => {
 
   // registers component as having been clicked (focused)
   state.resetIn(clicks, true)
-  state.resetIn(scrolls, { y: window.scrollY, x: window.scrollX })
 }
 
 /**
@@ -139,17 +157,16 @@ const FLIPLastInvertPlay = ({
   state,
   id,
   // just baffle them with https://cubic-bezier.com/
-  transition = "all .3s cubic-bezier(.54,-0.29,.17,1.11)"
+  // transition = "all .3s cubic-bezier(.54,-0.29,.17,1.11)"
+  transition = "all .3s ease-in-out"
 }) => {
   element.setAttribute("flip", id)
-  const { rects, clicks, scrolls } = zoom_paths(id)
+  const { rects, clicks } = zoom_paths(id)
 
   const F_flip_map = getIn(state.deref(), rects) || null
   // NO RECT => NOT CLICKED
   if (!F_flip_map) return
 
-  // 🕛 if flip active, scroll element on init
-  // element.scrollIntoView()
   /**
    * 🔥 this may cause issues for parrallel anims append this
    * to a specific target using:
@@ -171,12 +188,6 @@ const FLIPLastInvertPlay = ({
   const Sx = F_flip_map.width / L_flip_map.width
   const Sy = F_flip_map.height / L_flip_map.height
 
-  // 🕕 just before "Last", scroll element to middle of page
-  // const top = L_flip_map.top + window.pageYOffset
-  const { x, y } = getIn(state.deref(), scrolls) // top - window.innerHeight / 2
-
-  window.scrollTo(x, y)
-
   // console.log({ Tx, Ty, Sx, Sy })
 
   element.style.transformOrigin = "top left"
@@ -187,10 +198,7 @@ const FLIPLastInvertPlay = ({
   // PLAY
   requestAnimationFrame(() => {
     // 🕤 just before animating, scroll to new location
-    window.scrollTo(x, y)
-
     // element.style.transformOrigin = "top left"
-
     element.style.transition = transition
     element.style.transform = "none"
     // 💩 hack for removing zIndex after animation is complete
@@ -200,9 +208,7 @@ const FLIPLastInvertPlay = ({
   // move element to front
   zIndex(element, 1)
   // 🔍 consider exposing in the API
-
   const clicked = getIn(state.deref(), clicks) || null
-
   if (!clicked) {
     // console.log(uid, "FLIP'ed on navigated")
     state.resetIn(rects, null)
@@ -210,19 +216,20 @@ const FLIPLastInvertPlay = ({
     // console.log(uid, "FLIP'ed on click! 👆")
     state.resetIn(rects, L_flip_map)
   }
-
   // remove click frame
   state.resetIn(clicks, null)
 }
 
 const state = new Atom({})
 
+// render: onclick
 export const FLIP_FIRST = registerCMD({
   [CMD_SUB$]: "_FLIP_FIRST",
   [CMD_ARGS]: x => x,
   [CMD_WORK]: ({ id, target }) => FLIPFirst({ id, target, state })
 })
 
+// init
 export const FLIP_LAST_INVERSE_PLAY = registerCMD({
   [CMD_SUB$]: "_FLIP_LAST_INVERSE_PLAY",
   [CMD_ARGS]: x => x,
