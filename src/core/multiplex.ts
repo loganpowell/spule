@@ -181,8 +181,8 @@ export const multiplex = task_array =>
       if (erro && result instanceof Error) {
         let error = erro(acc, result)
         if (error.sub$) return command$.next(error)
-        console.warn(err_str, "[ Promise rejected ]:", result)
-        result = error
+        console.warn(err_str, "Promise rejected:", result)
+        return acc
       }
       // resovled promise handler
       if (!(result instanceof Error)) {

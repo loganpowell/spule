@@ -91,7 +91,8 @@ const Z_path = "FLIP_zoom"
 const zoom_paths = uid => ({
   rects: [Z_path, "rects", uid],
   elems: [Z_path, "elems", uid],
-  clicks: [Z_path, "clicks", uid]
+  clicks: [Z_path, "clicks", uid],
+  scrolls: [Z_path, "scroll", uid]
 })
 
 /**
@@ -118,7 +119,7 @@ const zoom_paths = uid => ({
 const FLIPFirst = ({ state, id, target }) => {
   // 📌 TODO: GOOD PLACE FOR AN `onStart` hook animation/callback
 
-  const { rects, clicks } = zoom_paths(id)
+  const { rects, clicks, scrolls } = zoom_paths(id)
 
   // sets the rect in state for next el init to sniff
   const flip_map = getRect(target)
@@ -126,6 +127,7 @@ const FLIPFirst = ({ state, id, target }) => {
 
   // registers component as having been clicked (focused)
   state.resetIn(clicks, true)
+  state.resetIn(scrolls, { y: window.scrollY, x: window.scrollX })
 }
 
 /**
@@ -157,11 +159,11 @@ const FLIPLastInvertPlay = ({
   state,
   id,
   // just baffle them with https://cubic-bezier.com/
-  // transition = "all .3s cubic-bezier(.54,-0.29,.17,1.11)"
-  transition = "all .3s ease-in-out"
+  transition = "all .5s cubic-bezier(.54,-0.29,.17,1.11)"
+  // transition = "all .3s ease-in-out"
 }) => {
   element.setAttribute("flip", id)
-  const { rects, clicks } = zoom_paths(id)
+  const { rects, clicks, scrolls } = zoom_paths(id)
 
   const F_flip_map = getIn(state.deref(), rects) || null
   // NO RECT => NOT CLICKED
@@ -175,13 +177,16 @@ const FLIPLastInvertPlay = ({
    *
    */
   // 🕞 calculate location and size
-  let L_flip_map = getRect(element)
+  const { x, y } = getIn(state.deref(), scrolls) // top - window.innerHeight / 2
+  window.scrollTo(x, y)
+  element.scrollIntoView()
 
+  let L_flip_map = getRect(element)
   // recalc rect if out of initial view after scrolling into view
-  if (Math.abs(F_flip_map.top - L_flip_map.top) > window.innerHeight) {
-    element.scrollIntoView()
-    L_flip_map = getRect(element)
-  }
+  // if (Math.abs(F_flip_map.top - L_flip_map.top) > window.innerHeight) {
+  //   element.scrollIntoView()
+  //   L_flip_map = getRect(element)
+  // }
 
   const Tx = F_flip_map.left - L_flip_map.left
   const Ty = F_flip_map.top - L_flip_map.top
@@ -198,7 +203,7 @@ const FLIPLastInvertPlay = ({
   // PLAY
   requestAnimationFrame(() => {
     // 🕤 just before animating, scroll to new location
-    // element.style.transformOrigin = "top left"
+    element.style.transformOrigin = "top left"
     element.style.transition = transition
     element.style.transform = "none"
     // 💩 hack for removing zIndex after animation is complete
@@ -225,13 +230,13 @@ const state = new Atom({})
 // render: onclick
 export const FLIP_FIRST = registerCMD({
   [CMD_SUB$]: "_FLIP_FIRST",
-  [CMD_ARGS]: x => x,
+  [CMD_ARGS]: ({ id, target }) => ({ id, target }),
   [CMD_WORK]: ({ id, target }) => FLIPFirst({ id, target, state })
 })
 
 // init
 export const FLIP_LAST_INVERSE_PLAY = registerCMD({
   [CMD_SUB$]: "_FLIP_LAST_INVERSE_PLAY",
-  [CMD_ARGS]: x => x,
+  [CMD_ARGS]: ({ id, element }) => ({ id, element }),
   [CMD_WORK]: ({ id, element }) => FLIPLastInvertPlay({ id, element, state })
 })

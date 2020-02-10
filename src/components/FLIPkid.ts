@@ -39,7 +39,7 @@ export const FLIPkid = Object.freeze({
       {
         onclick: ev => {
           ev.preventDefault()
-          console.log({ ev })
+          // console.log({ ev })
           const target = ev.target
           const href = target.getAttribute("href")
           // console.log({ target, href })
